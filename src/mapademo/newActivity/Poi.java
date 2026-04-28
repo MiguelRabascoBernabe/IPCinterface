@@ -1,4 +1,4 @@
-package mapademo;
+package mapademo.newActivity;
 import javafx.geometry.Point2D;
 
 /*
@@ -7,10 +7,6 @@ import javafx.geometry.Point2D;
  * and open the template in the editor.
  */
 
-/**
- *
- * @author jose
- */
 public class Poi {
     
     private String code;

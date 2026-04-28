@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane prefHeight="552.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mapademo.newActivity.FXMLDocumentController">
+   <center>
+      <VBox prefHeight="321.0" prefWidth="854.0" stylesheets="@../resources/estilos.css">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Register new activity" textAlignment="RIGHT" wrappingWidth="281.13671875">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Text>
+            <Region prefHeight="13.0" prefWidth="854.0" />
+            <HBox prefHeight="49.0" prefWidth="854.0">
+               <children>
+                  <Region prefHeight="53.0" prefWidth="55.0" />
+                  <Label prefHeight="41.0" prefWidth="137.0" text="GPX file:">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="uploadButton" mnemonicParsing="false" prefHeight="41.0" prefWidth="88.0">
+                     <graphic>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fitHeight="106.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/icons/upload.png" />
+                                 </image>
+                              </ImageView>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Upload" wrappingWidth="78.13671875">
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </HBox>
+                     </graphic></Button>
+                  <Region prefHeight="47.0" prefWidth="37.0" />
+                  <Text fx:id="filenameLabel" fill="#9a9a9a" strokeType="OUTSIDE" strokeWidth="0.0" text="UPVTour.gpx" wrappingWidth="72.13671875">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="15.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+            </HBox>
+            <VBox prefHeight="376.0" prefWidth="854.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Route details" textAlignment="CENTER" wrappingWidth="853.4700717926025">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <HBox prefHeight="390.0" prefWidth="853.0">
+                     <children>
+                        <ImageView fx:id="mapViewer" fitHeight="376.0" fitWidth="530.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../maps/upv.jpg" />
+                           </image>
+                        </ImageView>
+                        <Region prefHeight="390.0" prefWidth="20.0" />
+                        <VBox prefHeight="390.0" prefWidth="286.0">
+                           <children>
+                              <HBox prefHeight="41.0" prefWidth="286.0">
+                                 <children>
+                                    <ImageView fitHeight="31.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/icons/distance.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Distance:" wrappingWidth="78.13665771484375">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                    <Text fx:id="distance" fill="#0000006d" strokeType="OUTSIDE" strokeWidth="0.0" text="3.21 km">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="41.0" prefWidth="286.0">
+                                 <children>
+                                    <ImageView fitHeight="31.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/icons/sandclock.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Duration:" wrappingWidth="78.13665771484375">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                    <Text fx:id="duration" fill="#0000006d" strokeType="OUTSIDE" strokeWidth="0.0" text="3h 21min">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <Region prefHeight="5.0" prefWidth="286.0" style="-fx-background-color: #c2c2c2; -fx-opacity: 0.2;" />
+                              <HBox prefHeight="41.0" prefWidth="286.0">
+                                 <children>
+                                    <ImageView fitHeight="31.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/icons/speed.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Avg. Speed:" wrappingWidth="106.80328369140625">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                    <Text fx:id="avgSpeed" fill="#0000006d" strokeType="OUTSIDE" strokeWidth="0.0" text="7.31 km/h">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="41.0" prefWidth="286.0">
+                                 <children>
+                                    <ImageView fitHeight="31.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/icons/stopwatch.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Avg. Pace:" wrappingWidth="106.13665771484375">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                    <Text fx:id="avgPace" fill="#0000006d" strokeType="OUTSIDE" strokeWidth="0.0" text="3' 21'' / km">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <Region prefHeight="5.0" prefWidth="286.0" style="-fx-background-color: #c2c2c2; -fx-opacity: 0.2;" />
+                              <HBox prefHeight="41.0" prefWidth="286.0">
+                                 <children>
+                                    <ImageView fitHeight="24.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/icons/chart_up.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Positive elevation gain: " wrappingWidth="168.1365966796875">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                    <Text fx:id="elevationPositive" fill="#0000006d" strokeType="OUTSIDE" strokeWidth="0.0" text="+521m">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="41.0" prefWidth="286.0">
+                                 <children>
+                                    <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/icons/downwards.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Negative elevation gain: " wrappingWidth="168.1365966796875">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                    <Text fx:id="elevationNegative" fill="#0000006d" strokeType="OUTSIDE" strokeWidth="0.0" text="-521m">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <Region prefHeight="4.0" prefWidth="286.0" style="-fx-background-color: #c2c2c2; -fx-opacity: 0.2;" />
+                              <HBox prefHeight="41.0" prefWidth="286.0">
+                                 <children>
+                                    <ImageView fitHeight="24.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/icons/mountain.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Max. altitude:" wrappingWidth="124.80322265625">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                    <Text fx:id="maxAlt" fill="#0000006d" strokeType="OUTSIDE" strokeWidth="0.0" text="7.31 km/h">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="41.0" prefWidth="286.0">
+                                 <children>
+                                    <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/icons/ditch.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Min. altitude:" wrappingWidth="124.1365966796875">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                    <Text fx:id="minAlt" fill="#0000006d" strokeType="OUTSIDE" strokeWidth="0.0" text="3' 21'' / km">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </center>
+   <top>
+      <HBox alignment="CENTER_RIGHT" fillHeight="false" spacing="5.0">
+   <children>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Estraba" wrappingWidth="85.13671875" />
+      <Region HBox.hgrow="ALWAYS" />
+      <MenuBar>
+         <menus>
+            <Menu mnemonicParsing="false" text="User">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#about" text="View/edit" />
+                  <MenuItem mnemonicParsing="false" onAction="#about" text="Session history" />
+                  <MenuItem mnemonicParsing="false" onAction="#about" text="Sign Out" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+   </children>
+</HBox>
+<!--      <HBox alignment="CENTER_RIGHT" fillHeight="false" spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <Region />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Estraba" wrappingWidth="82.31999969482422">
+               <font>
+                  <Font name="Beleren Proxy Bold" size="23.0" />
+               </font>
+            </Text>
+            <Region HBox.hgrow="ALWAYS" />
+            <Circle fill="DODGERBLUE" radius="27.0" stroke="BLACK" strokeType="INSIDE" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CepePapillaYT" wrappingWidth="181.876953125">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Text>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+         </BorderPane.margin>
+      </HBox>-->
+   </top>
+   <bottom>
+      <HBox alignment="CENTER_RIGHT" prefHeight="52.0" prefWidth="842.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+         </BorderPane.margin>
+         <children>
+            <Button mnemonicParsing="false" style="-fx-background-color: #c2c2c2;" text="Cancel">
+               <HBox.margin>
+                  <Insets right="40.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="createButton" mnemonicParsing="false" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: #008000;" text="Create" textFill="WHITE">
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+               <graphic>
+                  <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/icons/check-svgrepo-com.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.text.Text?>
+
+
+<HBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER_RIGHT" fillHeight="false" spacing="5.0" xmlns="http://javafx.com/javafx/25" fx:controller="mapademo.newActivity.FXMLDocument_1Controller">
+   <children>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Estraba" wrappingWidth="85.13671875" />
+      <Region HBox.hgrow="ALWAYS" />
+      <MenuBar>
+         <menus>
+            <Menu mnemonicParsing="false" text="User">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#about" text="View/edit" />
+                  <MenuItem mnemonicParsing="false" onAction="#about" text="Session history" />
+                  <MenuItem mnemonicParsing="false" onAction="#about" text="Sign Out" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+   </children>
+</HBox>
