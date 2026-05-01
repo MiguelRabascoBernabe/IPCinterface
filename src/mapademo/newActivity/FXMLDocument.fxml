@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -49,9 +50,12 @@
                               </Text>
                            </children>
                         </HBox>
-                     </graphic></Button>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
                   <Region prefHeight="47.0" prefWidth="37.0" />
-                  <Text fx:id="filenameLabel" fill="#9a9a9a" strokeType="OUTSIDE" strokeWidth="0.0" text="UPVTour.gpx" wrappingWidth="72.13671875">
+                  <Text fx:id="filenameLabel" fill="#9a9a9a" strokeType="OUTSIDE" strokeWidth="0.0" text="UPVTour.gpx" wrappingWidth="369.13671875">
                      <font>
                         <Font size="11.0" />
                      </font>
@@ -63,7 +67,7 @@
             </HBox>
             <VBox prefHeight="376.0" prefWidth="854.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Route details" textAlignment="CENTER" wrappingWidth="853.4700717926025">
+                  <Text fx:id="title" strokeType="OUTSIDE" strokeWidth="0.0" text="Route details" textAlignment="CENTER" wrappingWidth="853.4700717926025">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -72,11 +76,11 @@
                      <children>
                         <ImageView fx:id="mapViewer" fitHeight="376.0" fitWidth="530.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../maps/upv.jpg" />
+                              <Image url="@../../../maps/calderona.jpg" />
                            </image>
                         </ImageView>
                         <Region prefHeight="390.0" prefWidth="20.0" />
-                        <VBox prefHeight="390.0" prefWidth="286.0">
+                        <VBox fx:id="details" prefHeight="390.0" prefWidth="286.0">
                            <children>
                               <HBox prefHeight="41.0" prefWidth="286.0">
                                  <children>
@@ -320,13 +324,16 @@
             <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
          </BorderPane.margin>
          <children>
-            <Button mnemonicParsing="false" style="-fx-background-color: #c2c2c2;" text="Cancel">
+            <Button fx:id="cancelButton" mnemonicParsing="false" style="-fx-background-color: #c2c2c2;" text="Cancel">
                <HBox.margin>
                   <Insets right="40.0" />
                </HBox.margin>
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Button fx:id="createButton" mnemonicParsing="false" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: #008000;" text="Create" textFill="WHITE">
                <HBox.margin>
@@ -337,6 +344,9 @@
                      <image>
                         <Image url="@../../resources/icons/check-svgrepo-com.png" />
                      </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </ImageView>
                </graphic>
                <font>
