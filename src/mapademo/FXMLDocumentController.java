@@ -41,6 +41,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
@@ -75,7 +76,8 @@ import javafx.util.Duration;
  *
  * Implementa {@link Initializable} para poder ejecutar código de
  * inicialización una vez que el FXML ha sido cargado completamente.
- */
+ **/
+
 public class FXMLDocumentController implements Initializable {
 
     // =========================================================
@@ -97,7 +99,10 @@ public class FXMLDocumentController implements Initializable {
     //               └─ Circle    ← anotaciones circulares
     //
     // =========================================================
-
+     
+    // save mode for save and edit button
+    public boolean editmode;
+    
     /** Group que se escala para aplicar el zoom. */
     private Group zoomGroup;
 
@@ -125,11 +130,9 @@ public class FXMLDocumentController implements Initializable {
     // =========================================================
 
     /** Lista lateral que muestra todos los POIs añadidos al mapa. */
-    @FXML
     private ListView<Poi> map_listview;
 
     /** ScrollPane que envuelve el mapa y permite desplazarlo. */
-    @FXML
     private ScrollPane map_scrollpane;
 
     /**
@@ -137,7 +140,6 @@ public class FXMLDocumentController implements Initializable {
      * Rango: [0.5 – 1.5]. Valor inicial: 1.0 (sin zoom).
      * Cada cambio de valor llama al método zoom().
      */
-    @FXML
     private Slider zoom_slider;
 
     /**
@@ -151,10 +153,15 @@ public class FXMLDocumentController implements Initializable {
     //   · 'pin_info'       (inyectada pero nunca actualizada)
 
     /** Etiqueta en la barra de estado que muestra las coordenadas del ratón. */
-    @FXML
     private Label mousePosition;
     @FXML
-    private SplitPane splitPane;
+    private Button saveButton;
+    @FXML
+    private Button editButton;
+
+    public FXMLDocumentController() {
+       
+    }
  
 
     // =========================================================
@@ -166,7 +173,6 @@ public class FXMLDocumentController implements Initializable {
      *
      * @param event evento de acción del botón
      */
-    @FXML
     void zoomIn(ActionEvent event) {
         double sliderVal = zoom_slider.getValue();
         zoom_slider.setValue(sliderVal + 0.1);
@@ -177,7 +183,6 @@ public class FXMLDocumentController implements Initializable {
      *
      * @param event evento de acción del botón
      */
-    @FXML
     void zoomOut(ActionEvent event) {
         double sliderVal = zoom_slider.getValue();
         zoom_slider.setValue(sliderVal - 0.1);
@@ -235,7 +240,6 @@ public class FXMLDocumentController implements Initializable {
      *
      * @param event evento de ratón sobre el ListView
      */
-    @FXML
     void listClicked(MouseEvent event) {
         // Obtenemos el POI seleccionado; si no hay ninguno, salimos
         Poi itemSelected = map_listview.getSelectionModel().getSelectedItem();
@@ -404,6 +408,8 @@ public class FXMLDocumentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        editmode = false;
 
         // ── Configuración del slider de zoom ──────────────────────────
         zoom_slider.setMin(0.5);   // zoom mínimo: 50 %
@@ -418,8 +424,8 @@ public class FXMLDocumentController implements Initializable {
 
         // Los items se crean aquí sin acción; las acciones se asignan
         // en onMapRightClick() con las coordenadas correctas de cada clic.
-        MenuItem miText   = new MenuItem("📝 Añadir texto");
-        MenuItem miCircle = new MenuItem("⭕ Añadir círculo");
+        MenuItem miText   = new MenuItem("Añadir texto");
+        MenuItem miCircle = new MenuItem("Añadir círculo");
         mapContextMenu = new ContextMenu(miText, miCircle);
 
                //  setCellFactory() define cómo se renderiza cada celda
@@ -461,7 +467,6 @@ public class FXMLDocumentController implements Initializable {
      *
      * @param event evento de movimiento del ratón
      */
-    @FXML
     private void showPosition(MouseEvent event) {
         mousePosition.setText(
             "sceneX: " + (int) event.getSceneX() +
@@ -581,7 +586,6 @@ public class FXMLDocumentController implements Initializable {
      * @param event evento de acción del menú
      * @throws IOException si hay un problema al obtener la ruta canónica
      */
-    @FXML
     private void cambiarMapa(ActionEvent event) throws IOException {
         FileChooser fc = new FileChooser();
         fc.setInitialDirectory(new File(".")); // Empezamos en el directorio del proyecto
@@ -617,6 +621,23 @@ public class FXMLDocumentController implements Initializable {
         circle.setCenterX(x);
         circle.setCenterY(y);
         mapPane.getChildren().add(circle); // Se añade sobre el mapa como cualquier nodo
+    }
+
+    @FXML
+    private void saveClick(ActionEvent event) {
+        editmode = false;
+        editButton.setDisable(false);
+        saveButton.setDisable(true);
+        
+        
+    }
+
+    @FXML
+    private void editClick(ActionEvent event) {
+            editmode = true;
+            editButton.setDisable(true);
+            saveButton.setDisable(false);
+
     }
 
 
