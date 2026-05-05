@@ -130,9 +130,11 @@ public class FXMLDocumentController implements Initializable {
     // =========================================================
 
     /** Lista lateral que muestra todos los POIs añadidos al mapa. */
+    @FXML
     private ListView<Poi> map_listview;
 
     /** ScrollPane que envuelve el mapa y permite desplazarlo. */
+    @FXML
     private ScrollPane map_scrollpane;
 
     /**
@@ -140,6 +142,7 @@ public class FXMLDocumentController implements Initializable {
      * Rango: [0.5 – 1.5]. Valor inicial: 1.0 (sin zoom).
      * Cada cambio de valor llama al método zoom().
      */
+    @FXML
     private Slider zoom_slider;
 
     /**
@@ -153,11 +156,12 @@ public class FXMLDocumentController implements Initializable {
     //   · 'pin_info'       (inyectada pero nunca actualizada)
 
     /** Etiqueta en la barra de estado que muestra las coordenadas del ratón. */
+    @FXML
     private Label mousePosition;
-    @FXML
     private Button saveButton;
-    @FXML
     private Button editButton;
+    @FXML
+    private SplitPane splitPane;
 
     public FXMLDocumentController() {
        
@@ -173,6 +177,7 @@ public class FXMLDocumentController implements Initializable {
      *
      * @param event evento de acción del botón
      */
+    @FXML
     void zoomIn(ActionEvent event) {
         double sliderVal = zoom_slider.getValue();
         zoom_slider.setValue(sliderVal + 0.1);
@@ -183,6 +188,7 @@ public class FXMLDocumentController implements Initializable {
      *
      * @param event evento de acción del botón
      */
+    @FXML
     void zoomOut(ActionEvent event) {
         double sliderVal = zoom_slider.getValue();
         zoom_slider.setValue(sliderVal - 0.1);
@@ -240,6 +246,7 @@ public class FXMLDocumentController implements Initializable {
      *
      * @param event evento de ratón sobre el ListView
      */
+    @FXML
     void listClicked(MouseEvent event) {
         // Obtenemos el POI seleccionado; si no hay ninguno, salimos
         Poi itemSelected = map_listview.getSelectionModel().getSelectedItem();
@@ -467,6 +474,7 @@ public class FXMLDocumentController implements Initializable {
      *
      * @param event evento de movimiento del ratón
      */
+    @FXML
     private void showPosition(MouseEvent event) {
         mousePosition.setText(
             "sceneX: " + (int) event.getSceneX() +
@@ -586,6 +594,7 @@ public class FXMLDocumentController implements Initializable {
      * @param event evento de acción del menú
      * @throws IOException si hay un problema al obtener la ruta canónica
      */
+    @FXML
     private void cambiarMapa(ActionEvent event) throws IOException {
         FileChooser fc = new FileChooser();
         fc.setInitialDirectory(new File(".")); // Empezamos en el directorio del proyecto
@@ -623,7 +632,6 @@ public class FXMLDocumentController implements Initializable {
         mapPane.getChildren().add(circle); // Se añade sobre el mapa como cualquier nodo
     }
 
-    @FXML
     private void saveClick(ActionEvent event) {
         editmode = false;
         editButton.setDisable(false);
@@ -632,7 +640,6 @@ public class FXMLDocumentController implements Initializable {
         
     }
 
-    @FXML
     private void editClick(ActionEvent event) {
             editmode = true;
             editButton.setDisable(true);
