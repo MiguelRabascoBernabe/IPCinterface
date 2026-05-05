@@ -40,6 +40,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.GaussianBlur?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -119,10 +120,13 @@
                               <Insets bottom="10.0" left="40.0" top="10.0" />
                            </VBox.margin>
                         </Text>
-                        <TextField fx:id="passInput" maxWidth="323.0" prefHeight="27.0" prefWidth="290.0">
+                        <TextField fx:id="passInput" maxWidth="323.0" prefHeight="27.0" prefWidth="290.0" promptText="password">
                            <VBox.margin>
                               <Insets left="40.0" />
                            </VBox.margin>
+                           <effect>
+                              <GaussianBlur radius="10.37" />
+                           </effect>
                         </TextField>
                      </children>
                   </VBox>
@@ -172,7 +176,7 @@
                   <Menu mnemonicParsing="false" text="User">
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#about" text="View/edit" />
-                        <MenuItem mnemonicParsing="false" onAction="#about" text="Session history" />
+                        <MenuItem fx:id="sessionHistory" mnemonicParsing="false" onAction="#about" text="Session history" />
                         <MenuItem mnemonicParsing="false" onAction="#about" text="Sign Out" />
                      </items>
                   </Menu>

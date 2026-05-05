@@ -14,8 +14,14 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;import javafx.scene.shape.Circle;
 import java.io.File;
+import java.util.Locale;
+import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import javafx.scene.image.Image;
+import javax.sound.sampled.*;
+import javafx.scene.effect.GaussianBlur;
+
+
 
 /**
  * FXML Controller class
@@ -48,9 +54,15 @@ public class UserController implements Initializable {
     private ImageView profileImage;
     @FXML
     private Circle profileCircle;
+    @FXML
+    private MenuItem sessionHistory;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        //config datepicker
+        birthdateInput.setChronology(java.time.chrono.IsoChronology.INSTANCE);
+        Locale.setDefault(Locale.forLanguageTag("es-ES"));
         //buttons
         editmode = false;
         saveButton.setDisable(true);
@@ -72,18 +84,19 @@ public class UserController implements Initializable {
         
         //image default
         profileImage.setImage(new Image("resources/default_user_icon.jpg"));
-
+        //test
         
 
         
     }    
 
     @FXML
-    private void about(ActionEvent event) {
+    private void about(ActionEvent event){
     }
 
     @FXML
     private void saveClick(ActionEvent event) {
+        //buttons and textinput manipulation
         editmode = false;
         editButton.setDisable(false);
         saveButton.setDisable(true);
@@ -91,6 +104,12 @@ public class UserController implements Initializable {
         passInput.setDisable(true);
         birthdateInput.setDisable(true);
         editAvatar.setDisable(true);
+        //passinput blur back
+        GaussianBlur passblur = new GaussianBlur();
+        passblur.setRadius(10);
+        passInput.setEffect(passblur);
+        
+
 
 
    
@@ -98,14 +117,18 @@ public class UserController implements Initializable {
 
     @FXML
     private void editClick(ActionEvent event) {
+        //button toggling
         editmode = true;
         editButton.setDisable(true);
         saveButton.setDisable(false);
-        
+        // input effects
         emailInput.setDisable(false);
         passInput.setDisable(false);
         birthdateInput.setDisable(false);
         editAvatar.setDisable(false);
+        // pass input effect
+        passInput.setEffect(null);
+        
 
     }
 
