@@ -1,0 +1,93 @@
+/* Fondo general de la aplicación */
+.root {
+    -fx-background-color: #FDFDFD;
+}
+
+/* Bloques principales con sombras sutiles en lugar de bordes marcados */
+.chart, .scroll-pane, .list-view {
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: #E0E0E0; /* Gris muy clarito */
+    -fx-border-width: 1;
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 4);
+}
+
+/* Forzar el recorte del mapa */
+.scroll-pane > .viewport {
+    -fx-background-radius: 15;
+}
+
+/* Botones minimalistas: fondo blanco con borde fino */
+.button {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: #D1D1D1;
+    -fx-border-width: 1;
+    -fx-text-fill: #444444;
+    -fx-font-weight: normal;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #F1F7F0;
+    -fx-border-color: #BDBDBD;
+}
+
+/* Gráfico de elevación ultra limpio (Punto 6.1) */
+.chart-series-line {
+    -fx-stroke: #555555; /* Línea gris oscuro profesional */
+    -fx-stroke-width: 2px;
+}
+
+.chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+.chart-vertical-grid-lines, .chart-horizontal-grid-lines {
+    -fx-stroke: #F0F0F0;
+}
+
+/* Lista de actividades */
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #444444;
+    -fx-padding: 10;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #F0F0F0;
+    -fx-text-fill: #000000;
+}
+
+.azul{
+    -fx-border-width: 2;
+    -fx-border-color: #A9D8D9;
+}
+
+/* Recorte específico para el contenedor del mapa */
+.scroll-pane {
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-radius: 15;
+    -fx-background-color: transparent;
+}
+
+/* Para redondear la imagen directamente si se sale de los bordes */
+.image-view {
+    -fx-background-radius: 15;
+}
+
+.morado{
+    -fx-border-width: 2;
+    -fx-border-color: #C2A9D9;
+}
+
+.botonesZoom {
+    -fx-background-color: #B3F4F5;
+}

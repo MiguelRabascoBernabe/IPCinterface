@@ -99,6 +99,7 @@ public class FXMLDocumentController implements Initializable {
     // =========================================================
 
     /** Group que se escala para aplicar el zoom. */
+    @FXML
     private Group zoomGroup;
 
     /**
@@ -107,6 +108,7 @@ public class FXMLDocumentController implements Initializable {
      * (textos, círculos, etc.). Sus dimensiones coinciden con las de
      * la imagen cargada.
      */
+    @FXML
     private Pane mapPane;
 
     
@@ -137,8 +139,9 @@ public class FXMLDocumentController implements Initializable {
      * Rango: [0.5 – 1.5]. Valor inicial: 1.0 (sin zoom).
      * Cada cambio de valor llama al método zoom().
      */
-    @FXML
-    private Slider zoom_slider;
+    //@FXML
+    //private Slider zoom_slider;
+    private double zoomV;
 
     /**
      * Botón de pin visible sobre el mapa.
@@ -151,10 +154,13 @@ public class FXMLDocumentController implements Initializable {
     //   · 'pin_info'       (inyectada pero nunca actualizada)
 
     /** Etiqueta en la barra de estado que muestra las coordenadas del ratón. */
-    @FXML
-    private Label mousePosition;
+    //private Label mousePosition;
     @FXML
     private SplitPane splitPane;
+    @FXML
+    private ImageView imageViewer;
+    @FXML
+    private Group contentGroup;
  
 
     // =========================================================
@@ -166,10 +172,10 @@ public class FXMLDocumentController implements Initializable {
      *
      * @param event evento de acción del botón
      */
-    @FXML
     void zoomIn(ActionEvent event) {
-        double sliderVal = zoom_slider.getValue();
-        zoom_slider.setValue(sliderVal + 0.1);
+        double sliderVal = zoomV; //zoom_slider.getValue();
+        //zoom_slider.setValue(sliderVal + 0.1);
+        zoomV = zoomV +0.1;
     }
 
     /**
@@ -177,10 +183,10 @@ public class FXMLDocumentController implements Initializable {
      *
      * @param event evento de acción del botón
      */
-    @FXML
     void zoomOut(ActionEvent event) {
-        double sliderVal = zoom_slider.getValue();
-        zoom_slider.setValue(sliderVal - 0.1);
+        double sliderVal = zoomV; //zoom_slider.getValue();
+        //zoom_slider.setValue(sliderVal - 0.1);
+        zoomV = zoomV -0.1;
     }
 
     /**
@@ -344,7 +350,7 @@ public class FXMLDocumentController implements Initializable {
         contentGroup.getChildren().add(zoomGroup);
 
         // Aplicamos el zoom actual (valor actual del slider)
-        double zoom = zoom_slider.getValue();
+        double zoom = zoomV;
         zoomGroup.setScaleX(zoom);
         zoomGroup.setScaleY(zoom);
 
@@ -406,15 +412,16 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         // ── Configuración del slider de zoom ──────────────────────────
-        zoom_slider.setMin(0.5);   // zoom mínimo: 50 %
-        zoom_slider.setMax(1.5);   // zoom máximo: 150 %
-        zoom_slider.setValue(1.0); // valor inicial: 100 %
+        //zoom_slider.setMin(0.5);   // zoom mínimo: 50 %
+        //zoom_slider.setMax(1.5);   // zoom máximo: 150 %
+        //zoom_slider.setValue(1.0); // valor inicial: 100 %
+        zoomV = 1.0;
 
         // Listener que invoca zoom() cada vez que el slider cambia de valor.
         // Usamos una expresión lambda en lugar de una clase anónima por brevedad.
-        zoom_slider.valueProperty().addListener(
-            (observable, oldVal, newVal) -> zoom((Double) newVal)
-        );
+        //zoom_slider.valueProperty().addListener(
+        //    (observable, oldVal, newVal) -> zoom((Double) newVal)
+        //);
 
         // Los items se crean aquí sin acción; las acciones se asignan
         // en onMapRightClick() con las coordenadas correctas de cada clic.
@@ -461,7 +468,7 @@ public class FXMLDocumentController implements Initializable {
      *
      * @param event evento de movimiento del ratón
      */
-    @FXML
+    /*@FXML
     private void showPosition(MouseEvent event) {
         mousePosition.setText(
             "sceneX: " + (int) event.getSceneX() +
@@ -469,7 +476,7 @@ public class FXMLDocumentController implements Initializable {
             "         X: " + (int) event.getX() +
             ",          Y: " + (int) event.getY()
         );
-    }
+    }*/
 
     // =========================================================
     //  DIÁLOGO "ACERCA DE"
@@ -581,12 +588,11 @@ public class FXMLDocumentController implements Initializable {
      * @param event evento de acción del menú
      * @throws IOException si hay un problema al obtener la ruta canónica
      */
-    @FXML
     private void cambiarMapa(ActionEvent event) throws IOException {
         FileChooser fc = new FileChooser();
         fc.setInitialDirectory(new File(".")); // Empezamos en el directorio del proyecto
 
-        File imgFile = fc.showOpenDialog(zoom_slider.getScene().getWindow());
+        File imgFile = fc.showOpenDialog(imageViewer.getScene().getWindow());
 
         // FIX 3: showOpenDialog() devuelve null si el usuario cancela la selección
         if (imgFile != null) {
@@ -618,7 +624,23 @@ public class FXMLDocumentController implements Initializable {
         circle.setCenterY(y);
         mapPane.getChildren().add(circle); // Se añade sobre el mapa como cualquier nodo
     }
-
+    
+    
+    @FXML
+    private void zoomInBtnFunction(ActionEvent event){
+        if(zoomV >= 0.5 && zoomV <= 1.5){
+            zoomIn(event);
+            zoom(zoomV);
+        }
+    }
+    
+    @FXML
+    private void zoomOutBtnFunction(ActionEvent event){
+        if(zoomV >= 0.5 && zoomV <= 1.5){
+            zoomOut(event);
+            zoom(zoomV);
+        }
+    }
 
 
 }
