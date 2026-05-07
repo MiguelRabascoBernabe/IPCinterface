@@ -77,7 +77,7 @@ import app.Poi;
  * Implementa {@link Initializable} para poder ejecutar código de
  * inicialización una vez que el FXML ha sido cargado completamente.
  */
-public class FXMLDocumentController implements Initializable {
+public class MainSceneController implements Initializable {
 
     // =========================================================
     //  ESTRUCTURA DE NODOS PARA ZOOM
