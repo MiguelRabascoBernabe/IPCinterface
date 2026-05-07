@@ -25,7 +25,7 @@
  *
  * ============================================================
  */
-package mapademo;
+package controllers;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,6 +66,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import app.Poi;
 
 /**
  * Controlador principal de la aplicación de mapa con POIs.

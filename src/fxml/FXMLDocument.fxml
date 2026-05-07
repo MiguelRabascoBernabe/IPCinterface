@@ -24,9 +24,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mapademo.FXMLDocumentController">
+<BorderPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FXMLDocumentController">
    <center>
-      <VBox prefHeight="556.0" prefWidth="853.0" stylesheets="@../resources/estilos.css, @../resources/styles.css">
+      <VBox prefHeight="556.0" prefWidth="853.0" stylesheets="@../css/estilos.css, @../css/styles.css">
          <children>
             <SplitPane fx:id="splitPane" dividerPositions="0.7784037558685446" VBox.vgrow="ALWAYS">
                <items>
