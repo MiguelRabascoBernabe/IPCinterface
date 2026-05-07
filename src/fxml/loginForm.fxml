@@ -14,8 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mapademo.LoginFormController">
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
@@ -50,28 +49,28 @@
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
                   <TextField fx:id="username" maxWidth="130.0" prefHeight="25.0" prefWidth="130.0" promptText="ExampleUsername" />
-                  <Text fx:id="usernameError" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Text fx:id="usernameError" fill="#d71515" strokeType="OUTSIDE" strokeWidth="0.0" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail address" />
                   <TextField fx:id="email" maxWidth="215.0" prefWidth="215.0" promptText="yourtag@yourdomain.com" />
-                  <Text fx:id="emailError" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Text fx:id="emailError" fill="#d71515" strokeType="OUTSIDE" strokeWidth="0.0" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
                   <PasswordField fx:id="password" maxWidth="215.0" prefHeight="25.0" prefWidth="215.0" promptText="SuperSecretP@ssw0rd" />
-                  <Text fx:id="passwordError" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Text fx:id="passwordError" fill="#d71515" strokeType="OUTSIDE" strokeWidth="0.0" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Birth" />
-                  <DatePicker fx:id="birthdate" promptText="DD/MM/YYYY" />
-                  <Text fx:id="birthdateError" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <DatePicker fx:id="birthdate" prefHeight="26.0" prefWidth="130.0" promptText="DD/MM/YYYY" />
+                  <Text fx:id="birthdateError" fill="#d71515" strokeType="OUTSIDE" strokeWidth="0.0" />
                </children>
             </VBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
@@ -102,8 +101,8 @@
                   </Hyperlink>
                </children>
             </HBox>
-            <Text fx:id="usernameInstructions" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1.0" GridPane.columnIndex="2" />
-            <Text fx:id="passwordInstructions" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Text fx:id="usernameInstructions" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="330.0" GridPane.columnIndex="2" />
+            <Text fx:id="passwordInstructions" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="330.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </children>

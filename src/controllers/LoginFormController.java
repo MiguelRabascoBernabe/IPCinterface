@@ -65,24 +65,42 @@ public class LoginFormController implements Initializable {
 
     @FXML
     private void createAccount(ActionEvent event) {
+        boolean mistake=false;
         if(User.checkEmail(email.getText())&&
            User.checkPassword(password.getText())&&
            User.checkNickName(username.getText())&&
            User.isOlderThan(birthdate.getValue(),12)){
-                app.registerUser();
+                if(mistake){
+                    emailError.setText("");passwordError.setText("");passwordInstructions.setText("");
+                    usernameError.setText("");usernameInstructions.setText("");birthdateError.setText("");
+                    mistake=false;
+                }
             }
-        else{
-            if(!User.checkEmail(email.getText())){emailError.setText("Non-valid E-mail address");}
-            if(!User.checkPassword(password.getText())){passwordError.setText("Non-valid password");
-                                                        passwordInstructions.setText("8 to 20 characters/nAt least one uppercase letter/nAt least one lowercase letter/nOne digit/nOne symbol (!@#$%&*()-+=)");}
-            if(!User.checkNickName(username.getText())){usernameError.setText("Non-valid nickname");
-                                                        usernameInstructions.setText("6 to 15 characters/nLetters, digits, hyphen or underscore only");}
-            if(!User.isOlderThan(birthdate.getValue(),12)){birthdateError.setText("User must be older than 12 years old");}       
+        else{mistake=true;
+            if(!User.checkEmail(email.getText())){
+                if(email.getText().equals("")){emailError.setText("This field is mandatory");}
+                else{emailError.setText("Non-valid E-mail address");}}
+            else{emailError.setText("");}
+            if(!User.checkPassword(password.getText())){
+                if(password.getText().equals("")){passwordError.setText("This field is mandatory");}
+                else{passwordError.setText("Non-valid password");}
+                passwordInstructions.setText("8 to 20 characters\nAt least one uppercase letter\nAt least one lowercase letter\nOne digit\nOne symbol (!@#$%&*()-+=)");}
+            else{passwordError.setText("");passwordInstructions.setText("");}
+            if(!User.checkNickName(username.getText())){
+                if(username.getText().equals("")){usernameError.setText("This field is mandatory");}
+                else{usernameError.setText("Non-valid nickname");}
+                usernameInstructions.setText("6 to 15 characters\nLetters, digits, hyphen or underscore only");}
+            else{usernameError.setText("");usernameInstructions.setText("");}
+            if(!User.isOlderThan(birthdate.getValue(),12)){
+                if(birthdate.getValue()==null){birthdateError.setText("This field is mandatory");}
+                else{birthdateError.setText("User must be older than 12 years old");}
+            }else{birthdateError.setText("");}
         }
     }
 
     @FXML
     private void signInChange(ActionEvent event) {
+        
     }
     
 }
