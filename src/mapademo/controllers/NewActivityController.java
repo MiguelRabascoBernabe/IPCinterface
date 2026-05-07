@@ -1,4 +1,4 @@
-package mapademo.newActivity;
+package mapademo.controllers;
 
 import java.io.File;
 import java.net.URL;
@@ -28,7 +28,7 @@ import upv.ipc.sportlib.SportActivityApp;
  * Implementa {@link Initializable} para poder ejecutar código de
  * inicialización una vez que el FXML ha sido cargado completamente.
  */
-public class FXMLDocumentController implements Initializable {
+public class NewActivityController implements Initializable {
 
     @FXML
     private Button createButton;
