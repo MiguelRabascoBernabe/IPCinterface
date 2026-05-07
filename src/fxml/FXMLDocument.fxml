@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.chart.CategoryAxis?>
@@ -26,7 +27,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FXMLDocumentController">
    <center>
-      <VBox prefHeight="556.0" prefWidth="853.0" stylesheets="@../css/estilos.css, @../css/styles.css">
+      <VBox prefHeight="556.0" prefWidth="853.0">
          <children>
             <SplitPane fx:id="splitPane" dividerPositions="0.7784037558685446" VBox.vgrow="ALWAYS">
                <items>
@@ -108,6 +109,10 @@
                </items>
             </SplitPane>
          </children>
+         <stylesheets>
+            <URL value="@../css/estilos.css" />
+            <URL value="@../css/stylesMainScene.css" />
+         </stylesheets>
       </VBox>
    </center>
    <top>

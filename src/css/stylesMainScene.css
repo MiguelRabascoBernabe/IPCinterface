@@ -7,7 +7,7 @@
 .chart, .scroll-pane, .list-view {
     -fx-background-radius: 15;
     -fx-border-radius: 15;
-    -fx-border-color: #E0E0E0; /* Gris muy clarito */
+    -fx-border-color: #E0E0E0; 
     -fx-border-width: 1;
     -fx-background-color: white;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 4);
@@ -35,9 +35,9 @@
     -fx-border-color: #BDBDBD;
 }
 
-/* Gráfico de elevación ultra limpio (Punto 6.1) */
+/* Grafico */
 .chart-series-line {
-    -fx-stroke: #555555; /* Línea gris oscuro profesional */
+    -fx-stroke: #555555; 
     -fx-stroke-width: 2px;
 }
 
@@ -61,11 +61,6 @@
     -fx-text-fill: #000000;
 }
 
-.azul{
-    -fx-border-width: 2;
-    -fx-border-color: #A9D8D9;
-}
-
 /* Recorte específico para el contenedor del mapa */
 .scroll-pane {
     -fx-background-radius: 15;
@@ -83,11 +78,18 @@
     -fx-background-radius: 15;
 }
 
+/*Redondeados de distintos colores para los botones*/
+.azul{
+    -fx-border-width: 2;
+    -fx-border-color: #A9D8D9;
+}
+
 .morado{
     -fx-border-width: 2;
     -fx-border-color: #C2A9D9;
 }
 
+/*Estilos del zoom*/
 .botonesZoom {
     -fx-background-color: #B3F4F5;
 }
