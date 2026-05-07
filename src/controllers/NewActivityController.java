@@ -1,4 +1,4 @@
-package mapademo.controllers;
+package controllers;
 
 import java.io.File;
 import java.net.URL;
@@ -62,13 +62,13 @@ public class NewActivityController implements Initializable {
     private Button cancelButton;
     
     
-    @FXML
     private void toggleVisibility(boolean visibility){
         // Hide the fields we do not want to show until a file has been submitted
         //mapViewer.setVisible(visibility);
         details.setVisible(visibility);
         title.setVisible(visibility);
         filenameLabel.setVisible(visibility);
+        mapViewer.setVisible(visibility);
         
         if(!visibility){
             createButton.setStyle("-fx-background-color: lightgray;");
@@ -88,14 +88,11 @@ public class NewActivityController implements Initializable {
         uploadButton.setOnMouseClicked(this::handleFileUpload);
     }
     
-    @FXML
     private void handleCancel(MouseEvent event){
         System.exit(0);
     }
     
-    @FXML
     private void handleFileUpload(MouseEvent event){
-        Window win = details.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Upload GPX file");
         fileChooser.getExtensionFilters().addAll(new ExtensionFilter("GPX file", "*.gpx"));
@@ -103,10 +100,10 @@ public class NewActivityController implements Initializable {
         
         if(selectedFile != null){
             // Read
-            SportActivityApp app = SportActivityApp.getInstance();
-            Activity activity = app.importActivity(selectedFile);
-            
-            System.out.println(activity);
+//            SportActivityApp app = SportActivityApp.getInstance();
+//            Activity activity = app.importActivity(selectedFile);
+//            
+//            System.out.println(activity);
             
             mapViewer.setVisible(true);
             mapViewer.setImage(new Image("resources/calderona.jpg"));

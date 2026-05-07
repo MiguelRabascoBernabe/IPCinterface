@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="552.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mapademo.newActivity.FXMLDocumentController">
+<BorderPane prefHeight="552.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.NewActivityController">
    <center>
       <VBox prefHeight="321.0" prefWidth="854.0" stylesheets="@../resources/estilos.css">
          <children>
@@ -40,7 +40,7 @@
                            <children>
                               <ImageView fitHeight="106.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../resources/icons/upload.png" />
+                                    <Image url="@../resources/icons/upload.png" />
                                  </image>
                               </ImageView>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Upload" wrappingWidth="78.13671875">
@@ -342,7 +342,7 @@
                <graphic>
                   <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../resources/icons/check-svgrepo-com.png" />
+                        <Image url="@../resources/icons/check-svgrepo-com.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />

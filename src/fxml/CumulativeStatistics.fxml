@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="204.0" prefWidth="467.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mapademo.newActivity.FXMLDocumentController">
+<BorderPane prefHeight="204.0" prefWidth="467.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CumulativeController">
    <top>
       <VBox prefHeight="61.0" prefWidth="764.0" BorderPane.alignment="CENTER">
          <children>

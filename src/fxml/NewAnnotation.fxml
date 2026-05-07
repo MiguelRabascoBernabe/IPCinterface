@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="175.0" prefWidth="467.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mapademo.newActivity.FXMLDocumentController">
+<BorderPane prefHeight="175.0" prefWidth="467.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.NewAnnotation">
    <top>
       <VBox prefHeight="291.0" prefWidth="467.0" BorderPane.alignment="CENTER">
          <children>
@@ -34,7 +34,7 @@
                         <Insets left="30.0" />
                      </HBox.margin>
                   </Label>
-                  <MenuButton mnemonicParsing="false" prefHeight="31.0" prefWidth="119.0" text="MenuButton">
+                  <MenuButton mnemonicParsing="false" prefHeight="31.0" prefWidth="119.0" text="...">
                      <items>
                           <MenuItem text="Point" />
                           <MenuItem text="Text" />
@@ -82,16 +82,16 @@
                      <graphic>
                         <ImageView fitHeight="23.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../resources/icons/cross.png" />
+                              <Image url="@../resources/icons/cross.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
                   <Button minWidth="34.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="34.0" style="-fx-background-color: #21ad2f;">
                      <graphic>
-                        <ImageView fitHeight="37.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="22.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../resources/icons/tick.png" />
+                              <Image url="@../resources/icons/tick.png" />
                            </image>
                         </ImageView>
                      </graphic>
