@@ -25,8 +25,9 @@
  *
  * ============================================================
  */
-package mapademo;
+package controllers;
 
+import app.Poi;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;

@@ -8,9 +8,11 @@
         </group>
         <group>
             <file>file:/C:/Users/pipec/OneDrive%20-%20UPV/Poli/IPC/Proyecto/ipcinterface/src/mapademo/FXMLDocumentController.java</file>
-            <file>file:/C:/Users/pipec/OneDrive%20-%20UPV/Poli/IPC/Proyecto/ipcinterface/src/mapademo/MapaDemoApp.java</file>
-            <file>file:/C:/Users/pipec/OneDrive%20-%20UPV/Poli/IPC/Proyecto/ipcinterface/src/mapademo/Poi.java</file>
-            <file>file:/C:/Users/pipec/OneDrive%20-%20UPV/Poli/IPC/Proyecto/ipcinterface/src/mapademo/FXMLDocument.fxml</file>
+            <file>file:/C:/Users/pipec/OneDrive%20-%20UPV/Poli/IPC/Proyecto/ipcinterface/src/controllers/MapaDemoApp.java</file>
+            <file>file:/C:/Users/pipec/OneDrive%20-%20UPV/Poli/IPC/Proyecto/ipcinterface/src/controllers/Poi.java</file>
+            <file>file:/C:/Users/pipec/OneDrive%20-%20UPV/Poli/IPC/Proyecto/ipcinterface/src/mapademo/FXML/FXMLDocument.fxml</file>
+            <file>file:/C:/Users/pipec/OneDrive%20-%20UPV/Poli/IPC/Proyecto/ipcinterface/src/mapademo/FXML/user.fxml</file>
+            <file>file:/C:/Users/pipec/OneDrive%20-%20UPV/Poli/IPC/Proyecto/ipcinterface/src/controllers/UserController.java</file>
         </group>
     </open-files>
 </project-private>
