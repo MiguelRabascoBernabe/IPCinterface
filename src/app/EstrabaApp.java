@@ -20,7 +20,7 @@ public class EstrabaApp extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("../fxml/MainSceneFXML.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainSceneFXML.fxml"));
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/logo.png")));
         Scene scene = new Scene(root);
         stage.setTitle("Demo mapas - IPC");
