@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainSceneController">
+   <center>
+      <VBox prefHeight="556.0" prefWidth="853.0">
+         <children>
+            <SplitPane fx:id="splitPane" dividerPositions="0.7784037558685446" VBox.vgrow="ALWAYS">
+               <items>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <LineChart prefHeight="198.0" prefWidth="659.0" styleClass="azul">
+                          <xAxis>
+                            <CategoryAxis label="Distance" prefHeight="20.0" prefWidth="589.0" side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis label="Height" minorTickVisible="false" side="LEFT" tickMarkVisible="false" />
+                          </yAxis>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </LineChart>
+                        <AnchorPane prefHeight="183.0" prefWidth="652.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <ScrollPane fx:id="map_scrollpane" fitToHeight="true" hbarPolicy="ALWAYS" pannable="true" prefHeight="358.0" prefWidth="659.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <content>
+                                    <Group fx:id="contentGroup">
+                                       <children>
+                                          <Group fx:id="zoomGroup">
+                                             <children>
+                                                <Pane fx:id="mapPane" prefHeight="200.0" prefWidth="200.0">
+                                                   <children>
+                                                      <ImageView fx:id="imageViewer" fitHeight="1039.0" fitWidth="1718.0" pickOnBounds="true">
+                                                         <image>
+                                                            <Image url="@../resources/upv.jpg" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </children>
+                                                </Pane>
+                                             </children>
+                                          </Group>
+                                       </children>
+                                    </Group>
+                                 </content>
+                              </ScrollPane>
+                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#zoomInBtnFunction" prefHeight="26.0" prefWidth="26.0" styleClass="button-zoom" text="+" />
+                                    <Button mnemonicParsing="false" onAction="#zoomOutBtnFunction" prefHeight="26.0" prefWidth="25.0" text="-" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="10.0" top="10.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="66.0" prefWidth="186.0" text="Activities">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="16.0" />
+                           </font></Button>
+                        <Label alignment="TOP_CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="189.0" text="Activity X" textAlignment="CENTER" textFill="#25468c">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <ListView fx:id="map_listview" onMouseClicked="#listClicked" prefHeight="488.0" prefWidth="185.0" styleClass="azul" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin></ListView>
+                     </children>
+                  </VBox>
+               </items>
+            </SplitPane>
+         </children>
+         <stylesheets>
+            <URL value="@../css/estilos.css" />
+            <URL value="@../css/stylesMainScene.css" />
+         </stylesheets>
+      </VBox>
+   </center>
+   <top>
+      <HBox alignment="CENTER_RIGHT" fillHeight="false" prefHeight="37.0" prefWidth="854.0" spacing="5.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+            <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Estraba" wrappingWidth="85.13671875">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin></Text>
+               <Region HBox.hgrow="ALWAYS" />
+            <MenuBar>
+              <menus>
+            <Menu mnemonicParsing="false" text="User">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#about" text="View/edit" />
+                  <MenuItem mnemonicParsing="false" onAction="#about" text="Session history" />
+                  <MenuItem mnemonicParsing="false" onAction="#about" text="Sign Out" />
+               </items>
+            </Menu>
+         </menus>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </MenuBar>
+            </children>
+         </HBox>
+   </top>
+</BorderPane>
