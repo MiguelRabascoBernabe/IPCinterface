@@ -67,6 +67,15 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import app.Poi;
+import java.time.LocalDate;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
+import upv.ipc.sportlib.*;
 
 /**
  * Controlador principal de la aplicación de mapa con POIs.
@@ -98,7 +107,9 @@ public class MainSceneController implements Initializable {
     //               └─ Circle    ← anotaciones circulares
     //
     // =========================================================
-
+    
+    SportActivityApp app = SportActivityApp.getInstance();
+    
     /** Group que se escala para aplicar el zoom. */
     @FXML
     private Group zoomGroup;
@@ -162,6 +173,10 @@ public class MainSceneController implements Initializable {
     private ImageView imageViewer;
     @FXML
     private Group contentGroup;
+    @FXML
+    private MenuItem viewEditBtn;
+    @FXML
+    private Button activitiesBtn;
  
 
     // =========================================================
@@ -188,6 +203,8 @@ public class MainSceneController implements Initializable {
         double sliderVal = zoomV; //zoom_slider.getValue();
         //zoom_slider.setValue(sliderVal - 0.1);
         zoomV = zoomV -0.1;
+        //System.out.println(app.registerUser("testing","test@tung.sahur", "Ul12345$", LocalDate.MIN, "/src/resources/logo.png"));
+        //System.out.println(app.login("testing", "Ul12345$"));
     }
 
     /**
@@ -642,6 +659,26 @@ public class MainSceneController implements Initializable {
             zoom(zoomV);
         }
     }
+    
+    @FXML
+    private void openViewEdit(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/user.fxml"));
+        Parent root = loader.load();
 
+        Stage stage = new Stage();
+        stage.setTitle("View-edit");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
 
+    @FXML
+    private void openActivities(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NewActivity.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        stage.setTitle("Activities");
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+    }
 }
