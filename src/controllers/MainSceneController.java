@@ -654,7 +654,7 @@ public class MainSceneController implements Initializable {
     
     @FXML
     private void openViewEdit(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("user.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/user.fxml"));
         Parent root = loader.load();
 
         Stage stage = new Stage();
