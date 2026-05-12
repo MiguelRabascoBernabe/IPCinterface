@@ -19,7 +19,7 @@
 }
 
 /* Botones minimalistas: fondo blanco con borde fino */
-.button {
+.button, .toggle-button {
     -fx-background-color: white;
     -fx-background-radius: 20;
     -fx-border-radius: 20;
@@ -30,9 +30,13 @@
     -fx-cursor: hand;
 }
 
-.button:hover {
+.button:hover, .toggle-button:selected {
     -fx-background-color: #F1F7F0;
     -fx-border-color: #BDBDBD;
+}
+
+.buttonActivities{
+    -fx-font-size: 16px;
 }
 
 /* Grafico */

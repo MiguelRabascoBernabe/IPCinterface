@@ -7,11 +7,11 @@
             <file>file:/C:/Users/jsole/Desktop/2026/IPC/entrega/FINAL/POI_UPV/src/poiupv/FXMLDocumentController.java</file>
         </group>
         <group>
-            <file>file:/C:/Users/victo/OneDrive/Documents/Politecnico/IPC/ipcinterface/src/mapademo/FXMLDocumentController.java</file>
-            <file>file:/C:/Users/victo/OneDrive/Documents/Politecnico/IPC/ipcinterface/src/mapademo/FXMLDocument.fxml</file>
-            <file>file:/C:/Users/victo/OneDrive/Documents/Politecnico/IPC/ipcinterface/src/mapademo/MapaDemoApp.java</file>
-            <file>file:/C:/Users/victo/OneDrive/Documents/Politecnico/IPC/ipcinterface/src/mapademo/Poi.java</file>
-            <file>file:/C:/Users/victo/OneDrive/Documents/Politecnico/IPC/ipcinterface/src/resources/styles.css</file>
+            <file>file:/C:/Users/victo/OneDrive/Documents/Politecnico/IPC/ipcinterface/src/controllers/MainSceneController.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documents/Politecnico/IPC/ipcinterface/src/fxml/MainSceneFXML.fxml</file>
+            <file>file:/C:/Users/victo/OneDrive/Documents/Politecnico/IPC/ipcinterface/src/app/EstrabaApp.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documents/Politecnico/IPC/ipcinterface/src/app/Poi.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documents/Politecnico/IPC/ipcinterface/src/css/stylesMainScene.css</file>
         </group>
     </open-files>
 </project-private>

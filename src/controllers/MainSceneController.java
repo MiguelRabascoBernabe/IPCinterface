@@ -67,6 +67,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import app.Poi;
+import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 
 /**
  * Controlador principal de la aplicación de mapa con POIs.
@@ -162,6 +164,10 @@ public class MainSceneController implements Initializable {
     private ImageView imageViewer;
     @FXML
     private Group contentGroup;
+    @FXML
+    private ToggleButton speedBtn;
+    
+    private boolean speedMode = false;
  
 
     // =========================================================
@@ -643,5 +649,11 @@ public class MainSceneController implements Initializable {
         }
     }
 
+    @FXML
+    private void speedBtnFunction(ActionEvent event) {
+        speedMode = !speedMode;
+    }
+
+    
 
 }

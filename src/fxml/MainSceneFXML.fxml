@@ -14,6 +14,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -76,6 +77,7 @@
                                     <Insets left="10.0" top="10.0" />
                                  </padding>
                               </HBox>
+                              <ToggleButton fx:id="speedBtn" mnemonicParsing="false" onAction="#speedBtnFunction" text="Speed" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
@@ -85,7 +87,7 @@
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="66.0" prefWidth="186.0" text="Activities">
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="66.0" prefWidth="186.0" styleClass="buttonActivities" text="Activities">
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
