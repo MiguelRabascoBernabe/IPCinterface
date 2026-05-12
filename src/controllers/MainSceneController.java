@@ -452,7 +452,7 @@ public class MainSceneController implements Initializable {
 
         // ── Carga del mapa inicial ─────────────────────────────────────
         // El fichero se busca relativo al directorio de trabajo del proyecto.
-        buildMap(new File("maps/upv.jpg"));
+        buildMap(new File("src/resources/upv.jpg"));
     }
 
     // =========================================================

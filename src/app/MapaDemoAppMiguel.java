@@ -16,11 +16,11 @@ import javafx.stage.Stage;
  *
  * @author jose
  */
-public class MapaDemoApp extends Application {
+public class MapaDemoAppMiguel extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/loginForm.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/NewAnnotation.fxml"));
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/logo.png")));
         Scene scene = new Scene(root);
         stage.setTitle("Demo mapas - IPC");

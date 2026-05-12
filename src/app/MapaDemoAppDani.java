@@ -16,7 +16,7 @@ import javafx.stage.Stage;
  *
  * @author jose
  */
-public class MapaDemoApp extends Application {
+public class MapaDemoAppDani extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
