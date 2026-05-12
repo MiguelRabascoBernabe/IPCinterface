@@ -67,6 +67,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import app.Poi;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 /**
  * Controlador principal de la aplicación de mapa con POIs.
@@ -162,6 +169,8 @@ public class MainSceneController implements Initializable {
     private ImageView imageViewer;
     @FXML
     private Group contentGroup;
+    @FXML
+    private MenuItem viewEditBtn;
  
 
     // =========================================================
@@ -452,7 +461,7 @@ public class MainSceneController implements Initializable {
 
         // ── Carga del mapa inicial ─────────────────────────────────────
         // El fichero se busca relativo al directorio de trabajo del proyecto.
-        buildMap(new File("maps/upv.jpg"));
+        buildMap(new File("src/resources/upv.jpg"));
     }
 
     // =========================================================
@@ -641,6 +650,17 @@ public class MainSceneController implements Initializable {
             zoomOut(event);
             zoom(zoomV);
         }
+    }
+    
+    @FXML
+    private void openViewEdit(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("user.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        stage.setTitle("View-edit");
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
 
