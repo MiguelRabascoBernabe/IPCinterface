@@ -34,12 +34,12 @@
                         <Insets left="30.0" />
                      </HBox.margin>
                   </Label>
-                  <MenuButton mnemonicParsing="false" prefHeight="31.0" prefWidth="119.0" text="...">
+                  <MenuButton fx:id="visibleSelectedOption" mnemonicParsing="false" prefHeight="31.0" prefWidth="119.0" text="...">
                      <items>
-                          <MenuItem text="Point" />
-                          <MenuItem text="Text" />
-                          <MenuItem text="Line" />
-                        <MenuItem text="Circle" />
+                          <MenuItem fx:id="pointSelection" text="Point" />
+                          <MenuItem fx:id="textSelection" text="Text" />
+                          <MenuItem fx:id="lineSelection" text="Line" />
+                        <MenuItem fx:id="circleSelection" text="Circle" />
                      </items>
                      <HBox.margin>
                         <Insets left="20.0" />
@@ -57,7 +57,7 @@
                         <Insets left="30.0" />
                      </padding>
                   </Label>
-                  <TextField prefHeight="23.0" prefWidth="275.0" promptText="Dangerous sector" />
+                  <TextField fx:id="annotationText" prefHeight="23.0" prefWidth="275.0" promptText="Dangerous sector" />
                </children>
                <VBox.margin>
                   <Insets top="20.0" />
@@ -70,12 +70,12 @@
                         <Insets left="30.0" />
                      </padding>
                   </Label>
-                  <ColorPicker prefHeight="26.0" prefWidth="48.0" />
+                  <ColorPicker fx:id="colorSelection" prefHeight="26.0" prefWidth="48.0" />
                </children>
             </HBox>
             <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button minWidth="36.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="36.0" style="-fx-background-color: #f05959;">
+                  <Button fx:id="cancelButton" minWidth="36.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="36.0" style="-fx-background-color: #f05959;">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>
@@ -87,7 +87,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button minWidth="34.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="34.0" style="-fx-background-color: #21ad2f;">
+                  <Button fx:id="acceptButton" minWidth="34.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="34.0" style="-fx-background-color: #21ad2f;">
                      <graphic>
                         <ImageView fitHeight="22.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                            <image>

@@ -29,54 +29,22 @@ import upv.ipc.sportlib.SportActivityApp;
  * inicialización una vez que el FXML ha sido cargado completamente.
  */
 public class NewActivityController implements Initializable {
-
-    @FXML
-    private Button createButton;
-    @FXML
-    private Button uploadButton;
     @FXML
     private Text filenameLabel;
     @FXML
-    private ImageView mapViewer;
-    @FXML
-    private Text distance;
-    @FXML
-    private Text duration;
-    @FXML
-    private Text avgSpeed;
-    @FXML
-    private Text avgPace;
-    @FXML
-    private Text elevationPositive;
-    @FXML
-    private Text elevationNegative;
-    @FXML
-    private Text maxAlt;
-    @FXML
-    private Text minAlt;
-    @FXML
-    private VBox details;
-    @FXML
-    private Text title;
+    private Button uploadButton;
     @FXML
     private Button cancelButton;
+    @FXML
+    private Button createButton;
+    
+    SportActivityApp context;
+    File fileToUpload;
     
     
     private void toggleVisibility(boolean visibility){
         // Hide the fields we do not want to show until a file has been submitted
-        //mapViewer.setVisible(visibility);
-        details.setVisible(visibility);
-        title.setVisible(visibility);
         filenameLabel.setVisible(visibility);
-        mapViewer.setVisible(visibility);
-        
-        if(!visibility){
-            createButton.setStyle("-fx-background-color: lightgray;");
-            createButton.setCursor(Cursor.DEFAULT);
-        } else {
-            createButton.setStyle("-fx-background-color: #008000;");
-            createButton.setCursor(Cursor.HAND);
-        }
     }
     
     @Override
@@ -84,8 +52,17 @@ public class NewActivityController implements Initializable {
         toggleVisibility(false);
         
         cancelButton.setOnMouseClicked(this::handleCancel);
-        
         uploadButton.setOnMouseClicked(this::handleFileUpload);
+        createButton.setOnMouseClicked(this::handleDBActivityRegister);
+        createButton.setDisable(true);
+    }
+    
+    private void handleDBActivityRegister(MouseEvent event){
+        if(createButton.disableProperty().get() == true) return;
+        
+        context.importActivity(fileToUpload);
+        System.out.println("File uploaded!");
+        System.exit(0);
     }
     
     private void handleCancel(MouseEvent event){
@@ -96,24 +73,19 @@ public class NewActivityController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Upload GPX file");
         fileChooser.getExtensionFilters().addAll(new ExtensionFilter("GPX file", "*.gpx"));
-        File selectedFile = fileChooser.showOpenDialog(null);
+        fileToUpload = fileChooser.showOpenDialog(null);
         
-        if(selectedFile != null){
-            // Read
-//            SportActivityApp app = SportActivityApp.getInstance();
-//            Activity activity = app.importActivity(selectedFile);
-//            
-//            System.out.println(activity);
+        if(fileToUpload != null){
+            context = SportActivityApp.getInstance();
+            // placeholder login in order to test the functionalities
+            context.login("testing", "Ul12345$");
             
-            mapViewer.setVisible(true);
-            mapViewer.setImage(new Image("resources/calderona.jpg"));
-            filenameLabel.setText(selectedFile.getName());
+            createButton.setDisable(false);
+            createButton.setCursor(Cursor.HAND);
+            
+            System.out.println(context.getUserActivities());
+            filenameLabel.setText(fileToUpload.getName());
             toggleVisibility(true);
         }
-        //System.out.println("HOLA");
-    }
-
-    @FXML
-    private void about(ActionEvent event) {
     }
 }
