@@ -203,8 +203,6 @@ public class MainSceneController implements Initializable {
         double sliderVal = zoomV; //zoom_slider.getValue();
         //zoom_slider.setValue(sliderVal - 0.1);
         zoomV = zoomV -0.1;
-        //System.out.println(app.registerUser("testing","test@tung.sahur", "Ul12345$", LocalDate.MIN, "/src/resources/logo.png"));
-        //System.out.println(app.login("testing", "Ul12345$"));
     }
 
     /**
@@ -681,4 +679,17 @@ public class MainSceneController implements Initializable {
         stage.setScene(new Scene(root));
         stage.showAndWait();
     }
+
+    @FXML
+    private void openAddMap(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/addMap.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        stage.setTitle("Add map");
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+    }
+    
+    
 }
