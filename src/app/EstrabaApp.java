@@ -11,13 +11,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
+import java.time.LocalDate;
 /**
  *
  * @author jose
  */
 public class EstrabaApp extends Application {
-    
+    public static Context c=new Context();
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainSceneFXML.fxml"));
@@ -34,5 +34,5 @@ public class EstrabaApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+    public static Context getContext(){return c;}
 }
