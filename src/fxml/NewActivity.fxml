@@ -16,16 +16,16 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="206.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.NewActivityController">
+<BorderPane prefHeight="268.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.NewActivityController">
    <center>
       <VBox prefHeight="244.0" prefWidth="854.0" stylesheets="@../resources/estilos.css">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Register new activity" textAlignment="RIGHT" wrappingWidth="281.13671875">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="newTitle" text="Register new activity" textAlignment="RIGHT" wrappingWidth="281.13671875">
                <font>
                   <Font size="25.0" />
                </font>
             </Text>
-            <Region prefHeight="13.0" prefWidth="854.0" />
+            <Region prefHeight="41.0" prefWidth="854.0" />
             <HBox prefHeight="49.0" prefWidth="854.0">
                <children>
                   <Region prefHeight="53.0" prefWidth="55.0" />
@@ -36,14 +36,14 @@
                   </Label>
                   <Button fx:id="uploadButton" mnemonicParsing="false" prefHeight="41.0" prefWidth="88.0">
                      <graphic>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
+                        <HBox prefHeight="100.0" prefWidth="200.0" styleClass="uploadButton">
                            <children>
                               <ImageView fitHeight="106.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resources/icons/upload.png" />
                                  </image>
                               </ImageView>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Upload" wrappingWidth="78.13671875">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="uploadLabel" text="Upload" wrappingWidth="78.13671875">
                                  <font>
                                     <Font size="23.0" />
                                  </font>
@@ -55,7 +55,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
                   <Region prefHeight="47.0" prefWidth="37.0" />
-                  <Text fx:id="filenameLabel" fill="#9a9a9a" strokeType="OUTSIDE" strokeWidth="0.0" text="UPVTour.gpx" wrappingWidth="369.13671875">
+                  <Text fx:id="filenameLabel" fill="#9a9a9a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="placeholderFile" text="UPVTour.gpx" wrappingWidth="230.13671875">
                      <font>
                         <Font size="11.0" />
                      </font>

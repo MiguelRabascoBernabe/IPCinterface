@@ -1,0 +1,45 @@
+* {
+    -fx-background-color: #b0b0b0;
+}
+
+.newTitle {
+    -fx-fill: black;
+    -fx-padding: 40px;
+    /*-fx-*/
+}
+
+.uploadButton {
+    -fx-alignment: center;
+    -fx-background-color: linear-gradient(to bottom, #464d55, #25292e);
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-width: 0;
+    -fx-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-family: "Segoe UI", "Roboto", "Arial";
+    -fx-pref-height: 52px;
+    -fx-padding: 10;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 20, 0.2, 0, 3);
+}
+
+.uploadButton:hover {
+    -fx-opacity: 0.85;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.22), 8, 0.2, 0, 2);
+}
+
+.uploadButton:pressed {
+    -fx-background-insets: 1;
+}
+
+.uploadButton:focused {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 3, 0.5, 0, 0);
+}
+
+.uploadButton .uploadLabel {
+    -fx-fill: #c0c0c0;
+}
+
+.placeholderFile {
+    -fx-fill: #171719;
+}

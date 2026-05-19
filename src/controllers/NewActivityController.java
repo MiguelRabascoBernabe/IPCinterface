@@ -19,15 +19,6 @@ import javafx.stage.Window;
 import upv.ipc.sportlib.Activity;
 import upv.ipc.sportlib.SportActivityApp;
 
-/**
- * Controller that handles all the funcionalities of creating a new activity.
- *
- * La anotación @FXML conecta automáticamente los campos de esta clase
- * con los elementos declarados en el fichero FXML mediante su atributo fx:id.
- *
- * Implementa {@link Initializable} para poder ejecutar código de
- * inicialización una vez que el FXML ha sido cargado completamente.
- */
 public class NewActivityController implements Initializable {
     @FXML
     private Text filenameLabel;

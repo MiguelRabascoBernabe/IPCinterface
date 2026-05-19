@@ -19,7 +19,7 @@
    <top>
       <VBox prefHeight="291.0" prefWidth="467.0" BorderPane.alignment="CENTER">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New annotation" wrappingWidth="276.8033752441406">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="New annotation" wrappingWidth="276.8033752441406">
                <font>
                   <Font size="18.0" />
                </font>
@@ -27,7 +27,7 @@
                   <Insets left="20.0" top="10.0" />
                </VBox.margin>
             </Text>
-            <HBox prefHeight="36.0" prefWidth="467.0">
+            <HBox prefHeight="36.0" prefWidth="467.0" styleClass="form-row">
                <children>
                   <Label prefHeight="118.0" prefWidth="41.0" text="Type:">
                      <HBox.margin>
@@ -50,7 +50,7 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </HBox>
-            <HBox prefHeight="65.0" prefWidth="467.0">
+            <HBox prefHeight="65.0" prefWidth="467.0" styleClass="form-row">
                <children>
                   <Label prefHeight="26.0" prefWidth="65.0" text="Text:">
                      <padding>
@@ -63,7 +63,7 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </HBox>
-            <HBox prefHeight="70.0" prefWidth="467.0">
+            <HBox prefHeight="70.0" prefWidth="467.0" styleClass="form-row">
                <children>
                   <Label prefHeight="26.0" prefWidth="83.0" text="Colour:">
                      <padding>
@@ -75,7 +75,7 @@
             </HBox>
             <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="cancelButton" minWidth="36.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="36.0" style="-fx-background-color: #f05959;">
+                  <Button fx:id="cancelButton" minWidth="36.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="36.0" style="-fx-background-color: #f05959;" styleClass="cancel-button">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>
@@ -87,7 +87,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="acceptButton" minWidth="34.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="34.0" style="-fx-background-color: #21ad2f;">
+                  <Button fx:id="acceptButton" minWidth="34.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="34.0" style="-fx-background-color: #21ad2f;" styleClass="accept-button">
                      <graphic>
                         <ImageView fitHeight="22.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                            <image>

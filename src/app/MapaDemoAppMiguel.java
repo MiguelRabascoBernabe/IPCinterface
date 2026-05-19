@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package app;
 
 import javafx.application.Application;
@@ -12,26 +7,26 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-/**
- *
- * @author jose
- */
 public class MapaDemoAppMiguel extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-//        Parent root = FXMLLoader.load(getClass().getResource("/fxml/NewAnnotation.fxml"));
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/NewActivity.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/newAnnotation.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getResource("/fxml/NewActivity.fxml"));
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/logo.png")));
         Scene scene = new Scene(root);
+//        String css = this.getClass().getResource("/css/newActivityStyles.css").toExternalForm();
+//        scene.getStylesheets().add(this.getClass().getResource("/css/statisticsStyles.css").toExternalForm());
+        scene.getStylesheets().add(
+            getClass().getResource("/css/newAnnotationStyles.css").toExternalForm()
+        );
+//        System.out.println(css);
+//        scene.getStylesheets().add(css);
         stage.setTitle("Demo mapas - IPC");
         stage.setScene(scene);
         stage.show();
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         launch(args);
     }
