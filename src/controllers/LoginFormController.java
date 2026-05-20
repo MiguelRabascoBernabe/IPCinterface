@@ -52,13 +52,21 @@ public class LoginFormController implements Initializable {
     private Button createButton;
     @FXML
     private Hyperlink signInGo;
-
-    /**
-     * Initializes the controller class.
-     */
-    @Override
+    String userChar = "abcdefghijklmnopqrstuvwxyz0123456789-_";
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        username.textProperty().addListener((obs, o, n)->{
+            int w=n.length();
+            if(w>0){
+            if(!checkLetter(n.charAt(w-1))){
+                username.setText(o);
+                usernameInstructions.setText("6 to 15 characters\nLetters, digits, hyphen or underscore only");
+            }
+            else if(w>15){username.setText(o);
+                usernameInstructions.setText("6 to 15 characters\nLetters, digits, hyphen or underscore only");
+            }
+            else {usernameInstructions.setText("");}
+            }
+        });
     }    
 
     @FXML
@@ -120,5 +128,7 @@ public class LoginFormController implements Initializable {
         ex.printStackTrace();
         }
     }
-    
+    private boolean checkLetter(char c){
+        return userChar.contains(""+c);
+    }
 }
