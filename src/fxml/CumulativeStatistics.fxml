@@ -8,9 +8,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="279.0" prefWidth="467.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CumulativeController">
+<BorderPane prefHeight="460.0" prefWidth="804.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CumulativeController">
    <top>
-      <VBox prefHeight="280.0" prefWidth="467.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="462.0" prefWidth="804.0" BorderPane.alignment="CENTER">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Cumulative statistics" wrappingWidth="276.8033752441406">
                <font>
@@ -20,72 +20,96 @@
                   <Insets left="20.0" top="10.0" />
                </VBox.margin>
             </Text>
-            <HBox prefHeight="0.0" prefWidth="467.0">
+            <HBox prefHeight="16.0" prefWidth="804.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Month:" wrappingWidth="53.803375244140625">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Month:" wrappingWidth="86.80337524414062">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
                      <font>
-                        <Font size="14.0" />
+                        <Font size="24.0" />
                      </font>
                   </Text>
-                  <DatePicker />
+                  <DatePicker prefHeight="35.0" prefWidth="214.0" />
                </children>
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
             </HBox>
-            <HBox prefHeight="51.0" prefWidth="467.0" styleClass="stat-row">
+            <HBox prefHeight="124.0" prefWidth="764.0" styleClass="stat-row">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="stat-label" text="Total time:" />
-                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="stat-value" text="32h 33min" wrappingWidth="62.63671875">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="stat-label" text="Total time:">
+                     <font>
+                        <Font size="24.0" />
+                     </font></Text>
+                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="stat-value" text="32h 33min" wrappingWidth="114.63671875">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
+                     <font>
+                        <Font size="24.0" />
+                     </font>
                   </Text>
                </children>
                <VBox.margin>
-                  <Insets left="20.0" top="30.0" />
+                  <Insets left="20.0" right="20.0" top="30.0" />
                </VBox.margin>
             </HBox>
-            <HBox prefHeight="51.0" prefWidth="467.0" styleClass="stat-row">
+            <HBox prefHeight="145.0" prefWidth="764.0" styleClass="stat-row">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="stat-label" text="Acumulated distance:" />
-                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="stat-value" text="33km 33min" wrappingWidth="116.13671875">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="stat-label" text="Acumulated distance:">
+                     <font>
+                        <Font size="24.0" />
+                     </font></Text>
+                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="stat-value" text="33km 33min" wrappingWidth="154.13671875">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
+                     <font>
+                        <Font size="24.0" />
+                     </font>
                   </Text>
                </children>
                <VBox.margin>
-                  <Insets left="20.0" top="5.0" />
+                  <Insets left="20.0" right="20.0" top="5.0" />
                </VBox.margin>
             </HBox>
-            <HBox prefHeight="51.0" prefWidth="467.0" styleClass="stat-row">
+            <HBox prefHeight="140.0" prefWidth="764.0" styleClass="stat-row">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="stat-label" text="Ascended metres:" />
-                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="stat-value" text="3333m" wrappingWidth="62.63671875">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="stat-label" text="Ascended metres:">
+                     <font>
+                        <Font size="24.0" />
+                     </font></Text>
+                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="stat-value" text="3333m" wrappingWidth="98.63671875">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
+                     <font>
+                        <Font size="24.0" />
+                     </font>
                   </Text>
                </children>
                <VBox.margin>
-                  <Insets left="20.0" top="5.0" />
+                  <Insets left="20.0" right="20.0" top="5.0" />
                </VBox.margin>
             </HBox>
-            <HBox prefHeight="51.0" prefWidth="467.0" styleClass="stat-row">
+            <HBox prefHeight="150.0" prefWidth="764.0" styleClass="stat-row">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="stat-label" text="Descended metres:" />
-                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="stat-value" text="3333m" wrappingWidth="62.63671875">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="stat-label" text="Descended metres:">
+                     <font>
+                        <Font size="24.0" />
+                     </font></Text>
+                  <Text fill="#868686" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="stat-value" text="3333m" wrappingWidth="87.63671875">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
+                     <font>
+                        <Font size="24.0" />
+                     </font>
                   </Text>
                </children>
                <VBox.margin>
-                  <Insets left="20.0" top="5.0" />
+                  <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
                </VBox.margin>
             </HBox>
          </children>

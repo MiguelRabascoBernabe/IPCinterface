@@ -29,14 +29,14 @@
             <HBox prefHeight="49.0" prefWidth="854.0">
                <children>
                   <Region prefHeight="53.0" prefWidth="55.0" />
-                  <Label prefHeight="41.0" prefWidth="137.0" text="GPX file:">
+                  <Label prefHeight="159.0" prefWidth="137.0" styleClass="label-upload" text="GPX file:">
                      <font>
                         <Font size="21.0" />
                      </font>
                   </Label>
-                  <Button fx:id="uploadButton" mnemonicParsing="false" prefHeight="41.0" prefWidth="88.0">
+                  <Button fx:id="uploadButton" alignment="CENTER" mnemonicParsing="false" prefHeight="154.0" prefWidth="126.0" styleClass="uploadButton">
                      <graphic>
-                        <HBox prefHeight="100.0" prefWidth="200.0" styleClass="uploadButton">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <ImageView fitHeight="106.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -113,7 +113,7 @@
             <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
          </BorderPane.margin>
          <children>
-            <Button fx:id="cancelButton" mnemonicParsing="false" style="-fx-background-color: #c2c2c2;" text="Cancel">
+            <Button fx:id="cancelButton" mnemonicParsing="false" style="-fx-background-color: #c2c2c2;" styleClass="cancelButton" text="Cancel">
                <HBox.margin>
                   <Insets right="40.0" />
                </HBox.margin>
@@ -124,7 +124,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="createButton" mnemonicParsing="false" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: #008000;" text="Create" textFill="WHITE">
+            <Button fx:id="createButton" mnemonicParsing="false" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: #008000;" styleClass="createButton" text="Create" textFill="WHITE">
                <HBox.margin>
                   <Insets right="30.0" />
                </HBox.margin>
