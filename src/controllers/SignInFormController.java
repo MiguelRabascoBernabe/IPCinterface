@@ -4,6 +4,7 @@
  */
 package controllers;
 
+import app.MapaDemoAppDani;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -76,7 +77,8 @@ public class SignInFormController implements Initializable {
 
     @FXML
     private void signInGo(ActionEvent event) {
-        
+        if(MapaDemoAppDani.getContext().getApp().login(username.getText(),password.getText())){}
+        else{passwordError.setText("Username and password do not match");}
     }
     
 }
