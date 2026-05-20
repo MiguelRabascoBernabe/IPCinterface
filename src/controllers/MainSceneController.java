@@ -68,10 +68,14 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import app.Poi;
 import java.time.LocalDate;
+import java.util.List;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -113,7 +117,7 @@ public class MainSceneController implements Initializable {
     /** Group que se escala para aplicar el zoom. */
     @FXML
     private Group zoomGroup;
-
+   
     /**
      * Pane que actúa como lienzo del mapa.
      * Contiene la imagen de fondo y todos los elementos superpuestos
@@ -177,6 +181,8 @@ public class MainSceneController implements Initializable {
     private MenuItem viewEditBtn;
     @FXML
     private Button activitiesBtn;
+    @FXML
+    private LineChart<Number, Number> graficaAlturas;
  
 
     // =========================================================
@@ -203,8 +209,6 @@ public class MainSceneController implements Initializable {
         double sliderVal = zoomV; //zoom_slider.getValue();
         //zoom_slider.setValue(sliderVal - 0.1);
         zoomV = zoomV -0.1;
-        //System.out.println(app.registerUser("testing","test@tung.sahur", "Ul12345$", LocalDate.MIN, "/src/resources/logo.png"));
-        //System.out.println(app.login("testing", "Ul12345$"));
     }
 
     /**
@@ -470,8 +474,35 @@ public class MainSceneController implements Initializable {
         // ── Carga del mapa inicial ─────────────────────────────────────
         // El fichero se busca relativo al directorio de trabajo del proyecto.
         buildMap(new File("src/resources/upv.jpg"));
+        
+        //Parte provisional para empezar lo de la grafica de altura
+        //Necesita linkearse con la funcionalidad de seleccionar actividad, de momento cogemos la primera actividad
+        Activity act = app.getAllActivities().get(0);
+        cargarDatosGrafico(act);
     }
+    
+    public void cargarDatosGrafico(Activity actividad) {
+        graficaAlturas.getData().clear();
+        graficaAlturas.setLegendVisible(false);
+        graficaAlturas.setCreateSymbols(false);
 
+        XYChart.Series<Number, Number> series = new XYChart.Series<>();
+        List<TrackPoint> puntos = actividad.getTrackPoints();
+        double distanciaAcumulada = 0.0;
+
+        for (int i = 0; i < puntos.size(); i++) {
+            TrackPoint puntoActual = puntos.get(i);
+
+            if (i > 0) {
+                distanciaAcumulada += puntoActual.distanceTo(puntos.get(i - 1));
+            }
+
+            series.getData().add(new XYChart.Data<>(distanciaAcumulada / 1000.0, puntoActual.getElevation()));
+        }
+
+        graficaAlturas.getData().add(series);        
+    }
+    
     // =========================================================
     //  INDICADOR DE POSICIÓN DEL RATÓN
     // =========================================================
@@ -681,4 +712,17 @@ public class MainSceneController implements Initializable {
         stage.setScene(new Scene(root));
         stage.showAndWait();
     }
+
+    @FXML
+    private void openAddMap(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/addMap.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        stage.setTitle("Add map");
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+    }
+    
+    
 }
