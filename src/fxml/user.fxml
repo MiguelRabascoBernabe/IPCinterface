@@ -52,7 +52,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UserController">
+<BorderPane styleClass="background" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UserController">
    <center>
       <VBox prefHeight="556.0" prefWidth="853.0" stylesheets="@../resources/estilos.css">
          <children>
@@ -74,39 +74,41 @@
                </children>
             </GridPane>
             <Separator prefWidth="200.0" />
-            <GridPane prefHeight="435.0" prefWidth="853.0">
+            <GridPane prefHeight="435.0" prefWidth="853.0" styleClass="arrow">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="572.0" minWidth="10.0" prefWidth="192.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="572.0" minWidth="10.0" prefWidth="442.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="421.5" minWidth="10.0" prefWidth="282.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox minWidth="0.0" prefHeight="96.0" prefWidth="262.0" GridPane.columnIndex="1">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username" wrappingWidth="88.13671875" VBox.vgrow="ALWAYS">
                            <VBox.margin>
                               <Insets bottom="10.0" left="40.0" top="10.0" />
                            </VBox.margin>
                         </Text>
-                        <TextField fx:id="usernameInput" maxWidth="323.0" prefHeight="27.0" prefWidth="290.0">
+                        <TextField fx:id="usernameInput" maxWidth="323.0" prefHeight="25.0" prefWidth="69.0">
                            <VBox.margin>
                               <Insets left="40.0" />
                            </VBox.margin>
                         </TextField>
                      </children>
                   </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="88.13671875" VBox.vgrow="ALWAYS">
                            <VBox.margin>
                               <Insets bottom="10.0" left="40.0" top="10.0" />
                            </VBox.margin>
                         </Text>
-                        <TextField fx:id="emailInput" maxWidth="323.0" prefHeight="27.0" prefWidth="290.0">
+                        <TextField fx:id="emailInput" maxWidth="362.0" prefHeight="27.0" prefWidth="362.0">
                            <VBox.margin>
                               <Insets left="40.0" />
                            </VBox.margin>
@@ -118,14 +120,14 @@
                         </Text>
                      </children>
                   </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="88.13671875" VBox.vgrow="ALWAYS">
                            <VBox.margin>
                               <Insets bottom="10.0" left="40.0" top="10.0" />
                            </VBox.margin>
                         </Text>
-                        <TextField fx:id="passInput" maxWidth="323.0" prefHeight="27.0" prefWidth="290.0" promptText="password">
+                        <TextField fx:id="passInput" maxWidth="364.0" prefHeight="27.0" prefWidth="364.0" promptText="password">
                            <VBox.margin>
                               <Insets left="40.0" />
                            </VBox.margin>
@@ -140,7 +142,7 @@
                         </Text>
                      </children>
                   </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date of birth" wrappingWidth="88.13671875" VBox.vgrow="ALWAYS">
                            <VBox.margin>
@@ -154,14 +156,14 @@
                         </DatePicker>
                      </children>
                   </VBox>
-                  <HBox alignment="BOTTOM_RIGHT" fillHeight="false" prefHeight="100.0" prefWidth="367.0" spacing="10.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" GridPane.vgrow="NEVER">
+                  <HBox alignment="BOTTOM_RIGHT" fillHeight="false" prefHeight="100.0" prefWidth="367.0" spacing="10.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" GridPane.vgrow="NEVER">
                      <children>
-                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveClick" prefHeight="25.0" prefWidth="56.0" text="Save">
+                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveClick" prefHeight="42.0" prefWidth="81.0" styleClass="primary-button" text="Save">
                            <HBox.margin>
                               <Insets bottom="20.0" right="20.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="editButton" mnemonicParsing="false" onAction="#editClick" prefHeight="25.0" prefWidth="54.0" text="Edit">
+                        <Button fx:id="editButton" mnemonicParsing="false" onAction="#editClick" prefHeight="41.0" prefWidth="70.0" style="-fx-background-color: #9fb1c9;" styleClass="primary-button" text="Edit">
                            <HBox.margin>
                               <Insets bottom="20.0" right="20.0" />
                            </HBox.margin>
