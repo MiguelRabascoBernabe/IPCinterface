@@ -731,8 +731,8 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    private void sessionHistory(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Sessions.fxml"));
+    private void sessionHistory(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Session.fxml"));
         Parent root = loader.load();
 
         Stage stage = new Stage();

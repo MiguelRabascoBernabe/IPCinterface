@@ -18,11 +18,9 @@ import java.util.Locale;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import javafx.scene.image.Image;
-import javax.sound.sampled.*;
 import javafx.scene.effect.GaussianBlur;
 import upv.ipc.sportlib.*;
 import app.Poi;
-import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
 
 
@@ -171,7 +169,7 @@ public class UserController implements Initializable {
 
     }
 
-    private void avatarSelect(ActionEvent event) {
+    private void avatarSelect(ActionEvent event) throws Exception {
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().add(
             new FileChooser.ExtensionFilter("Images", "*.png",

@@ -87,9 +87,9 @@
                      <children>
                         <TableView fx:id="sessionTable" prefHeight="329.0" prefWidth="777.0">
                           <columns>
-                            <TableColumn minWidth="30.0" prefWidth="120.0" text="Start" />
-                            <TableColumn minWidth="30.0" prefWidth="120.0" text="End" />
-                              <TableColumn minWidth="30.0" prefWidth="120.0" text="Duration" />
+                            <TableColumn fx:id="startColumn" minWidth="30.0" prefWidth="120.0" text="Start" />
+                            <TableColumn fx:id="endColumn" minWidth="30.0" prefWidth="120.0" text="End" />
+                              <TableColumn fx:id="durationColumn" minWidth="30.0" prefWidth="120.0" text="Duration" />
                               <TableColumn minWidth="30.0" prefWidth="120.0" text="Imported" />
                               <TableColumn minWidth="30.0" prefWidth="120.0" text="Viewed" />
                               <TableColumn minWidth="30.0" prefWidth="120.0" text="Created" />
@@ -97,28 +97,49 @@
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </VBox.margin>
                         </TableView>
                      </children></VBox>
                   <HBox GridPane.rowIndex="1">
                      <children>
                         <VBox prefHeight="95.0" prefWidth="359.0">
                            <children>
-                              <Text fx:id="totalSessions" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Sessions: " />
-                              <Text fx:id="totalTime" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Time:" />
+                              <Text fx:id="totalSessions" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Sessions: ">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+                                 </VBox.margin></Text>
+                              <Text fx:id="totalTime" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Time:">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+                                 </VBox.margin></Text>
                            </children>
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total Activities:" />
-                              <Text fx:id="imported" strokeType="OUTSIDE" strokeWidth="0.0" text="Imported" />
-                              <Text fx:id="viewed" strokeType="OUTSIDE" strokeWidth="0.0" text="Viewed" />
-                              <Text fx:id="annotations" strokeType="OUTSIDE" strokeWidth="0.0" text="Annotations" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total Activities:">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+                                 </VBox.margin></Text>
+                              <Text fx:id="imported" strokeType="OUTSIDE" strokeWidth="0.0" text="Imported">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+                                 </VBox.margin></Text>
+                              <Text fx:id="viewed" strokeType="OUTSIDE" strokeWidth="0.0" text="Viewed">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+                                 </VBox.margin></Text>
+                              <Text fx:id="annotations" strokeType="OUTSIDE" strokeWidth="0.0" text="Annotations">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+                                 </VBox.margin></Text>
                            </children>
                         </VBox>
                         <DatePicker fx:id="dayPicker" />
                      </children>
                   </HBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" />
+                  <VBox prefHeight="381.0" prefWidth="77.0" GridPane.columnIndex="1" />
                </children>
             </GridPane>
          </children>
