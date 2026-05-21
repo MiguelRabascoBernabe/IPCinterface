@@ -1,0 +1,117 @@
+.root {
+    -fx-background-color: linear-gradient(to bottom right, #f7f9fc, #e9eef5);
+    -fx-font-family: "Segoe UI", "Roboto", "Arial";
+}
+
+.vbox {
+    -fx-background-color: white;
+    -fx-background-radius: 18;
+    -fx-border-radius: 18;
+
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(0,0,0,0.12),
+        24,
+        0.15,
+        0,
+        4
+    );
+
+    -fx-padding: 10 15 20 15;
+}
+
+.text {
+    -fx-fill: #1e293b;
+}
+
+.text.title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-fill: linear-gradient(to right, #2563eb, #3b82f6);
+}
+
+.stat-label {
+    -fx-fill: #334155;
+    -fx-font-size: 15px;
+    -fx-font-weight: 600;
+}
+
+.stat-value {
+    -fx-fill: #64748b;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.stat-row {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 12;
+    -fx-padding: 12 14 12 14;
+
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 12;
+    -fx-border-width: 1;
+
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(0,0,0,0.04),
+        6,
+        0.1,
+        0,
+        1
+    );
+}
+
+.stat-row:hover {
+    -fx-background-color: #f1f5f9;
+}
+
+.date-picker {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+
+    -fx-border-color: #cbd5e1;
+    -fx-border-width: 1.2;
+
+    -fx-padding: 3 6 3 6;
+}
+
+.date-picker:hover {
+    -fx-border-color: #3b82f6;
+}
+
+.date-picker:focused {
+    -fx-border-color: #2563eb;
+
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(37,99,235,0.25),
+        8,
+        0.2,
+        0,
+        0
+    );
+}
+
+.date-picker .text-field {
+    -fx-background-color: transparent;
+    -fx-text-fill: #1e293b;
+    -fx-font-size: 14px;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 8;
+}
+
+.date-picker .arrow-button:hover {
+    -fx-background-color: #e0ecff;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
