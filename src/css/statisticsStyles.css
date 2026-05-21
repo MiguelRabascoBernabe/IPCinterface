@@ -20,19 +20,15 @@
     -fx-padding: 10 15 20 15;
 }
 
-.text {
-    -fx-fill: #1e293b;
-}
-
-.text.title {
+.title {
+    -fx-fill: linear-gradient(to right, #2563eb, #60a5fa);
     -fx-font-size: 28px;
     -fx-font-weight: bold;
-    -fx-fill: linear-gradient(to right, #2563eb, #3b82f6);
 }
 
 .stat-label {
     -fx-fill: #334155;
-    -fx-font-size: 15px;
+    -fx-font-size: 20px;
     -fx-font-weight: 600;
 }
 
@@ -114,4 +110,76 @@
 
 .scroll-pane > .viewport {
     -fx-background-color: transparent;
+}
+
+.calculateButton {
+    -fx-alignment: center;
+
+    -fx-background-color:
+        linear-gradient(to bottom, #464d55, #25292e);
+
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+
+    -fx-padding: 5;
+    -fx-font-size: 20px;
+
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(0,0,0,0.20),
+        14,
+        0.2,
+        0,
+        4
+    );
+    
+    -fx-cursor: hand;
+}
+
+.calculateButton:hover {
+    -fx-opacity: 0.92;
+
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(0,0,0,0.28),
+        18,
+        0.2,
+        0,
+        5
+    );
+}
+
+.calculateButton:pressed {
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+.calculateButton .text {
+    -fx-fill: #c0c0c0;
+    -fx-font-weight: bold;
+}
+
+.form-row {
+    -fx-background-color: #f8fafc;
+
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1;
+
+    -fx-padding: 14 16 14 16;
+
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(0,0,0,0.04),
+        6,
+        0.1,
+        0,
+        1
+    );
+}
+
+.form-row:hover {
+    -fx-background-color: #f1f5f9;
 }

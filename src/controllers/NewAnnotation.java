@@ -55,7 +55,7 @@ public class NewAnnotation implements Initializable {
     private ChangeListener<String> textListener;
     
     private void checkValidation(){
-        boolean valid = !annotationText.getText().equals("");
+        boolean valid = (!annotationText.getText().equals("") && visibleSelectedOption.getText().equals("TEXT")) || !visibleSelectedOption.getText().equals("TEXT");
         validAnnotation.set(valid);
         
         showError(valid, errorBox, errorText);
@@ -102,6 +102,7 @@ public class NewAnnotation implements Initializable {
                     if(textListener == null){
                         textListener = (a, b, c) -> checkValidation();
                         annotationText.textProperty().addListener(textListener);
+                        visibleSelectedOption.textProperty().addListener(textListener);
                     }
                 }
             }
