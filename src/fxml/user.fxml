@@ -111,6 +111,11 @@
                               <Insets left="40.0" />
                            </VBox.margin>
                         </TextField>
+                        <Text fx:id="emailError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Email Invalid" wrappingWidth="105.63671875">
+                           <VBox.margin>
+                              <Insets left="40.0" />
+                           </VBox.margin>
+                        </Text>
                      </children>
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
@@ -128,6 +133,11 @@
                               <GaussianBlur radius="10.37" />
                            </effect>
                         </TextField>
+                        <Text fx:id="passError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Password Invalid" wrappingWidth="105.63671875">
+                           <VBox.margin>
+                              <Insets left="40.0" />
+                           </VBox.margin>
+                        </Text>
                      </children>
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">

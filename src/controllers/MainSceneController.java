@@ -204,7 +204,7 @@ public class MainSceneController implements Initializable {
         //zoom_slider.setValue(sliderVal - 0.1);
         zoomV = zoomV -0.1;
         //System.out.println(app.registerUser("testing","test@tung.sahur", "Ul12345$", LocalDate.MIN, "/src/resources/logo.png"));
-        //System.out.println(app.login("testing", "Ul12345$"));
+        System.out.println(app.login("testing", "Ul12345$"));
     }
 
     /**

@@ -20,6 +20,9 @@ import javafx.stage.FileChooser;
 import javafx.scene.image.Image;
 import javax.sound.sampled.*;
 import javafx.scene.effect.GaussianBlur;
+import upv.ipc.sportlib.*;
+import app.Poi;
+import javafx.scene.text.Text;
 
 
 
@@ -57,6 +60,12 @@ public class UserController implements Initializable {
     @FXML
     private MenuItem sessionHistory;
     
+    private SportActivityApp app = SportActivityApp.getInstance();
+    @FXML
+    private Text emailError;
+    @FXML
+    private Text passError;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -84,11 +93,54 @@ public class UserController implements Initializable {
         
         //image default
         profileImage.setImage(new Image("resources/default_user_icon.jpg"));
-        //test
+        //test login
         
+        app.login("testing", "Ul12345$");
+        configParameter(app);
+        verifyParameter(app);
+        
+        //verify parameters
+        
+        
+        
+        
+    }
+    public void configParameter(SportActivityApp App){
+        User thisUser = app.getCurrentUser();
+        System.out.println("Usuario: " + thisUser); // añade esto
+        if (thisUser == null) return;
 
+        System.out.println("Nick: " + thisUser.getNickName()); // y esto
+        usernameInput.setText(thisUser.getNickName());
+        emailInput.setText(thisUser.getEmail());
+        passInput.setText(thisUser.getPassword());
         
-    }    
+        
+    }
+    public void verifyParameter(SportActivityApp App){
+        emailInput.textProperty().addListener((obs, old, val) -> {
+            if (emailError == null) return;
+            if (!User.validateEmail(val)) {
+                //emailError.setText("Email no válido");
+                emailError.setVisible(true);
+            } else {
+                emailError.setVisible(false);
+            }
+        });
+        passInput.textProperty().addListener((obs, old, val) -> {
+            if (passError == null) return;
+            //System.out.println("password changed: " + val);
+
+            if (!User.validatePassword(val)) {
+                //passError.setText("Contraseña no válida");
+                passError.setVisible(true);
+            } else {
+                passError.setVisible(false);
+            }
+    });
+        
+        
+    }
 
     @FXML
     private void about(ActionEvent event){
