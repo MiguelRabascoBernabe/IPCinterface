@@ -479,8 +479,12 @@ public class MainSceneController implements Initializable {
         
         //Parte provisional para empezar lo de la grafica de altura
         //Necesita linkearse con la funcionalidad de seleccionar actividad, de momento cogemos la primera actividad
-        Activity act = app.getAllActivities().get(0);
-        cargarDatosGrafico(act);
+        List<Activity> activities = app.getAllActivities();
+
+        if (!activities.isEmpty()) {
+            Activity act = activities.get(0);
+            cargarDatosGrafico(act);
+        }
     }
     
     public void cargarDatosGrafico(Activity actividad) {
