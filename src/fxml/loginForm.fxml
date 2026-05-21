@@ -14,13 +14,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginFormController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginFormController">
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Registration Form" wrappingWidth="599.4700622558594">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Registration Form" wrappingWidth="599.4700622558594">
                <font>
-                  <Font name="Comic Sans MS" size="50.0" />
+                  <Font name="Comic Sans MS" size="100.0" />
                </font>
                <HBox.margin>
                   <Insets left="10.0" />
@@ -35,74 +35,74 @@
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="56.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="56.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="56.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="56.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
-                  <TextField fx:id="username" maxWidth="130.0" prefHeight="25.0" prefWidth="130.0" promptText="ExampleUsername" />
-                  <Text fx:id="usernameError" fill="#d71515" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Username" />
+                  <TextField fx:id="username" maxWidth="152.0" prefHeight="41.0" prefWidth="152.0" promptText="ExampleUsername" styleClass="input" />
+                  <Text fx:id="usernameError" fill="#d71515" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="error-text" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail address" />
-                  <TextField fx:id="email" maxWidth="215.0" prefWidth="215.0" promptText="yourtag@yourdomain.com" />
-                  <Text fx:id="emailError" fill="#d71515" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="E-mail address" />
+                  <TextField fx:id="email" maxWidth="225.0" prefHeight="41.0" prefWidth="225.0" promptText="yourtag@yourdomain.com" styleClass="input" />
+                  <Text fx:id="emailError" fill="#d71515" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="error-text" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
-                  <PasswordField fx:id="password" maxWidth="215.0" prefHeight="25.0" prefWidth="215.0" promptText="SuperSecretP@ssw0rd" />
-                  <Text fx:id="passwordError" fill="#d71515" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Password" />
+                  <PasswordField fx:id="password" maxWidth="215.0" prefHeight="25.0" prefWidth="215.0" promptText="SuperSecretP@ssw0rd" styleClass="input" />
+                  <Text fx:id="passwordError" fill="#d71515" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="error-text" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Birth" />
-                  <DatePicker fx:id="birthdate" prefHeight="26.0" prefWidth="130.0" promptText="DD/MM/YYYY" />
-                  <Text fx:id="birthdateError" fill="#d71515" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Date of Birth" />
+                  <DatePicker fx:id="birthdate" prefHeight="50.0" prefWidth="165.0" promptText="DD/MM/YYYY" styleClass="input" />
+                  <Text fx:id="birthdateError" fill="#d71515" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="error-text" />
                </children>
             </VBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
                <children>
-                  <Button fx:id="cancelButton" cancelButton="true" mnemonicParsing="false" onAction="#cancelAction" text="Cancel">
+                  <Button fx:id="cancelButton" cancelButton="true" mnemonicParsing="false" onAction="#cancelAction" styleClass="secondary-button" text="Cancel">
                      <HBox.margin>
                         <Insets right="25.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="createButton" defaultButton="true" mnemonicParsing="false" onAction="#createAccount" text="Create">
+                  <Button fx:id="createButton" defaultButton="true" mnemonicParsing="false" onAction="#createAccount" styleClass="primary-button" text="Create">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="256.0" GridPane.columnSpan="2" GridPane.rowIndex="7">
+            <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="270.0" GridPane.columnSpan="2" GridPane.rowIndex="7">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Already have an account? ">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="footer-text" text="Already have an account? " wrappingWidth="138.287109375">
                      <HBox.margin>
                         <Insets left="5.0" top="25.0" />
                      </HBox.margin>
                   </Text>
-                  <Hyperlink fx:id="signInGo" onAction="#signInChange" prefHeight="24.0" prefWidth="91.0" text="Sign in instead">
+                  <Hyperlink fx:id="signInGo" onAction="#signInChange" prefHeight="24.0" prefWidth="91.0" styleClass="link" text="Sign in instead">
                      <HBox.margin>
                         <Insets left="5.0" top="25.0" />
                      </HBox.margin>
                   </Hyperlink>
                </children>
             </HBox>
-            <Text fx:id="usernameInstructions" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="330.0" GridPane.columnIndex="2" />
-            <Text fx:id="passwordInstructions" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="330.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Text fx:id="usernameInstructions" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="footer-text" wrappingWidth="330.0" GridPane.columnIndex="2" />
+            <Text fx:id="passwordInstructions" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="footer-text" wrappingWidth="330.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </children>
