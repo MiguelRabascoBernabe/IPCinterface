@@ -22,6 +22,7 @@ import javax.sound.sampled.*;
 import javafx.scene.effect.GaussianBlur;
 import upv.ipc.sportlib.*;
 import app.Poi;
+import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
 
 
@@ -33,9 +34,7 @@ import javafx.scene.text.Text;
  */
 public class UserController implements Initializable {
 
-    @FXML
     private Button saveButton;
-    @FXML
     private Button editButton;
 
     /**
@@ -43,27 +42,17 @@ public class UserController implements Initializable {
      */
     
     public boolean editmode;
-    @FXML
     private TextField usernameInput;
-    @FXML
     private TextField emailInput;
-    @FXML
     private TextField passInput;
-    @FXML
     private DatePicker birthdateInput;
-    @FXML
     private Button editAvatar;
-    @FXML
     private ImageView profileImage;
-    @FXML
-    private Circle profileCircle;
     @FXML
     private MenuItem sessionHistory;
     
     private SportActivityApp app = SportActivityApp.getInstance();
-    @FXML
     private Text emailError;
-    @FXML
     private Text passError;
     
     @Override
@@ -146,7 +135,6 @@ public class UserController implements Initializable {
     private void about(ActionEvent event){
     }
 
-    @FXML
     private void saveClick(ActionEvent event) {
         //buttons and textinput manipulation
         editmode = false;
@@ -167,7 +155,6 @@ public class UserController implements Initializable {
    
     }
 
-    @FXML
     private void editClick(ActionEvent event) {
         //button toggling
         editmode = true;
@@ -184,7 +171,6 @@ public class UserController implements Initializable {
 
     }
 
-    @FXML
     private void avatarSelect(ActionEvent event) {
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().add(

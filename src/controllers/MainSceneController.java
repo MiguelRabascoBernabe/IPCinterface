@@ -729,6 +729,17 @@ public class MainSceneController implements Initializable {
         stage.setScene(new Scene(root));
         stage.showAndWait();
     }
+
+    @FXML
+    private void sessionHistory(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Sessions.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        stage.setTitle("Add map");
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+    }
     
     
 }
