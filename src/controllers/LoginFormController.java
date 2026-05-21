@@ -52,7 +52,7 @@ public class LoginFormController implements Initializable {
     private Button createButton;
     @FXML
     private Hyperlink signInGo;
-    String userChar = "abcdefghijklmnopqrstuvwxyz0123456789-_";
+    String userChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
     public void initialize(URL url, ResourceBundle rb) {
         username.textProperty().addListener((obs, o, n)->{
             int w=n.length();
@@ -76,19 +76,15 @@ public class LoginFormController implements Initializable {
 
     @FXML
     private void createAccount(ActionEvent event) {
-        boolean mistake=false;
         if(User.checkEmail(email.getText())&&
            User.checkPassword(password.getText())&&
            User.checkNickName(username.getText())&&
            User.isOlderThan(birthdate.getValue(),12)){
-                if(mistake){
-                    emailError.setText("");passwordError.setText("");passwordInstructions.setText("");
-                    usernameError.setText("");usernameInstructions.setText("");birthdateError.setText("");
-                    mistake=false;
-                }
+               emailError.setText("");passwordError.setText("");passwordInstructions.setText("");
+               usernameError.setText("");usernameInstructions.setText("");birthdateError.setText("");
                MapaDemoAppDani.getContext().getApp().registerUser(username.getText(), email.getText(), password.getText(), birthdate.getValue(), "/resources/default_User_Icon.jpg");
             }
-        else{mistake=true;
+        else{
             if(!User.checkEmail(email.getText())){
                 if(email.getText().equals("")){emailError.setText("This field is mandatory");}
                 else{emailError.setText("Non-valid E-mail address");}}

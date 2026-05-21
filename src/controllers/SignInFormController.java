@@ -79,6 +79,7 @@ public class SignInFormController implements Initializable {
     private void signInGo(ActionEvent event) {
         if(MapaDemoAppDani.getContext().getApp().login(username.getText(),password.getText())){}
         else{passwordError.setText("Username and password do not match");}
+        System.out.println(MapaDemoAppDani.getContext().getApp().login(username.getText(),password.getText()));
     }
     
 }

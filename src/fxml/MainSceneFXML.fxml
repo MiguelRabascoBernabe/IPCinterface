@@ -128,7 +128,7 @@
             <Menu mnemonicParsing="false" text="User">
                <items>
                   <MenuItem fx:id="viewEditBtn" mnemonicParsing="false" onAction="#openViewEdit" text="View/edit" />
-                  <MenuItem mnemonicParsing="false" onAction="#about" text="Session history" />
+                  <MenuItem mnemonicParsing="false" onAction="#sessionHistory" text="Session history" />
                   <MenuItem mnemonicParsing="false" onAction="#about" text="Sign Out" />
                </items>
             </Menu>
