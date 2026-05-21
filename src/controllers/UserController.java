@@ -21,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.effect.GaussianBlur;
 import upv.ipc.sportlib.*;
 import app.Poi;
+import javafx.scene.Scene;
 import javafx.scene.text.Text;
 
 
@@ -32,7 +33,9 @@ import javafx.scene.text.Text;
  */
 public class UserController implements Initializable {
 
+    @FXML
     private Button saveButton;
+    @FXML
     private Button editButton;
 
     /**
@@ -40,18 +43,28 @@ public class UserController implements Initializable {
      */
     
     public boolean editmode;
+    @FXML
     private TextField usernameInput;
+    @FXML
     private TextField emailInput;
+    @FXML
     private TextField passInput;
+    @FXML
     private DatePicker birthdateInput;
+    @FXML
     private Button editAvatar;
+    @FXML
     private ImageView profileImage;
     @FXML
     private MenuItem sessionHistory;
     
     private SportActivityApp app = SportActivityApp.getInstance();
+    @FXML
     private Text emailError;
+    @FXML
     private Text passError;
+    @FXML
+    private Circle profileCircle;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -59,6 +72,8 @@ public class UserController implements Initializable {
         //config datepicker
         birthdateInput.setChronology(java.time.chrono.IsoChronology.INSTANCE);
         Locale.setDefault(Locale.forLanguageTag("es-ES"));
+        
+        
         //buttons
         editmode = false;
         saveButton.setDisable(true);
@@ -79,7 +94,7 @@ public class UserController implements Initializable {
         profileImage.setClip(clip);
         
         //image default
-        profileImage.setImage(new Image("resources/default_user_icon.jpg"));
+        profileImage.setImage(new Image("/resources/default_user_icon.jpg"));
         //test login
         
         app.login("testing", "Ul12345$");
@@ -133,6 +148,7 @@ public class UserController implements Initializable {
     private void about(ActionEvent event){
     }
 
+    @FXML
     private void saveClick(ActionEvent event) {
         //buttons and textinput manipulation
         editmode = false;
@@ -153,6 +169,7 @@ public class UserController implements Initializable {
    
     }
 
+    @FXML
     private void editClick(ActionEvent event) {
         //button toggling
         editmode = true;
@@ -169,6 +186,7 @@ public class UserController implements Initializable {
 
     }
 
+    @FXML
     private void avatarSelect(ActionEvent event) throws Exception {
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().add(
