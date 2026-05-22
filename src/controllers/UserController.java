@@ -97,8 +97,18 @@ public class UserController implements Initializable {
         profileImage.setClip(clip);
         
         //image default
-        
-        profileImage.setImage(new Image(user.getAvatarPath()));
+        String avatarPath = user.getAvatarPath();
+        try{
+            if (avatarPath != null && !avatarPath.isEmpty()) {
+                profileImage.setImage(new Image(avatarPath));
+            } else {
+             profileImage.setImage(new Image("/resources/default_user_icon.jpg"));
+            }
+        }
+        catch (Exception e) {
+            profileImage.setImage(new Image(getClass().getResourceAsStream("/resources/default_user_icon.jpg")));
+        }
+                
         //test login
         
         

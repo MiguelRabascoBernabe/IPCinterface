@@ -5,6 +5,7 @@
 package controllers;
 
 import java.net.URL;
+import java.time.format.*;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
@@ -23,6 +24,7 @@ import java.time.Duration;
 
 import upv.ipc.sportlib.Activity;
 import upv.ipc.sportlib.SportActivityApp;
+import upv.ipc.sportlib.User;
 
 /**
  * FXML Controller class
@@ -55,7 +57,7 @@ public class SessionController implements Initializable {
 
     
     private final SportActivityApp app = SportActivityApp.getInstance();
-
+    public User user = app.getCurrentUser();
     /**
      * Initializes the controller class.
      */
@@ -68,16 +70,21 @@ public class SessionController implements Initializable {
         imported.setText("Imported: 0");
         viewed.setText("Viewed: 0");
         annotations.setText("Annotations: 0");
-
+        
+       
         startColumn.setCellValueFactory(data ->
             new SimpleStringProperty(
-                data.getValue().getStartTime().toString()
+                data.getValue().getStartTime().format(
+                                DateTimeFormatter.ofPattern("dd/MM HH:mm")
+                )
             )
         );
         
         endColumn.setCellValueFactory(data ->
             new SimpleStringProperty(
-                data.getValue().getEndTime().toString()
+                data.getValue().getEndTime().format(
+                                DateTimeFormatter.ofPattern("dd/MM HH:mm")
+                )
             )
         );
         
@@ -91,12 +98,27 @@ public class SessionController implements Initializable {
 
             return new SimpleStringProperty(texto);
         });
+        startNumbers();
         
         sessionTable.getItems().addAll(app.getUserActivities());
 
 
         
     }    
+    private void startNumbers(){
+        Duration total = Duration.ZERO;
+        if(user.getActivities().size()>0){
+            totalSessions.setText("Total Sessions: "+ user.getActivities().size());
+            //get total time
+            for(Activity a: user.getActivities()){
+                total = total.plus(a.getDuration());}
+            totalTime.setText("Total Time: " + total.toHours() + "h " + (total.toMinutes() % 60) + "m");
+
+            imported.setText("Imported: 0");
+            viewed.setText("Viewed: 0");
+            annotations.setText("Annotations: 0");
+        }
+    }
 
     @FXML
     private void closeSession(ActionEvent event) {
