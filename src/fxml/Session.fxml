@@ -33,7 +33,6 @@
 -->
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -136,7 +135,6 @@
                                  </VBox.margin></Text>
                            </children>
                         </VBox>
-                        <DatePicker fx:id="dayPicker" />
                      </children>
                   </HBox>
                   <VBox prefHeight="381.0" prefWidth="77.0" GridPane.columnIndex="1" />
