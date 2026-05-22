@@ -779,7 +779,7 @@ public class MainSceneController implements Initializable {
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add(
-            getClass().getResource("/css/login.css").toExternalForm()
+            getClass().getResource("/css/userViewStyles.css").toExternalForm()
         );
 
         stage.setScene(scene);
