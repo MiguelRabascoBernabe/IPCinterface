@@ -78,8 +78,10 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import upv.ipc.sportlib.*;
+import utils.AnnotationCreationState;
 
 /**
  * Controlador principal de la aplicación de mapa con POIs.
@@ -183,6 +185,9 @@ public class MainSceneController implements Initializable {
     private Button activitiesBtn;
     @FXML
     private LineChart<Number, Number> graficaAlturas;
+    
+    private AnnotationCreationState annotationState;
+    private boolean waitingForSecondPoint = false;
  
 
     // =========================================================
@@ -321,7 +326,7 @@ public class MainSceneController implements Initializable {
      *
      * @param imgFile fichero de imagen a cargar como fondo del mapa
      */
-    private void buildMap(File imgFile) {
+    private void buildMap(File imgFile) throws Exception{
         // Comprobación defensiva: si el fichero no existe mostramos un aviso
         if (!imgFile.exists()) {
             map_scrollpane.setContent(
@@ -352,9 +357,26 @@ public class MainSceneController implements Initializable {
         // Gestionamos el clic derecho (menú contextual) y el clic izquierdo
         // en modo inserción (FIX 2).
         mapPane.setOnMouseClicked(e -> {
+            if(waitingForSecondPoint && e.getButton() == MouseButton.PRIMARY){
+                annotationState.setSecondX(e.getX());
+                annotationState.setSecondY(e.getY());
+                
+                // CREATE ANNOTATION
+                System.out.println("creating annotation for line or circle");
+                
+                waitingForSecondPoint = false;
+                annotationState = null;
+                
+                return;
+            }
+            
             if (e.getButton() == MouseButton.SECONDARY) {
-                // Clic derecho → mostrar menú contextual
-                onMapRightClick(e.getX(), e.getY());
+                try {
+                    // Clic derecho → mostrar menú contextual
+                    onMapRightClick(e.getX(), e.getY());
+                } catch (Exception ex) {
+                    System.getLogger(MainSceneController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                }
 
             } else if (e.getButton() == MouseButton.PRIMARY && insertionMode) {
                 // FIX 2: clic izquierdo en modo inserción → añadir POI y desactivar modo
@@ -396,23 +418,60 @@ public class MainSceneController implements Initializable {
      * @param x coordenada X del clic en el sistema local del mapPane
      * @param y coordenada Y del clic en el sistema local del mapPane
      */
-    private void onMapRightClick(double x, double y) {
+    private void onMapRightClick(double x, double y) throws Exception{
         // FIX 6: cerramos el menú si ya estaba visible (evita instancias flotantes)
-        mapContextMenu.hide();
+//        mapContextMenu.hide();
+//
+//        // Actualizamos las acciones de los items con las coordenadas actuales.
+//        // Usamos variables final para que el lambda pueda capturarlas.
+//        final double clickX = x;
+//        final double clickY = y;
+//        mapContextMenu.getItems().get(0).setOnAction(e -> addPoi(clickX, clickY));
+//        mapContextMenu.getItems().get(1).setOnAction(e -> addCircle(clickX, clickY));
+//
+//        // Mostramos el menú en coordenadas de pantalla
+//        mapContextMenu.show(
+//            mapPane.getScene().getWindow(),
+//            mapPane.localToScreen(x, y).getX(),
+//            mapPane.localToScreen(x, y).getY()
+//        );
 
-        // Actualizamos las acciones de los items con las coordenadas actuales.
-        // Usamos variables final para que el lambda pueda capturarlas.
-        final double clickX = x;
-        final double clickY = y;
-        mapContextMenu.getItems().get(0).setOnAction(e -> addPoi(clickX, clickY));
-        mapContextMenu.getItems().get(1).setOnAction(e -> addCircle(clickX, clickY));
-
-        // Mostramos el menú en coordenadas de pantalla
-        mapContextMenu.show(
-            mapPane.getScene().getWindow(),
-            mapPane.localToScreen(x, y).getX(),
-            mapPane.localToScreen(x, y).getY()
-        );
+        annotationState = new AnnotationCreationState(x, y);
+        
+        ////////////// RENDERING THE NEW ANNOTATION WINDOW //////////////
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NewAnnotation.fxml"));
+        Parent root = loader.load();
+        NewAnnotation controller = loader.getController();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(this.getClass().getResource("/css/newAnnotationStyles.css").toExternalForm());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Create new annotation");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+        //////////////////////////////////////////
+        
+        if(!controller.isAccepted()) return;
+        
+        annotationState.setType(controller.getAnnotationType());
+        annotationState.setText(controller.getAnnotationText());
+        annotationState.setColor(controller.getSelectedColor().toString());
+        
+        String type = controller.getAnnotationType();
+        if(type.equals("LINE") || type.equals("CIRCLE")){
+            this.annotationState = annotationState;
+            waitingForSecondPoint = true;
+            
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Select the second point on the map");
+            alert.show();
+            
+            return;
+        } else {
+            // CREATE THE ANNOTATION FOR TEXT OR POINT
+            System.out.println("create annotation for text or point");
+        }
     }
 
     // =========================================================
@@ -473,9 +532,13 @@ public class MainSceneController implements Initializable {
             }
         });
 
-        // ── Carga del mapa inicial ─────────────────────────────────────
-        // El fichero se busca relativo al directorio de trabajo del proyecto.
-        buildMap(new File("src/resources/upv.jpg"));
+        try {
+            // ── Carga del mapa inicial ─────────────────────────────────────
+            // El fichero se busca relativo al directorio de trabajo del proyecto.
+            buildMap(new File("src/resources/upv.jpg"));
+        } catch (Exception ex) {
+            System.getLogger(MainSceneController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
         
         //Parte provisional para empezar lo de la grafica de altura
         //Necesita linkearse con la funcionalidad de seleccionar actividad, de momento cogemos la primera actividad
@@ -643,7 +706,7 @@ public class MainSceneController implements Initializable {
      * @param event evento de acción del menú
      * @throws IOException si hay un problema al obtener la ruta canónica
      */
-    private void cambiarMapa(ActionEvent event) throws IOException {
+    private void cambiarMapa(ActionEvent event) throws IOException, Exception {
         FileChooser fc = new FileChooser();
         fc.setInitialDirectory(new File(".")); // Empezamos en el directorio del proyecto
 

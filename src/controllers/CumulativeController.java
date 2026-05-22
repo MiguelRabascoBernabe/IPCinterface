@@ -11,14 +11,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.text.Text;
 import java.time.Duration;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.scene.Node;
-import javafx.scene.layout.HBox;
 import upv.ipc.sportlib.Activity;
 import upv.ipc.sportlib.SportActivityApp;
 
@@ -69,7 +63,6 @@ public class CumulativeController implements Initializable {
 
         for(Activity lol : activities){
             if(YearMonth.from(lol.getStartTime().toLocalDate()).equals(selected)){
-//                System.out.println(String.format("%dh %02dmin", totalDuration.toHours(), totalDuration.toMinutesPart()));
                 totalDistance += lol.getTotalDistance();
                 totalGain += lol.getElevationGain();
                 totalLoss += lol.getElevationLoss();
