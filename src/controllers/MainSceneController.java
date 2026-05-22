@@ -71,6 +71,7 @@ import java.time.LocalDate;
 import java.util.List;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
@@ -78,6 +79,8 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.StrokeLineCap;
 import javafx.stage.Stage;
 import upv.ipc.sportlib.*;
 
@@ -183,6 +186,7 @@ public class MainSceneController implements Initializable {
     private Button activitiesBtn;
     @FXML
     private LineChart<Number, Number> graficaAlturas;
+    private boolean speedMode = false;
  
 
     // =========================================================
@@ -473,11 +477,15 @@ public class MainSceneController implements Initializable {
 
         // ── Carga del mapa inicial ─────────────────────────────────────
         // El fichero se busca relativo al directorio de trabajo del proyecto.
-        buildMap(new File("src/resources/upv.jpg"));
+        //Se ha comentado la linea de abajo porque hay que buildear el mapa de la actividad cargada
+        //borrar o ver que hacer
+        //buildMap(new File("src/resources/upv.jpg"));
         
         //Parte provisional para empezar lo de la grafica de altura
         //Necesita linkearse con la funcionalidad de seleccionar actividad, de momento cogemos la primera actividad
+        //borrar/eliminar
         Activity act = app.getAllActivities().get(0);
+        buildMap(new File(act.getSuggestedMap().getImagePath()));
         cargarDatosGrafico(act);
     }
     
@@ -677,7 +685,7 @@ public class MainSceneController implements Initializable {
     
     @FXML
     private void zoomInBtnFunction(ActionEvent event){
-        if(zoomV >= 0.5 && zoomV <= 1.5){
+        if(zoomV <= 1.5){
             zoomIn(event);
             zoom(zoomV);
         }
@@ -685,7 +693,7 @@ public class MainSceneController implements Initializable {
     
     @FXML
     private void zoomOutBtnFunction(ActionEvent event){
-        if(zoomV >= 0.5 && zoomV <= 1.5){
+        if(zoomV >= 0.5){
             zoomOut(event);
             zoom(zoomV);
         }
@@ -723,6 +731,59 @@ public class MainSceneController implements Initializable {
         stage.setScene(new Scene(root));
         stage.showAndWait();
     }
+
+    @FXML
+    private void speedBtnAction(ActionEvent event) {
+        speedMode = !speedMode;
+        if(speedMode){
+            dibujarHeatmapVelocidad(app.getAllActivities().get(0));
+        }else{
+            //Aqui va el codigo de volver a mostrar la trace normal
+            //Completar
+        }
+    }
     
+    private Color getColorSpeed(double velocidadKmh) {
+        if (velocidadKmh < 5) return Color.BLUE;
+        if (velocidadKmh < 15) return Color.GREEN;
+        if (velocidadKmh < 25) return Color.YELLOW;
+        if (velocidadKmh < 40) return Color.ORANGE;
+        return Color.RED;
+    }
     
+    public void dibujarHeatmapVelocidad(Activity actividad) {
+        mapPane.getChildren().removeIf(node -> node instanceof Line);
+
+        MapProjection proj = new MapProjection(app.findMapForActivity(actividad), mapPane.getWidth(), mapPane.getHeight());
+        List<TrackPoint> puntos = actividad.getTrackPoints();
+
+        for (int i = 1; i < puntos.size(); i++) {
+            TrackPoint p1 = puntos.get(i - 1);
+            TrackPoint p2 = puntos.get(i);
+
+            double velocidad = p1.speedTo(p2); 
+
+            Point2D pix1 = proj.project(p1);
+            Point2D pix2 = proj.project(p2);
+
+            Line segmento = new Line(pix1.getX(), pix1.getY(), pix2.getX(), pix2.getY());
+            System.out.println(pix1.getX()+", "+ pix1.getY());
+            segmento.setStroke(getColorSpeed(velocidad));
+            segmento.setStrokeWidth(3.5);
+            segmento.setStrokeLineCap(StrokeLineCap.ROUND);
+
+            mapPane.getChildren().add(segmento);
+        }
+    }
+
+    @FXML
+    private void signOut(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InitialScene.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        stage.setTitle("Sign in");
+        stage.setScene(new Scene(root));
+        stage.show();        
+    }
 }

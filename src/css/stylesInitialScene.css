@@ -1,0 +1,65 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 20 may 2026, 12:02:51
+    Author     : victo
+*/
+.root {
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+}
+
+.vbox-title{
+    -fx-alignment: center;
+    -fx-background-color: #84b8ec;
+    
+}
+
+.hbox {
+    -fx-alignment: center;
+    -fx-spacing: 0;
+}
+
+.label {
+    -fx-text-fill: #2d3748;
+    -fx-font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+.label-title {
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-margin-bottom: 10;
+    -fx-text-fill: #ffffff;
+}
+
+.label-subtitle {
+    -fx-font-size: 16px;
+    -fx-text-fill: #ffffff;
+}
+
+.button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #2d3748;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 30;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1;
+    -fx-cursor: hand;
+    -fx-pref-width: 140;
+}
+
+.button:hover {
+    -fx-background-color: #f7fafc;
+    -fx-border-color: #cbd5e0;
+}
+
+.button:pressed {
+    -fx-background-color: #edf2f7;
+}
