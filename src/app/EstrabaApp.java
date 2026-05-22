@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
 public class EstrabaApp extends Application {
     public static Context c=new Context();
     @Override
