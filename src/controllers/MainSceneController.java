@@ -807,6 +807,11 @@ public class MainSceneController implements Initializable {
         stage.setScene(new Scene(root));
         stage.showAndWait();
     }
+    
+    @FXML
+    private void speedBtnAction(ActionEvent event)throws IOException{
+        
+    }
 
     @FXML
     private void sessionHistory(ActionEvent event) throws IOException{
@@ -854,12 +859,15 @@ public class MainSceneController implements Initializable {
 
     @FXML
     private void signOut(ActionEvent event) throws IOException{
+        SportActivityApp.getInstance().logout();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InitialScene.fxml"));
         Parent root = loader.load();
 
         Stage stage = new Stage();
-        stage.setTitle("Sign in");
+        stage.setTitle("Welcome");
         stage.setScene(new Scene(root));
-        stage.show();
+        stage.show();   
+        Stage stag = (Stage) zoomGroup.getScene().getWindow();
+        stag.close();
     }
 }
