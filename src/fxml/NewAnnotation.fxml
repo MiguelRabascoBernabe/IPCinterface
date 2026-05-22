@@ -17,9 +17,9 @@
 
 <BorderPane prefHeight="175.0" prefWidth="467.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.NewAnnotation">
    <top>
-      <VBox prefHeight="291.0" prefWidth="467.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="337.0" prefWidth="467.0" BorderPane.alignment="CENTER">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New annotation" wrappingWidth="276.8033752441406">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="New annotation" wrappingWidth="276.8033752441406">
                <font>
                   <Font size="18.0" />
                </font>
@@ -27,7 +27,7 @@
                   <Insets left="20.0" top="10.0" />
                </VBox.margin>
             </Text>
-            <HBox prefHeight="36.0" prefWidth="467.0">
+            <HBox prefHeight="36.0" prefWidth="467.0" styleClass="form-row">
                <children>
                   <Label prefHeight="118.0" prefWidth="41.0" text="Type:">
                      <HBox.margin>
@@ -47,10 +47,10 @@
                   </MenuButton>
                </children>
                <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets left="20.0" right="20.0" top="20.0" />
                </VBox.margin>
             </HBox>
-            <HBox prefHeight="65.0" prefWidth="467.0">
+            <HBox prefHeight="38.0" prefWidth="427.0" styleClass="form-row">
                <children>
                   <Label prefHeight="26.0" prefWidth="65.0" text="Text:">
                      <padding>
@@ -60,10 +60,10 @@
                   <TextField fx:id="annotationText" prefHeight="23.0" prefWidth="275.0" promptText="Dangerous sector" />
                </children>
                <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets left="20.0" right="20.0" top="20.0" />
                </VBox.margin>
             </HBox>
-            <HBox prefHeight="70.0" prefWidth="467.0">
+            <HBox prefHeight="43.0" prefWidth="427.0" styleClass="form-row">
                <children>
                   <Label prefHeight="26.0" prefWidth="83.0" text="Colour:">
                      <padding>
@@ -72,10 +72,21 @@
                   </Label>
                   <ColorPicker fx:id="colorSelection" prefHeight="26.0" prefWidth="48.0" />
                </children>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox fx:id="errorBox" prefHeight="43.0" prefWidth="427.0" styleClass="form-row">
+               <children>
+                  <Text fx:id="errorText" fill="#ff4c4c" strokeType="OUTSIDE" strokeWidth="0.0" />
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
             </HBox>
             <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="cancelButton" minWidth="36.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="36.0" style="-fx-background-color: #f05959;">
+                  <Button fx:id="cancelButton" minWidth="36.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="36.0" style="-fx-background-color: #f05959;" styleClass="cancel-button">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>
@@ -87,7 +98,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="acceptButton" minWidth="34.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="34.0" style="-fx-background-color: #21ad2f;">
+                  <Button fx:id="acceptButton" minWidth="34.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="34.0" style="-fx-background-color: #21ad2f;" styleClass="accept-button">
                      <graphic>
                         <ImageView fitHeight="22.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -98,7 +109,7 @@
                   </Button>
                </children>
                <VBox.margin>
-                  <Insets bottom="20.0" right="20.0" />
+                  <Insets bottom="20.0" right="20.0" top="30.0" />
                </VBox.margin>
             </HBox>
          </children>

@@ -17,7 +17,7 @@ import javafx.stage.Stage;
  * @author jose
  */
 public class MapaDemoAppDani extends Application {
-    
+    public static Context c=new Context();
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/loginForm.fxml"));
@@ -34,5 +34,5 @@ public class MapaDemoAppDani extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+    public static Context getContext(){return c;}
 }

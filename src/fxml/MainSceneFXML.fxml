@@ -130,8 +130,13 @@
             <Menu mnemonicParsing="false" text="User">
                <items>
                   <MenuItem fx:id="viewEditBtn" mnemonicParsing="false" onAction="#openViewEdit" text="View/edit" />
+<<<<<<< HEAD
                   <MenuItem mnemonicParsing="false" onAction="#about" text="Session history" />
                   <MenuItem mnemonicParsing="false" onAction="#signOut" text="Sign Out" />
+=======
+                  <MenuItem mnemonicParsing="false" onAction="#sessionHistory" text="Session history" />
+                  <MenuItem mnemonicParsing="false" onAction="#about" text="Sign Out" />
+>>>>>>> c46aff7d5ac19256d034c776d35af0e14636c458
                </items>
             </Menu>
          </menus>

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package app;
 
 import javafx.application.Application;
@@ -12,26 +7,31 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-/**
- *
- * @author jose
- */
 public class MapaDemoAppMiguel extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-//        Parent root = FXMLLoader.load(getClass().getResource("/fxml/NewAnnotation.fxml"));
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/NewActivity.fxml"));
+        int window = 2; // 0 for New Activity, 1 for new annotation and 2 for cumulative statistics
+        Parent root;
+        
+        // Cases to "dynamically" add the required FXML for testing purposes
+        if(window == 0) root = FXMLLoader.load(getClass().getResource("/fxml/NewActivity.fxml"));
+        else if(window == 1) root = FXMLLoader.load(getClass().getResource("/fxml/NewAnnotation.fxml"));
+        else root = FXMLLoader.load(getClass().getResource("/fxml/CumulativeStatistics.fxml"));
+        
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/logo.png")));
         Scene scene = new Scene(root);
+        
+        // Cases to "dynamically" add the required CSS for testing purposes
+        if(window == 0) scene.getStylesheets().add(this.getClass().getResource("/css/newActivityStyles.css").toExternalForm());
+        else if (window == 1) scene.getStylesheets().add(this.getClass().getResource("/css/newAnnotationStyles.css").toExternalForm());
+        else if (window == 2) scene.getStylesheets().add(this.getClass().getResource("/css/statisticsStyles.css").toExternalForm());
+        
         stage.setTitle("Demo mapas - IPC");
         stage.setScene(scene);
         stage.show();
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         launch(args);
     }

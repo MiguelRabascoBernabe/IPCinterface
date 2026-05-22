@@ -213,6 +213,8 @@ public class MainSceneController implements Initializable {
         double sliderVal = zoomV; //zoom_slider.getValue();
         //zoom_slider.setValue(sliderVal - 0.1);
         zoomV = zoomV -0.1;
+        //System.out.println(app.registerUser("testing","test@tung.sahur", "Ul12345$", LocalDate.MIN, "/src/resources/logo.png"));
+        System.out.println(app.login("testing", "Ul12345$"));
     }
 
     /**
@@ -483,10 +485,19 @@ public class MainSceneController implements Initializable {
         
         //Parte provisional para empezar lo de la grafica de altura
         //Necesita linkearse con la funcionalidad de seleccionar actividad, de momento cogemos la primera actividad
+<<<<<<< HEAD
         //borrar/eliminar
         Activity act = app.getAllActivities().get(0);
         buildMap(new File(act.getSuggestedMap().getImagePath()));
         cargarDatosGrafico(act);
+=======
+        List<Activity> activities = app.getAllActivities();
+
+        if (!activities.isEmpty()) {
+            Activity act = activities.get(0);
+            cargarDatosGrafico(act);
+        }
+>>>>>>> c46aff7d5ac19256d034c776d35af0e14636c458
     }
     
     public void cargarDatosGrafico(Activity actividad) {
@@ -706,7 +717,13 @@ public class MainSceneController implements Initializable {
 
         Stage stage = new Stage();
         stage.setTitle("View-edit");
-        stage.setScene(new Scene(root));
+
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(
+            getClass().getResource("/css/login.css").toExternalForm()
+        );
+
+        stage.setScene(scene);
         stage.show();
     }
 
@@ -733,6 +750,7 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
+<<<<<<< HEAD
     private void speedBtnAction(ActionEvent event) {
         speedMode = !speedMode;
         if(speedMode){
@@ -741,6 +759,16 @@ public class MainSceneController implements Initializable {
             //Aqui va el codigo de volver a mostrar la trace normal
             //Completar
         }
+=======
+    private void sessionHistory(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Session.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        stage.setTitle("Add map");
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+>>>>>>> c46aff7d5ac19256d034c776d35af0e14636c458
     }
     
     private Color getColorSpeed(double velocidadKmh) {
