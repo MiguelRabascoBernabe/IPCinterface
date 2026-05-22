@@ -18,6 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import upv.ipc.sportlib.AnnotationType;
 
 public class NewAnnotation implements Initializable {
     @FXML
@@ -56,7 +57,13 @@ public class NewAnnotation implements Initializable {
     private boolean accepted = false;
     
     public boolean isAccepted(){ return accepted;}
-    public String getAnnotationType() {return visibleSelectedOption.getText();}
+    public AnnotationType getAnnotationType() {
+        String lol = visibleSelectedOption.getText();
+        if(lol.equals("POINT")) return AnnotationType.POINT;
+        else if(lol.equals("TEXT")) return AnnotationType.TEXT;
+        else if(lol.equals("LINE")) return AnnotationType.LINE;
+        else return AnnotationType.CIRCLE;
+    }
     public String getAnnotationText() {return annotationText.getText();}
     public Color getSelectedColor() {return colorSelection.getValue();}
     

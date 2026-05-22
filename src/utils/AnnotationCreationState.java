@@ -1,5 +1,7 @@
 package utils;
 
+import upv.ipc.sportlib.AnnotationType;
+
 /**
  *
  * @author Miguel
@@ -11,7 +13,7 @@ public class AnnotationCreationState {
     private double secondX;
     private double secondY;
     
-    private String type;
+    private AnnotationType type;
     private String text;
     private String color;
     
@@ -33,6 +35,6 @@ public class AnnotationCreationState {
     public void setText(String n){this.text = n;}
     public void setColor(String n){this.color = n;}
     
-    public String getType(){return type;}
-    public void setType(String n){this.type = n;}
+    public AnnotationType getType(){return type;}
+    public void setType(AnnotationType n){this.type = n;}
 }
