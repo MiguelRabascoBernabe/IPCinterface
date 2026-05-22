@@ -51,10 +51,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Slider;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -64,17 +62,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import app.Poi;
-import java.time.LocalDate;
 import java.util.List;
-import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
@@ -192,6 +185,7 @@ public class MainSceneController implements Initializable {
 
     private AnnotationCreationState annotationState;
     private boolean waitingForSecondPoint = false;
+    private Activity currentActivity;
 
 
     // =========================================================
@@ -366,7 +360,12 @@ public class MainSceneController implements Initializable {
                 annotationState.setSecondY(e.getY());
 
                 // CREATE ANNOTATION
-                System.out.println("creating annotation for line or circle");
+                saveAnnotation(true);
+//                System.out.println("creating annotation for line or circle");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText(null);
+                alert.setContentText("Annotation saved correctly");
+                alert.show();
 
                 waitingForSecondPoint = false;
                 annotationState = null;
@@ -407,6 +406,103 @@ public class MainSceneController implements Initializable {
         // Asignamos el contentGroup como contenido del ScrollPane
         map_scrollpane.setContent(contentGroup);
 
+    }
+    
+    private void saveAnnotation(boolean useTwoPoints){
+        System.out.println(
+            "Saving annotation type = " +
+            annotationState.getType()
+        );
+        MapProjection proj = new MapProjection(
+            app.findMapForActivity(currentActivity),
+            mapPane.getWidth(),
+            mapPane.getHeight()
+        );
+        
+        Annotation ann;
+        GeoPoint firstGeo = proj.unproject(annotationState.getFirstX(), annotationState.getFirstY());
+        
+        if(useTwoPoints){
+            GeoPoint secondGeo = proj.unproject(annotationState.getSecondX(), annotationState.getSecondY());
+
+            ann = new Annotation(annotationState.getType(), 
+                annotationState.getText(), 
+                annotationState.getColor(), 
+                2.0, List.of(firstGeo, secondGeo));
+        } else {
+            ann = new Annotation(
+                annotationState.getType(), 
+                annotationState.getText(), 
+                annotationState.getColor(), 
+                2.0, List.of(firstGeo)
+            );
+        }
+        
+        System.out.println("ann:" + ann.getType());
+        Annotation saved = app.addAnnotation(currentActivity, ann);
+        
+        if(saved != null) {
+            System.out.println("saved: " + saved.getType());
+            drawAnnotations(currentActivity);
+        }
+        System.out.println("Annotation saved correctly");
+    }
+    
+     private void addPoi(double x, double y) {
+
+        // ── Construcción del diálogo personalizado ────────────────────
+        Dialog<Poi> poiDialog = new Dialog<>();
+        poiDialog.setTitle("Nuevo POI");
+        poiDialog.setHeaderText("Introduce un nuevo POI");
+
+        // Personalizamos el icono de la ventana del diálogo
+        Stage dialogStage = (Stage) poiDialog.getDialogPane().getScene().getWindow();
+        dialogStage.getIcons().add(
+            new Image(getClass().getResourceAsStream("/resources/logo.png"))
+        );
+
+        // Botones del diálogo: Aceptar y Cancelar
+        ButtonType okButton = new ButtonType("Aceptar", ButtonBar.ButtonData.OK_DONE);
+        poiDialog.getDialogPane().getButtonTypes().addAll(okButton, ButtonType.CANCEL);
+
+        // Campo de texto para el nombre del POI
+        TextField nameField = new TextField();
+        nameField.setPromptText("Nombre del POI");
+
+        // Layout del contenido del diálogo (VBox con espaciado de 10 px)
+        VBox vbox = new VBox(10, new Label("Nombre:"), nameField);
+        poiDialog.getDialogPane().setContent(vbox);
+
+        // ResultConverter: transforma la selección del botón en un objeto Poi.
+        // FIX 1: ya no usamos coordenadas provisionales (0,0); pasamos (x,y)
+        // directamente al constructor para que el modelo sea coherente desde el inicio.
+        poiDialog.setResultConverter(dialogButton -> {
+            if (dialogButton == okButton) {
+                return new Poi(nameField.getText().trim(), x, y);
+            }
+            return null;
+        });
+
+        // Mostramos el diálogo y esperamos la respuesta del usuario
+        Optional<Poi> result = poiDialog.showAndWait();
+
+        if (result.isPresent()) {
+            Poi poi = result.get();
+
+            // FIX 1: confirmamos la posición como Point2D para compatibilidad
+            // con getPosition(), usando las mismas coordenadas (x, y).
+            poi.setPosition(new Point2D(x, y));
+
+            // Añadimos el POI al ListView (la CellFactory mostrará nombre y código)
+            map_listview.getItems().add(poi);
+
+            // FIX 1: usamos (x, y) tanto para el modelo como para el Text,
+            // garantizando que la etiqueta aparezca exactamente donde se hizo clic.
+            Text text = new Text(poi.getCode());
+            text.setX(x);
+            text.setY(y);
+            mapPane.getChildren().add(text);
+        }
     }
 
     // =========================================================
@@ -458,11 +554,12 @@ public class MainSceneController implements Initializable {
         if(!controller.isAccepted()) return;
 
         annotationState.setType(controller.getAnnotationType());
+        System.out.println("Selected type = " + controller.getAnnotationType());
         annotationState.setText(controller.getAnnotationText());
         annotationState.setColor(controller.getSelectedColor().toString());
 
-        String type = controller.getAnnotationType();
-        if(type.equals("LINE") || type.equals("CIRCLE")){
+        AnnotationType type = controller.getAnnotationType();
+        if(type == AnnotationType.LINE || type == AnnotationType.CIRCLE){
             this.annotationState = annotationState;
             waitingForSecondPoint = true;
 
@@ -474,7 +571,12 @@ public class MainSceneController implements Initializable {
             return;
         } else {
             // CREATE THE ANNOTATION FOR TEXT OR POINT
-            System.out.println("create annotation for text or point");
+//            System.out.println(annotationState.getType());
+            saveAnnotation(false);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Annotation saved successfully");
+            alert.show();
         }
     }
 
@@ -554,8 +656,9 @@ public class MainSceneController implements Initializable {
         List<Activity> activities = app.getAllActivities();
 
         if (!activities.isEmpty()) {
-            Activity act = activities.get(0);
-            cargarDatosGrafico(act);
+            currentActivity = activities.get(0);
+            cargarDatosGrafico(currentActivity);
+            drawAnnotations(currentActivity);
         }
     }
 
@@ -580,30 +683,6 @@ public class MainSceneController implements Initializable {
 
         graficaAlturas.getData().add(series);
     }
-
-    // =========================================================
-    //  INDICADOR DE POSICIÓN DEL RATÓN
-    // =========================================================
-
-    /**
-     * Actualiza la etiqueta {@code mousePosition} con las coordenadas
-     * actuales del ratón, tanto en el sistema de la escena como en el
-     * sistema local del nodo sobre el que se mueve.
-     *
-     * Útil para depuración y para que los alumnos comprendan la diferencia
-     * entre coordenadas de escena y coordenadas locales.
-     *
-     * @param event evento de movimiento del ratón
-     */
-    /*@FXML
-    private void showPosition(MouseEvent event) {
-        mousePosition.setText(
-            "sceneX: " + (int) event.getSceneX() +
-            ", sceneY: " + (int) event.getSceneY() + "\n" +
-            "         X: " + (int) event.getX() +
-            ",          Y: " + (int) event.getY()
-        );
-    }*/
 
     // =========================================================
     //  DIÁLOGO "ACERCA DE"
@@ -633,74 +712,6 @@ public class MainSceneController implements Initializable {
     }
 
     // =========================================================
-    //  AÑADIR UN POI (texto) AL MAPA
-    // =========================================================
-
-    /**
-     * Muestra un diálogo para introducir el nombre del nuevo POI,
-     * lo añade al ListView y dibuja su etiqueta sobre el mapa.
-     *
-     * @param x coordenada X del clic en el sistema local del mapPane
-     * @param y coordenada Y del clic en el sistema local del mapPane
-     */
-    private void addPoi(double x, double y) {
-
-        // ── Construcción del diálogo personalizado ────────────────────
-        Dialog<Poi> poiDialog = new Dialog<>();
-        poiDialog.setTitle("Nuevo POI");
-        poiDialog.setHeaderText("Introduce un nuevo POI");
-
-        // Personalizamos el icono de la ventana del diálogo
-        Stage dialogStage = (Stage) poiDialog.getDialogPane().getScene().getWindow();
-        dialogStage.getIcons().add(
-            new Image(getClass().getResourceAsStream("/resources/logo.png"))
-        );
-
-        // Botones del diálogo: Aceptar y Cancelar
-        ButtonType okButton = new ButtonType("Aceptar", ButtonBar.ButtonData.OK_DONE);
-        poiDialog.getDialogPane().getButtonTypes().addAll(okButton, ButtonType.CANCEL);
-
-        // Campo de texto para el nombre del POI
-        TextField nameField = new TextField();
-        nameField.setPromptText("Nombre del POI");
-
-        // Layout del contenido del diálogo (VBox con espaciado de 10 px)
-        VBox vbox = new VBox(10, new Label("Nombre:"), nameField);
-        poiDialog.getDialogPane().setContent(vbox);
-
-        // ResultConverter: transforma la selección del botón en un objeto Poi.
-        // FIX 1: ya no usamos coordenadas provisionales (0,0); pasamos (x,y)
-        // directamente al constructor para que el modelo sea coherente desde el inicio.
-        poiDialog.setResultConverter(dialogButton -> {
-            if (dialogButton == okButton) {
-                return new Poi(nameField.getText().trim(), x, y);
-            }
-            return null;
-        });
-
-        // Mostramos el diálogo y esperamos la respuesta del usuario
-        Optional<Poi> result = poiDialog.showAndWait();
-
-        if (result.isPresent()) {
-            Poi poi = result.get();
-
-            // FIX 1: confirmamos la posición como Point2D para compatibilidad
-            // con getPosition(), usando las mismas coordenadas (x, y).
-            poi.setPosition(new Point2D(x, y));
-
-            // Añadimos el POI al ListView (la CellFactory mostrará nombre y código)
-            map_listview.getItems().add(poi);
-
-            // FIX 1: usamos (x, y) tanto para el modelo como para el Text,
-            // garantizando que la etiqueta aparezca exactamente donde se hizo clic.
-            Text text = new Text(poi.getCode());
-            text.setX(x);
-            text.setY(y);
-            mapPane.getChildren().add(text);
-        }
-    }
-
-    // =========================================================
     //  CAMBIAR EL MAPA (selector de fichero)
     // =========================================================
 
@@ -727,29 +738,6 @@ public class MainSceneController implements Initializable {
             buildMap(imgFile); // Reconstruimos la vista con la nueva imagen
             map_listview.getItems().clear(); // Borramos los datos del mapa anterior
         }
-    }
-
-    // =========================================================
-    //  AÑADIR UN CÍRCULO AL MAPA
-    // =========================================================
-
-    /**
-     * Dibuja un círculo rojo de radio 10 px en la posición indicada.
-     *
-     * Ejemplo sencillo de cómo añadir formas vectoriales (Shape) sobre el mapa.
-     * Los alumnos pueden extenderlo para:
-     *  - Elegir color dinámicamente.
-     *  - Asociar información al círculo (tooltip, popup, etc.).
-     *  - Permitir moverlo con arrastrar y soltar (drag and drop).
-     *
-     * @param x coordenada X en el sistema local del mapPane
-     * @param y coordenada Y en el sistema local del mapPane
-     */
-    private void addCircle(double x, double y) {
-        Circle circle = new Circle(10, Color.RED); // radio = 10 px, color = rojo
-        circle.setCenterX(x);
-        circle.setCenterY(y);
-        mapPane.getChildren().add(circle); // Se añade sobre el mapa como cualquier nodo
     }
 
 
@@ -790,10 +778,12 @@ public class MainSceneController implements Initializable {
     private void openActivities(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NewActivity.fxml"));
         Parent root = loader.load();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(this.getClass().getResource("/css/newActivityStyles.css").toExternalForm());
 
         Stage stage = new Stage();
         stage.setTitle("Activities");
-        stage.setScene(new Scene(root));
+        stage.setScene(scene);
         stage.showAndWait();
     }
 
@@ -869,5 +859,104 @@ public class MainSceneController implements Initializable {
         stage.show();   
         Stage stag = (Stage) zoomGroup.getScene().getWindow();
         stag.close();
+    }
+    
+    // Method created with the help of AI
+    private void drawAnnotations(Activity activity) {
+
+        // remove old annotation drawings
+        mapPane.getChildren().removeIf(node ->
+            node.getUserData() != null &&
+            node.getUserData().equals("annotation")
+        );
+
+        MapProjection proj = new MapProjection(
+            app.findMapForActivity(activity),
+            mapPane.getWidth(),
+            mapPane.getHeight()
+        );
+        
+//        List<Annotation> anns = activity.getAnnotations();
+
+        for (Annotation ann : activity.getAnnotations()) {
+            System.out.println("tipo anotacion: " + ann.getType());
+            switch (ann.getType()) {
+                case POINT -> {
+
+                    GeoPoint gp = ann.getGeoPoints().get(0);
+                    Point2D p = proj.project(gp);
+
+                    Circle c = new Circle(p.getX(), p.getY(), 6);
+                    c.setFill(Color.web(ann.getColor()));
+
+                    c.setUserData("annotation");
+
+                    mapPane.getChildren().add(c);
+                }
+                case TEXT -> {
+
+                    GeoPoint gp = ann.getGeoPoints().get(0);
+                    Point2D p = proj.project(gp);
+
+                    Text text = new Text(ann.getText());
+
+                    text.setX(p.getX());
+                    text.setY(p.getY());
+
+                    text.setFill(Color.web(ann.getColor()));
+
+                    text.setUserData("annotation");
+
+                    mapPane.getChildren().add(text);
+                }
+
+                case LINE -> {
+
+                    GeoPoint gp1 = ann.getGeoPoints().get(0);
+                    GeoPoint gp2 = ann.getGeoPoints().get(1);
+
+                    Point2D p1 = proj.project(gp1);
+                    Point2D p2 = proj.project(gp2);
+
+                    Line line = new Line(
+                        p1.getX(), p1.getY(),
+                        p2.getX(), p2.getY()
+                    );
+
+                    line.setStroke(Color.web(ann.getColor()));
+                    line.setStrokeWidth(ann.getStrokeWidth());
+
+                    line.setUserData("annotation");
+
+                    mapPane.getChildren().add(line);
+                }
+
+                case CIRCLE -> {
+
+                    GeoPoint center = ann.getGeoPoints().get(0);
+                    GeoPoint edge = ann.getGeoPoints().get(1);
+
+                    Point2D c = proj.project(center);
+                    Point2D e = proj.project(edge);
+
+                    double radius = c.distance(e);
+//
+                    Circle circle = new Circle(
+                        c.getX(),
+                        c.getY(),
+                        radius
+                    );
+
+                    circle.setFill(Color.TRANSPARENT);
+
+                    circle.setStroke(Color.web(ann.getColor()));
+                    circle.setStrokeWidth(ann.getStrokeWidth());
+
+                    circle.setUserData("annotation");
+
+                    mapPane.getChildren().add(circle);
+                }
+            }
+        }
     }
 }
