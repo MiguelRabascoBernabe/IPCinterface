@@ -8,6 +8,8 @@
     -fx-background-color: white;
     -fx-border-color: transparent transparent #e2e8f0 transparent;
     -fx-border-width: 0 0 1 0;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
 }
 
 /* Menu bar */
@@ -97,26 +99,25 @@
 }
 
 /* Primary button (Save) */
-.primary-button {
-    -fx-background-color: #2563eb;
-    -fx-text-fill: white;
+.save-button {    
+    -fx-background-color: #a6a9f2e8;
+    -fx-text-fill: #9494e9;
+    -fx-font-size: 13px;
     -fx-font-weight: bold;
-    -fx-font-size: 14px;
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
-    -fx-padding: 10 18;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
     -fx-cursor: hand;
 }
 
-.primary-button:hover {
-    -fx-background-color: #1d4ed8;
+.save-button:hover {
+    -fx-background-color: #7a7ee7;
 }
 
-.primary-button:pressed {
-    -fx-background-color: #1e40af;
+.save-button:pressed {
+    -fx-background-color: rgb(95, 90, 217);
 }
 
-.primary-button:disabled {
+.save-button:disabled {
     -fx-opacity: 0.5;
 }
 
@@ -166,4 +167,24 @@
 .error-text {
     -fx-fill: #dc2626;
     -fx-font-size: 11px;
+}
+
+.close-button {
+    -fx-background-color: #e2e8f0;
+    -fx-text-fill: #334155;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 6 14 6 14;
+    -fx-cursor: hand;
+}
+
+.close-button:hover {
+    -fx-background-color: #cbd5e1;
+    -fx-text-fill: #1e293b;
+}
+
+.close-button:pressed {
+    -fx-background-color: #bcc3ca;
 }
