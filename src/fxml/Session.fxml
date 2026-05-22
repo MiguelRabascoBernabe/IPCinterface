@@ -160,7 +160,7 @@
       </VBox>
    </center>
    <top>
-      <HBox alignment="CENTER_RIGHT" fillHeight="false" prefHeight="42.0" prefWidth="841.0" spacing="5.0" style="-fx-border-radius: 10; -fx-background-radius: 10;" styleClass="top-bar" BorderPane.alignment="BOTTOM_CENTER">
+      <HBox alignment="CENTER_RIGHT" fillHeight="false" prefHeight="46.0" prefWidth="841.0" spacing="5.0" styleClass="top-bar" BorderPane.alignment="BOTTOM_CENTER">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Estraba" wrappingWidth="85.13671875">
                <HBox.margin>
