@@ -71,7 +71,21 @@ public class LoginFormController implements Initializable {
 
     @FXML
     private void cancelAction(ActionEvent event) {
-        System.exit(0);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InitialScene.fxml"));
+            Parent root = loader.load();
+            InitialSceneController controller = loader.getController();
+
+            Stage newStage = new Stage();
+
+            newStage.setScene(new Scene(root));
+            newStage.setTitle("Welcome");
+            newStage.show();
+            Stage stage = (Stage) signInGo.getScene().getWindow();
+            stage.close();
+            } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML

@@ -485,19 +485,12 @@ public class MainSceneController implements Initializable {
         
         //Parte provisional para empezar lo de la grafica de altura
         //Necesita linkearse con la funcionalidad de seleccionar actividad, de momento cogemos la primera actividad
-<<<<<<< HEAD
-        //borrar/eliminar
-        Activity act = app.getAllActivities().get(0);
-        buildMap(new File(act.getSuggestedMap().getImagePath()));
-        cargarDatosGrafico(act);
-=======
         List<Activity> activities = app.getAllActivities();
 
         if (!activities.isEmpty()) {
             Activity act = activities.get(0);
             cargarDatosGrafico(act);
         }
->>>>>>> c46aff7d5ac19256d034c776d35af0e14636c458
     }
     
     public void cargarDatosGrafico(Activity actividad) {
@@ -748,18 +741,13 @@ public class MainSceneController implements Initializable {
         stage.setScene(new Scene(root));
         stage.showAndWait();
     }
+    
+    @FXML
+    private void speedBtnAction(ActionEvent event)throws IOException{
+        
+    }
 
     @FXML
-<<<<<<< HEAD
-    private void speedBtnAction(ActionEvent event) {
-        speedMode = !speedMode;
-        if(speedMode){
-            dibujarHeatmapVelocidad(app.getAllActivities().get(0));
-        }else{
-            //Aqui va el codigo de volver a mostrar la trace normal
-            //Completar
-        }
-=======
     private void sessionHistory(ActionEvent event) throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Session.fxml"));
         Parent root = loader.load();
@@ -768,7 +756,6 @@ public class MainSceneController implements Initializable {
         stage.setTitle("Add map");
         stage.setScene(new Scene(root));
         stage.showAndWait();
->>>>>>> c46aff7d5ac19256d034c776d35af0e14636c458
     }
     
     private Color getColorSpeed(double velocidadKmh) {
@@ -806,12 +793,15 @@ public class MainSceneController implements Initializable {
 
     @FXML
     private void signOut(ActionEvent event) throws IOException{
+        SportActivityApp.getInstance().logout();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InitialScene.fxml"));
         Parent root = loader.load();
 
         Stage stage = new Stage();
-        stage.setTitle("Sign in");
+        stage.setTitle("Welcome");
         stage.setScene(new Scene(root));
-        stage.show();        
+        stage.show();   
+        Stage stag = (Stage) zoomGroup.getScene().getWindow();
+        stag.close();
     }
 }
