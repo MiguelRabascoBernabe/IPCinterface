@@ -733,6 +733,7 @@ public class MainSceneController implements Initializable {
         Stage stage = new Stage();
         stage.setTitle("Add map");
         stage.setScene(new Scene(root));
+        
         stage.showAndWait();
     }
 
@@ -742,9 +743,15 @@ public class MainSceneController implements Initializable {
         Parent root = loader.load();
 
         Stage stage = new Stage();
-        stage.setTitle("Add map");
+        stage.setTitle("Session history");
         stage.setScene(new Scene(root));
+        Scene scene = stage.getScene();
+        scene.getStylesheets().add(getClass().getResource("/css/sessionStyles.css").toExternalForm());
+
+        
         stage.showAndWait();
+        
+        
     }
     
     

@@ -32,8 +32,6 @@ import upv.ipc.sportlib.SportActivityApp;
 public class SessionController implements Initializable {
 
     @FXML
-    private MenuItem sessionHistory;
-    @FXML
     private TableView<Activity> sessionTable;
     @FXML
     private Text totalSessions;
@@ -45,8 +43,6 @@ public class SessionController implements Initializable {
     private Text viewed;
     @FXML
     private Text annotations;
-    @FXML
-    private DatePicker dayPicker;
     
     @FXML
     private TableColumn<Activity, String> startColumn;
@@ -73,8 +69,6 @@ public class SessionController implements Initializable {
         viewed.setText("Viewed: 0");
         annotations.setText("Annotations: 0");
 
-        dayPicker.setValue(LocalDate.now());
-        
         startColumn.setCellValueFactory(data ->
             new SimpleStringProperty(
                 data.getValue().getStartTime().toString()
@@ -105,7 +99,11 @@ public class SessionController implements Initializable {
     }    
 
     @FXML
-    private void about(ActionEvent event) {
+    private void closeSession(ActionEvent event) {
+            sessionTable.getScene().getWindow().hide();
+
     }
+    
+
     
 }
