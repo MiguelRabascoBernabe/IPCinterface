@@ -187,6 +187,8 @@ public class MainSceneController implements Initializable {
     private boolean waitingForSecondPoint = false;
     private Activity currentActivity;
 
+    private double mapWidth;
+    private double mapHeight;
 
     // =========================================================
     //  MANEJADORES DE ZOOM
@@ -326,29 +328,49 @@ public class MainSceneController implements Initializable {
      */
     private void buildMap(File imgFile) throws Exception{
         // Comprobación defensiva: si el fichero no existe mostramos un aviso
+//        if (!imgFile.exists()) {
+//            map_scrollpane.setContent(
+//                new Label("Imagen no encontrada: " + imgFile.getPath()));
+//            return;
+//        }
+//
+//        // Cargamos la imagen y obtenemos sus dimensiones reales en píxeles
+//        Image img = new Image(imgFile.toURI().toString());
+//        double W = img.getWidth();
+//        double H = img.getHeight();
+//
+//        // ── mapPane: lienzo del mapa ───────────────────────────────────
+//        // Usamos un Pane (y no un Group) para poder posicionar los nodos
+//        // hijos con coordenadas absolutas (setLayoutX / setLayoutY).
+//        mapPane = new Pane();
+//        mapPane.setPrefSize(W, H); // tamaño preferido = tamaño de la imagen
+//        mapPane.setMinSize(W, H);  // impedimos que el layout lo encoja
+//        mapPane.setMaxSize(W, H);  // impedimos que el layout lo agrande
+//
+//        // Añadimos la imagen como fondo del Pane
+//        ImageView iv = new ImageView(img);
+//        iv.setFitWidth(W);
+//        iv.setFitHeight(H);
+//        mapPane.getChildren().add(iv);
+
         if (!imgFile.exists()) {
-            map_scrollpane.setContent(
-                new Label("Imagen no encontrada: " + imgFile.getPath()));
+            map_scrollpane.setContent(new Label("Imagen no encontrada: " + imgFile.getPath()));
             return;
         }
 
-        // Cargamos la imagen y obtenemos sus dimensiones reales en píxeles
         Image img = new Image(imgFile.toURI().toString());
-        double W = img.getWidth();
-        double H = img.getHeight();
 
-        // ── mapPane: lienzo del mapa ───────────────────────────────────
-        // Usamos un Pane (y no un Group) para poder posicionar los nodos
-        // hijos con coordenadas absolutas (setLayoutX / setLayoutY).
+        mapWidth = img.getWidth();
+        mapHeight = img.getHeight();
+
         mapPane = new Pane();
-        mapPane.setPrefSize(W, H); // tamaño preferido = tamaño de la imagen
-        mapPane.setMinSize(W, H);  // impedimos que el layout lo encoja
-        mapPane.setMaxSize(W, H);  // impedimos que el layout lo agrande
+        mapPane.setPrefSize(mapWidth, mapHeight);
+        mapPane.setMinSize(mapWidth, mapHeight);
+        mapPane.setMaxSize(mapWidth, mapHeight);
 
-        // Añadimos la imagen como fondo del Pane
         ImageView iv = new ImageView(img);
-        iv.setFitWidth(W);
-        iv.setFitHeight(H);
+        iv.setFitWidth(mapWidth);
+        iv.setFitHeight(mapHeight);
         mapPane.getChildren().add(iv);
 
         // ── Manejador de clics sobre el mapa ──────────────────────────
@@ -415,8 +437,8 @@ public class MainSceneController implements Initializable {
         );
         MapProjection proj = new MapProjection(
             app.findMapForActivity(currentActivity),
-            mapPane.getWidth(),
-            mapPane.getHeight()
+            mapWidth,
+            mapHeight
         );
         
         Annotation ann;
@@ -638,6 +660,16 @@ public class MainSceneController implements Initializable {
             }
         });
 
+        //Parte provisional para empezar lo de la grafica de altura
+        //Necesita linkearse con la funcionalidad de seleccionar actividad, de momento cogemos la primera actividad
+        List<Activity> activities = app.getAllActivities();
+
+        if (!activities.isEmpty()) {
+            currentActivity = activities.get(0);
+            cargarDatosGrafico(currentActivity);
+//            drawAnnotations(currentActivity);
+        }
+        
         // ── Carga del mapa inicial ─────────────────────────────────────
         // El fichero se busca relativo al directorio de trabajo del proyecto.
         //Se ha comentado la linea de abajo porque hay que buildear el mapa de la actividad cargada
@@ -647,18 +679,12 @@ public class MainSceneController implements Initializable {
             // ── Carga del mapa inicial ─────────────────────────────────────
             // El fichero se busca relativo al directorio de trabajo del proyecto.
             buildMap(new File("src/resources/upv.jpg"));
+            if(currentActivity != null){
+            drawAnnotations(currentActivity);
+            cargarDatosGrafico(currentActivity);
+        }
         } catch (Exception ex) {
             System.getLogger(MainSceneController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
-
-        //Parte provisional para empezar lo de la grafica de altura
-        //Necesita linkearse con la funcionalidad de seleccionar actividad, de momento cogemos la primera actividad
-        List<Activity> activities = app.getAllActivities();
-
-        if (!activities.isEmpty()) {
-            currentActivity = activities.get(0);
-            cargarDatosGrafico(currentActivity);
-            drawAnnotations(currentActivity);
         }
     }
 
@@ -832,7 +858,12 @@ public class MainSceneController implements Initializable {
     public void dibujarHeatmapVelocidad(Activity actividad) {
         mapPane.getChildren().removeIf(node -> node instanceof Line);
 
-        MapProjection proj = new MapProjection(app.findMapForActivity(actividad), mapPane.getWidth(), mapPane.getHeight());
+//        MapProjection proj = new MapProjection(app.findMapForActivity(actividad), mapPane.getWidth(), mapPane.getHeight());
+        MapProjection proj = new MapProjection(
+            app.findMapForActivity(actividad),
+            mapWidth,
+            mapHeight
+        );
         List<TrackPoint> puntos = actividad.getTrackPoints();
 
         for (int i = 1; i < puntos.size(); i++) {
@@ -879,8 +910,8 @@ public class MainSceneController implements Initializable {
 
         MapProjection proj = new MapProjection(
             app.findMapForActivity(activity),
-            mapPane.getWidth(),
-            mapPane.getHeight()
+            mapWidth,
+            mapHeight
         );
         
 //        List<Annotation> anns = activity.getAnnotations();
