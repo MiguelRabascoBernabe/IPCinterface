@@ -81,8 +81,10 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import upv.ipc.sportlib.*;
+import utils.AnnotationCreationState;
 
 /**
  * Controlador principal de la aplicación de mapa con POIs.
@@ -114,13 +116,13 @@ public class MainSceneController implements Initializable {
     //               └─ Circle    ← anotaciones circulares
     //
     // =========================================================
-    
+
     SportActivityApp app = SportActivityApp.getInstance();
-    
+
     /** Group que se escala para aplicar el zoom. */
     @FXML
     private Group zoomGroup;
-   
+
     /**
      * Pane que actúa como lienzo del mapa.
      * Contiene la imagen de fondo y todos los elementos superpuestos
@@ -130,7 +132,7 @@ public class MainSceneController implements Initializable {
     @FXML
     private Pane mapPane;
 
-    
+
     /** Menú contextual reutilizable para el clic derecho sobre el mapa. */
     private ContextMenu mapContextMenu;
 
@@ -187,7 +189,10 @@ public class MainSceneController implements Initializable {
     @FXML
     private LineChart<Number, Number> graficaAlturas;
     private boolean speedMode = false;
- 
+
+    private AnnotationCreationState annotationState;
+    private boolean waitingForSecondPoint = false;
+
 
     // =========================================================
     //  MANEJADORES DE ZOOM
@@ -325,7 +330,7 @@ public class MainSceneController implements Initializable {
      *
      * @param imgFile fichero de imagen a cargar como fondo del mapa
      */
-    private void buildMap(File imgFile) {
+    private void buildMap(File imgFile) throws Exception{
         // Comprobación defensiva: si el fichero no existe mostramos un aviso
         if (!imgFile.exists()) {
             map_scrollpane.setContent(
@@ -356,9 +361,26 @@ public class MainSceneController implements Initializable {
         // Gestionamos el clic derecho (menú contextual) y el clic izquierdo
         // en modo inserción (FIX 2).
         mapPane.setOnMouseClicked(e -> {
+            if(waitingForSecondPoint && e.getButton() == MouseButton.PRIMARY){
+                annotationState.setSecondX(e.getX());
+                annotationState.setSecondY(e.getY());
+
+                // CREATE ANNOTATION
+                System.out.println("creating annotation for line or circle");
+
+                waitingForSecondPoint = false;
+                annotationState = null;
+
+                return;
+            }
+
             if (e.getButton() == MouseButton.SECONDARY) {
-                // Clic derecho → mostrar menú contextual
-                onMapRightClick(e.getX(), e.getY());
+                try {
+                    // Clic derecho → mostrar menú contextual
+                    onMapRightClick(e.getX(), e.getY());
+                } catch (Exception ex) {
+                    System.getLogger(MainSceneController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                }
 
             } else if (e.getButton() == MouseButton.PRIMARY && insertionMode) {
                 // FIX 2: clic izquierdo en modo inserción → añadir POI y desactivar modo
@@ -400,23 +422,60 @@ public class MainSceneController implements Initializable {
      * @param x coordenada X del clic en el sistema local del mapPane
      * @param y coordenada Y del clic en el sistema local del mapPane
      */
-    private void onMapRightClick(double x, double y) {
+    private void onMapRightClick(double x, double y) throws Exception{
         // FIX 6: cerramos el menú si ya estaba visible (evita instancias flotantes)
-        mapContextMenu.hide();
+//        mapContextMenu.hide();
+//
+//        // Actualizamos las acciones de los items con las coordenadas actuales.
+//        // Usamos variables final para que el lambda pueda capturarlas.
+//        final double clickX = x;
+//        final double clickY = y;
+//        mapContextMenu.getItems().get(0).setOnAction(e -> addPoi(clickX, clickY));
+//        mapContextMenu.getItems().get(1).setOnAction(e -> addCircle(clickX, clickY));
+//
+//        // Mostramos el menú en coordenadas de pantalla
+//        mapContextMenu.show(
+//            mapPane.getScene().getWindow(),
+//            mapPane.localToScreen(x, y).getX(),
+//            mapPane.localToScreen(x, y).getY()
+//        );
 
-        // Actualizamos las acciones de los items con las coordenadas actuales.
-        // Usamos variables final para que el lambda pueda capturarlas.
-        final double clickX = x;
-        final double clickY = y;
-        mapContextMenu.getItems().get(0).setOnAction(e -> addPoi(clickX, clickY));
-        mapContextMenu.getItems().get(1).setOnAction(e -> addCircle(clickX, clickY));
+        annotationState = new AnnotationCreationState(x, y);
 
-        // Mostramos el menú en coordenadas de pantalla
-        mapContextMenu.show(
-            mapPane.getScene().getWindow(),
-            mapPane.localToScreen(x, y).getX(),
-            mapPane.localToScreen(x, y).getY()
-        );
+        ////////////// RENDERING THE NEW ANNOTATION WINDOW //////////////
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NewAnnotation.fxml"));
+        Parent root = loader.load();
+        NewAnnotation controller = loader.getController();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(this.getClass().getResource("/css/newAnnotationStyles.css").toExternalForm());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Create new annotation");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+        //////////////////////////////////////////
+
+        if(!controller.isAccepted()) return;
+
+        annotationState.setType(controller.getAnnotationType());
+        annotationState.setText(controller.getAnnotationText());
+        annotationState.setColor(controller.getSelectedColor().toString());
+
+        String type = controller.getAnnotationType();
+        if(type.equals("LINE") || type.equals("CIRCLE")){
+            this.annotationState = annotationState;
+            waitingForSecondPoint = true;
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Select the second point on the map");
+            alert.show();
+
+            return;
+        } else {
+            // CREATE THE ANNOTATION FOR TEXT OR POINT
+            System.out.println("create annotation for text or point");
+        }
     }
 
     // =========================================================
@@ -482,7 +541,14 @@ public class MainSceneController implements Initializable {
         //Se ha comentado la linea de abajo porque hay que buildear el mapa de la actividad cargada
         //borrar o ver que hacer
         //buildMap(new File("src/resources/upv.jpg"));
-        
+        try {
+            // ── Carga del mapa inicial ─────────────────────────────────────
+            // El fichero se busca relativo al directorio de trabajo del proyecto.
+            buildMap(new File("src/resources/upv.jpg"));
+        } catch (Exception ex) {
+            System.getLogger(MainSceneController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+
         //Parte provisional para empezar lo de la grafica de altura
         //Necesita linkearse con la funcionalidad de seleccionar actividad, de momento cogemos la primera actividad
         List<Activity> activities = app.getAllActivities();
@@ -492,7 +558,7 @@ public class MainSceneController implements Initializable {
             cargarDatosGrafico(act);
         }
     }
-    
+
     public void cargarDatosGrafico(Activity actividad) {
         graficaAlturas.getData().clear();
         graficaAlturas.setLegendVisible(false);
@@ -512,9 +578,9 @@ public class MainSceneController implements Initializable {
             series.getData().add(new XYChart.Data<>(distanciaAcumulada / 1000.0, puntoActual.getElevation()));
         }
 
-        graficaAlturas.getData().add(series);        
+        graficaAlturas.getData().add(series);
     }
-    
+
     // =========================================================
     //  INDICADOR DE POSICIÓN DEL RATÓN
     // =========================================================
@@ -649,7 +715,7 @@ public class MainSceneController implements Initializable {
      * @param event evento de acción del menú
      * @throws IOException si hay un problema al obtener la ruta canónica
      */
-    private void cambiarMapa(ActionEvent event) throws IOException {
+    private void cambiarMapa(ActionEvent event) throws IOException, Exception {
         FileChooser fc = new FileChooser();
         fc.setInitialDirectory(new File(".")); // Empezamos en el directorio del proyecto
 
@@ -685,8 +751,8 @@ public class MainSceneController implements Initializable {
         circle.setCenterY(y);
         mapPane.getChildren().add(circle); // Se añade sobre el mapa como cualquier nodo
     }
-    
-    
+
+
     @FXML
     private void zoomInBtnFunction(ActionEvent event){
         if(zoomV <= 1.5){
@@ -694,7 +760,7 @@ public class MainSceneController implements Initializable {
             zoom(zoomV);
         }
     }
-    
+
     @FXML
     private void zoomOutBtnFunction(ActionEvent event){
         if(zoomV >= 0.5){
@@ -702,7 +768,7 @@ public class MainSceneController implements Initializable {
             zoom(zoomV);
         }
     }
-    
+
     @FXML
     private void openViewEdit(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/user.fxml"));
@@ -757,7 +823,7 @@ public class MainSceneController implements Initializable {
         stage.setScene(new Scene(root));
         stage.showAndWait();
     }
-    
+
     private Color getColorSpeed(double velocidadKmh) {
         if (velocidadKmh < 5) return Color.BLUE;
         if (velocidadKmh < 15) return Color.GREEN;
@@ -765,7 +831,7 @@ public class MainSceneController implements Initializable {
         if (velocidadKmh < 40) return Color.ORANGE;
         return Color.RED;
     }
-    
+
     public void dibujarHeatmapVelocidad(Activity actividad) {
         mapPane.getChildren().removeIf(node -> node instanceof Line);
 
@@ -776,7 +842,7 @@ public class MainSceneController implements Initializable {
             TrackPoint p1 = puntos.get(i - 1);
             TrackPoint p2 = puntos.get(i);
 
-            double velocidad = p1.speedTo(p2); 
+            double velocidad = p1.speedTo(p2);
 
             Point2D pix1 = proj.project(p1);
             Point2D pix2 = proj.project(p2);
