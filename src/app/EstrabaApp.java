@@ -11,18 +11,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-/**
- *
- * @author jose
- */
+
 public class EstrabaApp extends Application {
     public static Context c=new Context();
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainSceneFXML.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/InitialScene.fxml"));
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/logo.png")));
         Scene scene = new Scene(root);
-        stage.setTitle("Estraba");
+        stage.setTitle("Welcome");
         stage.setScene(scene);
         stage.show();
     }

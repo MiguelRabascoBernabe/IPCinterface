@@ -18,7 +18,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import upv.ipc.sportlib.User;
 import app.*;
-import java.time.LocalDate;
+
 /**
  * FXML Controller class
  *
@@ -71,7 +71,21 @@ public class LoginFormController implements Initializable {
 
     @FXML
     private void cancelAction(ActionEvent event) {
-        System.exit(0);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InitialScene.fxml"));
+            Parent root = loader.load();
+            InitialSceneController controller = loader.getController();
+
+            Stage newStage = new Stage();
+
+            newStage.setScene(new Scene(root));
+            newStage.setTitle("Welcome");
+            newStage.show();
+            Stage stage = (Stage) signInGo.getScene().getWindow();
+            stage.close();
+            } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML
@@ -82,7 +96,27 @@ public class LoginFormController implements Initializable {
            User.isOlderThan(birthdate.getValue(),12)){
                emailError.setText("");passwordError.setText("");passwordInstructions.setText("");
                usernameError.setText("");usernameInstructions.setText("");birthdateError.setText("");
-               MapaDemoAppDani.getContext().getApp().registerUser(username.getText(), email.getText(), password.getText(), birthdate.getValue(), "/resources/default_User_Icon.jpg");
+               if(MapaDemoAppDani.getContext().getApp().registerUser(username.getText(), email.getText(), password.getText(), birthdate.getValue(), "/resources/default_User_Icon.jpg")){
+                   MapaDemoAppDani.getContext().getApp().login(username.getText(),password.getText());
+                   System.out.println(MapaDemoAppDani.getContext().getApp().getCurrentUser().getEmail());
+                   try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainSceneFXML.fxml"));
+                        Parent root = loader.load();
+                        MainSceneController controller = loader.getController();
+
+                        Stage newStage = new Stage();
+
+                        newStage.setScene(new Scene(root));
+                        newStage.setTitle("Estraba");
+                        newStage.show();
+                        Stage stage = (Stage) signInGo.getScene().getWindow();
+                        stage.close();
+                        } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }else{
+                   usernameError.setText("This username already exists, try signing in!");
+                }
             }
         else{
             if(!User.checkEmail(email.getText())){
@@ -109,19 +143,19 @@ public class LoginFormController implements Initializable {
     @FXML
     private void signInChange(ActionEvent event) {
         try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/signInForm.fxml"));
-        Parent root = loader.load();
-        SignInFormController controller = loader.getController();
-        
-        Stage newStage = new Stage();
-        
-        newStage.setScene(new Scene(root));
-        newStage.setTitle("Sign In");
-        newStage.show();
-        Stage stage = (Stage) signInGo.getScene().getWindow();
-        stage.close();
-        } catch (IOException ex) {
-        ex.printStackTrace();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/signInForm.fxml"));
+            Parent root = loader.load();
+            SignInFormController controller = loader.getController();
+
+            Stage newStage = new Stage();
+
+            newStage.setScene(new Scene(root));
+            newStage.setTitle("Sign In");
+            newStage.show();
+            Stage stage = (Stage) signInGo.getScene().getWindow();
+            stage.close();
+            } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
     private boolean checkLetter(char c){

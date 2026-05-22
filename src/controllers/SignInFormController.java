@@ -72,14 +72,43 @@ public class SignInFormController implements Initializable {
 
     @FXML
     private void cancelClick(ActionEvent event) {
-        
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InitialScene.fxml"));
+            Parent root = loader.load();
+            InitialSceneController controller = loader.getController();
+
+            Stage newStage = new Stage();
+
+            newStage.setScene(new Scene(root));
+            newStage.setTitle("Sign In");
+            newStage.show();
+            Stage stage = (Stage) signInButton.getScene().getWindow();
+            stage.close();
+            } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML
     private void signInGo(ActionEvent event) {
-        if(MapaDemoAppDani.getContext().getApp().login(username.getText(),password.getText())){}
+        if(MapaDemoAppDani.getContext().getApp().login(username.getText(),password.getText())){
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainSceneFXML.fxml"));
+                Parent root = loader.load();
+                MainSceneController controller = loader.getController();
+
+                Stage newStage = new Stage();
+
+                newStage.setScene(new Scene(root));
+                newStage.setTitle("Estraba");
+                newStage.show();
+                Stage stage = (Stage) registerGo.getScene().getWindow();
+                stage.close();
+                } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
         else{passwordError.setText("Username and password do not match");}
-        System.out.println(MapaDemoAppDani.getContext().getApp().login(username.getText(),password.getText()));
     }
     
 }

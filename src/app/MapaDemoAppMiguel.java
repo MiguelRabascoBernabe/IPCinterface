@@ -11,7 +11,7 @@ public class MapaDemoAppMiguel extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        int window = 2; // 0 for New Activity, 1 for new annotation and 2 for cumulative statistics
+        int window = 0; // 0 for New Activity, 1 for new annotation and 2 for cumulative statistics
         Parent root;
         
         // Cases to "dynamically" add the required FXML for testing purposes
