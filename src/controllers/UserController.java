@@ -84,6 +84,9 @@ public class UserController implements Initializable {
         birthdateInput.setDisable(true);
         //edit avatar
         editAvatar.setDisable(true);
+        //labels
+        passError.setVisible(false);
+        emailError.setVisible(false);
         
         //clip circle
         profileImage.setFitWidth(150);
@@ -97,12 +100,12 @@ public class UserController implements Initializable {
         profileImage.setImage(new Image("/resources/default_user_icon.jpg"));
         //test login
         
-        app.login("testing", "Ul12345$");
+        
         configParameter(app);
         verifyParameter(app);
         
         //verify parameters
-        
+        //testingUser123-
         
         
         
@@ -116,6 +119,7 @@ public class UserController implements Initializable {
         usernameInput.setText(thisUser.getNickName());
         emailInput.setText(thisUser.getEmail());
         passInput.setText(thisUser.getPassword());
+        birthdateInput.setValue(thisUser.getBirthDate());
         
         
     }
