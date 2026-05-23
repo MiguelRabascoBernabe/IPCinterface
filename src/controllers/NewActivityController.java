@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import upv.ipc.sportlib.Activity;
 import upv.ipc.sportlib.SportActivityApp;
@@ -56,8 +58,9 @@ public class NewActivityController implements Initializable {
         System.exit(0);
     }
     
-    private void handleCancel(MouseEvent event){
-        System.exit(0);
+    private void handleCancel(MouseEvent e){
+        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        stage.close();
     }
     
     private void handleFileUpload(MouseEvent event){

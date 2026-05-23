@@ -72,7 +72,21 @@ public class SignInFormController implements Initializable {
 
     @FXML
     private void cancelClick(ActionEvent event) {
-        
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InitialScene.fxml"));
+            Parent root = loader.load();
+            InitialSceneController controller = loader.getController();
+
+            Stage newStage = new Stage();
+
+            newStage.setScene(new Scene(root));
+            newStage.setTitle("Sign In");
+            newStage.show();
+            Stage stage = (Stage) signInButton.getScene().getWindow();
+            stage.close();
+            } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML
@@ -95,7 +109,6 @@ public class SignInFormController implements Initializable {
             }
         }
         else{passwordError.setText("Username and password do not match");}
-        System.out.println(MapaDemoAppDani.getContext().getApp().login(username.getText(),password.getText()));
     }
     
 }

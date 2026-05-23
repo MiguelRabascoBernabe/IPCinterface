@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="root" stylesheets="@../css/stylesInitialScene.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="root" stylesheets="@../css/stylesInitialScene.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InitialSceneController">
    <children>
       <VBox prefHeight="170.0" prefWidth="600.0" styleClass="vbox-title">
          <children>
@@ -36,7 +36,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="34.0" prefWidth="600.0">
                <children>
-                  <Button mnemonicParsing="false" text="Sign in" />
+                  <Button fx:id="signIn" mnemonicParsing="false" onAction="#signInGo" text="Sign in" />
                </children>
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -44,7 +44,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="29.0" prefWidth="600.0">
                <children>
-                  <Button mnemonicParsing="false" text="Log in" />
+                  <Button fx:id="register" mnemonicParsing="false" onAction="#registerGo" text="Register" />
                </children>
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

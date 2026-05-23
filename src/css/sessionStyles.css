@@ -1,0 +1,140 @@
+.root {
+    -fx-background-color: linear-gradient(to bottom right, #f4f7fb, #e9eef5);
+    -fx-font-family: "Segoe UI", "Roboto", "Arial";
+}
+
+/* Top bar */
+.top-bar {
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent #e2e8f0 transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.top-bar .text {
+    -fx-fill: #4b5d75;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+}
+
+/* Menu bar */
+.menu-bar {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.menu .label {
+    -fx-text-fill: #374151;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.context-menu {
+    
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+}
+
+.menu-item:focused {
+    -fx-background-color: #e5e7eb;
+}
+
+.menu-item .label {
+    -fx-text-fill: #111827;
+}
+
+/* Page title */
+.page-title {
+    -fx-font-size: 39px;
+    -fx-font-weight: bold;
+}
+
+/* Table */
+.table-view {
+    -fx-background-color: white;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 14 14 0 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #e2e8f0 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #64748b;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #f1f5f9 transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 4 0 4 0;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: #f8fafc;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #eff6ff;
+}
+
+.table-view .table-row-cell:selected .text {
+    -fx-fill: #1e40af;
+}
+
+.table-view .table-cell {
+    -fx-text-fill: #334155;
+    -fx-font-size: 13px;
+    -fx-padding: 6 12 6 12;
+}
+
+.table-view .scroll-bar {
+    -fx-background-color: transparent;
+}
+
+/* Summary stats below the table */
+.stat-text {
+    -fx-fill: #334155;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+}
+
+.stat-label {
+    -fx-fill: #64748b;
+    -fx-font-size: 13px;
+    
+}
+/*Generated with the help of Generative Artificial Intelligence agents*/
+.close-button {
+    -fx-background-color: #e2e8f0;
+    -fx-text-fill: #334155;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 6 14 6 14;
+    -fx-cursor: hand;
+}
+
+.close-button:hover {
+    -fx-background-color: #cbd5e1;
+    -fx-text-fill: #1e293b;
+}
+
+.close-button:pressed {
+    -fx-background-color: #bcc3ca;
+}

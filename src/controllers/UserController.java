@@ -32,7 +32,6 @@ import javafx.scene.text.Text;
  * @author pipec
  */
 public class UserController implements Initializable {
-
     @FXML
     private Button saveButton;
     @FXML
@@ -42,7 +41,8 @@ public class UserController implements Initializable {
      * Initializes the controller class.
      */
     
-    public boolean editmode;
+    public boolean editmode = false, avatarChanged = false;
+    public boolean emailValid = true, passValid = true;
     @FXML
     private TextField usernameInput;
     @FXML
@@ -55,8 +55,6 @@ public class UserController implements Initializable {
     private Button editAvatar;
     @FXML
     private ImageView profileImage;
-    @FXML
-    private MenuItem sessionHistory;
     
     private SportActivityApp app = SportActivityApp.getInstance();
     @FXML
@@ -65,6 +63,8 @@ public class UserController implements Initializable {
     private Text passError;
     @FXML
     private Circle profileCircle;
+    
+    public User user = app.getCurrentUser();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -84,6 +84,9 @@ public class UserController implements Initializable {
         birthdateInput.setDisable(true);
         //edit avatar
         editAvatar.setDisable(true);
+        //labels
+        passError.setVisible(false);
+        emailError.setVisible(false);
         
         //clip circle
         profileImage.setFitWidth(150);
@@ -94,28 +97,39 @@ public class UserController implements Initializable {
         profileImage.setClip(clip);
         
         //image default
-        profileImage.setImage(new Image("/resources/default_user_icon.jpg"));
+        String avatarPath = user.getAvatarPath();
+        try{
+            if (avatarPath != null && !avatarPath.isEmpty()) {
+                profileImage.setImage(new Image(avatarPath));
+            } else {
+             profileImage.setImage(new Image("/resources/default_user_icon.jpg"));
+            }
+        }
+        catch (Exception e) {
+            profileImage.setImage(new Image(getClass().getResourceAsStream("/resources/default_user_icon.jpg")));
+        }
+                
         //test login
         
-        app.login("testing", "Ul12345$");
+        
         configParameter(app);
         verifyParameter(app);
         
         //verify parameters
-        
+        //testingUser123-
         
         
         
     }
     public void configParameter(SportActivityApp App){
-        User thisUser = app.getCurrentUser();
-        System.out.println("Usuario: " + thisUser); // añade esto
-        if (thisUser == null) return;
+        System.out.println("Usuario: " + user); // añade esto
+        if (user == null) return;
 
-        System.out.println("Nick: " + thisUser.getNickName()); // y esto
-        usernameInput.setText(thisUser.getNickName());
-        emailInput.setText(thisUser.getEmail());
-        passInput.setText(thisUser.getPassword());
+        System.out.println("Nick: " + user.getNickName()); // y esto
+        usernameInput.setText(user.getNickName());
+        emailInput.setText(user.getEmail());
+        passInput.setText(user.getPassword());
+        birthdateInput.setValue(user.getBirthDate());
         
         
     }
@@ -125,8 +139,10 @@ public class UserController implements Initializable {
             if (!User.validateEmail(val)) {
                 //emailError.setText("Email no válido");
                 emailError.setVisible(true);
+                emailValid = false;
             } else {
                 emailError.setVisible(false);
+                emailValid = true;
             }
         });
         passInput.textProperty().addListener((obs, old, val) -> {
@@ -136,21 +152,18 @@ public class UserController implements Initializable {
             if (!User.validatePassword(val)) {
                 //passError.setText("Contraseña no válida");
                 passError.setVisible(true);
+                passValid = false;
             } else {
                 passError.setVisible(false);
+                passValid = true;
             }
     });
         
         
     }
 
-    @FXML
-    private void about(ActionEvent event){
-    }
-
-    @FXML
-    private void saveClick(ActionEvent event) {
-        //buttons and textinput manipulation
+    
+    private void disableInputs(){
         editmode = false;
         editButton.setDisable(false);
         saveButton.setDisable(true);
@@ -162,11 +175,34 @@ public class UserController implements Initializable {
         GaussianBlur passblur = new GaussianBlur();
         passblur.setRadius(10);
         passInput.setEffect(passblur);
+    }
+    @FXML
+    private void saveClick(ActionEvent event) {
+        //reload validation
+        verifyParameter(app);
         
-
-
-
+        //buttons and textinput manipulation
+        //save will only toggle back if valid
+        
+        if(passValid && emailValid){
+            disableInputs();
+            System.out.println("Email and pass valid");
+            updateEntry();
+        }else{
+            System.out.println("passValid:" + passValid);
+            System.out.println("emailValid: "+ emailValid);
+        }
+        //DATABASE UPKEEP
    
+    }
+    
+    private void updateEntry(){
+        
+        user.setEmail(emailInput.getText());
+        user.setPassword(passInput.getText());
+        user.setBirthDate(birthdateInput.getValue());
+        user.setAvatarPath(profileImage.getImage().getUrl());
+    
     }
 
     @FXML
@@ -188,14 +224,26 @@ public class UserController implements Initializable {
 
     @FXML
     private void avatarSelect(ActionEvent event) throws Exception {
+        //System.out.println("[DEBUG]: Avatar path" + user.getAvatarPath());
+        //paths seem to be local, so you cannot upload an image to the DB
+        //avat images can NOT persistent
+        avatarChanged = true;
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().add(
             new FileChooser.ExtensionFilter("Images", "*.png",
                                     "*.jpg","*.jpeg"));
         File file = fc.showOpenDialog(profileImage.getScene().getWindow());
+        
         if (file != null){
             profileImage.setImage(new Image(file.toURI().toString()));
+            
             }
+        
+    }
+
+    @FXML
+    private void closeEdit(ActionEvent event) {
+        emailInput.getScene().getWindow().hide();
     }
     
 }

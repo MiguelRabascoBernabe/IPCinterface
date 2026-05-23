@@ -15,7 +15,10 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import upv.ipc.sportlib.AnnotationType;
 
 public class NewAnnotation implements Initializable {
     @FXML
@@ -51,6 +54,19 @@ public class NewAnnotation implements Initializable {
         }
     }
     
+    private boolean accepted = false;
+    
+    public boolean isAccepted(){ return accepted;}
+    public AnnotationType getAnnotationType() {
+        String lol = visibleSelectedOption.getText();
+        if(lol.equals("POINT")) return AnnotationType.POINT;
+        else if(lol.equals("TEXT")) return AnnotationType.TEXT;
+        else if(lol.equals("LINE")) return AnnotationType.LINE;
+        else return AnnotationType.CIRCLE;
+    }
+    public String getAnnotationText() {return annotationText.getText();}
+    public Color getSelectedColor() {return colorSelection.getValue();}
+    
     private BooleanProperty validAnnotation;
     private ChangeListener<String> textListener;
     
@@ -68,11 +84,18 @@ public class NewAnnotation implements Initializable {
         field.setStyle((isValid ? "" : "-fx-background-color: #fce5e0"));
         acceptButton.setDisable(!isValid);
     }
+    
+    private void buttonAction(boolean value, ActionEvent e){
+        accepted = value;
+        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        stage.close();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ///////////// MISC INITIALIZATIONS /////////////
-        cancelButton.setOnAction(e -> System.exit(0));
+        cancelButton.setOnAction(e -> buttonAction(false, e));
+        acceptButton.setOnAction(e -> buttonAction(true, e));
         errorBox.setVisible(false);
         
         ///////////// MENU SELECTION LOGIC ///////////// 
