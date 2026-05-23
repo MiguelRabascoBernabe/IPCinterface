@@ -483,21 +483,15 @@ public class MainSceneController implements Initializable {
         //borrar o ver que hacer
         //buildMap(new File("src/resources/upv.jpg"));
         
-        //Parte provisional para empezar lo de la grafica de altura
+//Parte provisional para empezar lo de la grafica de altura
         //Necesita linkearse con la funcionalidad de seleccionar actividad, de momento cogemos la primera actividad
-<<<<<<< HEAD
-        //borrar/eliminar
-        Activity act = app.getAllActivities().get(0);
-        buildMap(new File(act.getSuggestedMap().getImagePath()));
-        cargarDatosGrafico(act);
-=======
         List<Activity> activities = app.getAllActivities();
 
         if (!activities.isEmpty()) {
             Activity act = activities.get(0);
+            buildMap(new File(act.getSuggestedMap().getImagePath()));
             cargarDatosGrafico(act);
         }
->>>>>>> c46aff7d5ac19256d034c776d35af0e14636c458
     }
     
     public void cargarDatosGrafico(Activity actividad) {
@@ -558,7 +552,6 @@ public class MainSceneController implements Initializable {
      *
      * @param event evento de acción del menú
      */
-    @FXML
     private void about(ActionEvent event) {
         Alert mensaje = new Alert(Alert.AlertType.INFORMATION);
 
@@ -750,7 +743,7 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-<<<<<<< HEAD
+
     private void speedBtnAction(ActionEvent event) {
         speedMode = !speedMode;
         if(speedMode){
@@ -759,7 +752,9 @@ public class MainSceneController implements Initializable {
             //Aqui va el codigo de volver a mostrar la trace normal
             //Completar
         }
-=======
+    }
+    
+    @FXML
     private void sessionHistory(ActionEvent event) throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Session.fxml"));
         Parent root = loader.load();
@@ -768,7 +763,6 @@ public class MainSceneController implements Initializable {
         stage.setTitle("Add map");
         stage.setScene(new Scene(root));
         stage.showAndWait();
->>>>>>> c46aff7d5ac19256d034c776d35af0e14636c458
     }
     
     private Color getColorSpeed(double velocidadKmh) {
