@@ -62,6 +62,12 @@ public class SessionController implements Initializable {
     private final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM HH:mm");
     @FXML
     private Text totalActivities;
+    @FXML
+    private TableColumn<Session, String> importedColumn;
+    @FXML
+    private TableColumn<Session, String> viewedColumn;
+    @FXML
+    private TableColumn<Session, String> createdColumn;
 
     /**
      * Initializes the controller class.
@@ -87,6 +93,15 @@ public class SessionController implements Initializable {
             Duration d = data.getValue().getDuration();
             return new SimpleStringProperty(d.toHours() + "h " + (d.toMinutes() % 60) + "m");
         });
+        importedColumn.setCellValueFactory(data ->
+            new SimpleStringProperty(String.valueOf(data.getValue().getImportedActivities()))
+        );
+        viewedColumn.setCellValueFactory(data ->
+            new SimpleStringProperty(String.valueOf(data.getValue().getViewedActivities()))
+        );
+        createdColumn.setCellValueFactory(data ->
+            new SimpleStringProperty(String.valueOf(data.getValue().getAnnotationsCreated()))
+        );
 
         sessionTable.getItems().addAll(user.getSessions());
         loadStats();

@@ -13,23 +13,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.text.Text;
 import java.time.Duration;
+import javafx.scene.control.ListView;
 import upv.ipc.sportlib.Activity;
 import upv.ipc.sportlib.SportActivityApp;
 
 public class CumulativeController implements Initializable {
-    @FXML
     private Text totalTime;
-    @FXML
     private Text accumulatedDistance;
-    @FXML
     private Text ascendedMetres;
-    @FXML
     private Text descendedMetres;
-    @FXML
     private Button calculateButton;
-    @FXML
     private ComboBox<String> monthCombobox;
-    @FXML
     private ComboBox<String> yearCombobox;
     
     private void initializeCombobox(ComboBox<String> cb, String[] options){

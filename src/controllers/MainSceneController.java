@@ -346,6 +346,7 @@ public class MainSceneController implements Initializable {
      *
      * @param imgFile fichero de imagen a cargar como fondo del mapa
      */
+    /*
     private void buildMap(File imgFile) throws Exception{
         // Comprobación defensiva: si el fichero no existe mostramos un aviso
 //        if (!imgFile.exists()) {
@@ -449,47 +450,79 @@ public class MainSceneController implements Initializable {
         map_scrollpane.setContent(contentGroup);
 
     }
-    
+    */
+    private void buildMap(File imgFile) throws Exception {
+
+        if (!imgFile.exists()) {
+            map_scrollpane.setContent(
+                new Label("Imagen no encontrada: " + imgFile.getPath())
+            );
+            return;
+        }
+
+        Image img = new Image(imgFile.toURI().toString());
+
+        mapWidth = img.getWidth();
+        mapHeight = img.getHeight();
+
+        mapPane.setPrefSize(mapWidth, mapHeight);
+        mapPane.setMinSize(mapWidth, mapHeight);
+        mapPane.setMaxSize(mapWidth, mapHeight);
+
+        // Remove previous map image only
+        mapPane.getChildren().removeIf(node ->
+            node instanceof ImageView
+        );
+
+        ImageView iv = new ImageView(img);
+
+        iv.setFitWidth(mapWidth);
+        iv.setFitHeight(mapHeight);
+
+        // background image ALWAYS at bottom layer
+        mapPane.getChildren().add(0, iv);
+    }
+
     private void saveAnnotation(boolean useTwoPoints){
         System.out.println(
             "Saving annotation type = " +
             annotationState.getType()
         );
         MapProjection proj = new MapProjection(
-            app.findMapForActivity(currentActivity),
+            currentRegion,
             mapWidth,
             mapHeight
         );
-        
+
         Annotation ann;
         GeoPoint firstGeo = proj.unproject(annotationState.getFirstX(), annotationState.getFirstY());
-        
+
         if(useTwoPoints){
             GeoPoint secondGeo = proj.unproject(annotationState.getSecondX(), annotationState.getSecondY());
 
-            ann = new Annotation(annotationState.getType(), 
-                annotationState.getText(), 
-                annotationState.getColor(), 
+            ann = new Annotation(annotationState.getType(),
+                annotationState.getText(),
+                annotationState.getColor(),
                 2.0, List.of(firstGeo, secondGeo));
         } else {
             ann = new Annotation(
-                annotationState.getType(), 
-                annotationState.getText(), 
-                annotationState.getColor(), 
+                annotationState.getType(),
+                annotationState.getText(),
+                annotationState.getColor(),
                 2.0, List.of(firstGeo)
             );
         }
-        
+
         System.out.println("ann:" + ann.getType());
         Annotation saved = app.addAnnotation(currentActivity, ann);
-        
+
         if(saved != null) {
             System.out.println("saved: " + saved.getType());
             drawAnnotations(currentActivity);
         }
         System.out.println("Annotation saved correctly");
     }
-    
+
      private void addPoi(double x, double y) {
 
         // ── Construcción del diálogo personalizado ────────────────────
@@ -682,41 +715,55 @@ public class MainSceneController implements Initializable {
 
         //Parte provisional para empezar lo de la grafica de altura
         //Necesita linkearse con la funcionalidad de seleccionar actividad, de momento cogemos la primera actividad
-        List<Activity> activities = app.getAllActivities();
+//        List<Activity> activities = app.getAllActivities();
+//
+//        if (!activities.isEmpty()) {
+//            currentActivity = activities.get(0);
+//            cargarDatosGrafico(currentActivity);
+////            drawAnnotations(currentActivity);
+//        }
 
-        if (!activities.isEmpty()) {
-            try{
-                currentActivity = activities.get(0);
-                buildMap(new File(currentActivity.getSuggestedMap().getImagePath()));
-                cargarDatosGrafico(currentActivity);   
-                drawAnnotations(currentActivity);
-            }catch(Exception e){
-                System.out.println("Error on loading activity on initialization");
-            }
-            
-        }
-                
+        
         // ── Carga del mapa inicial ─────────────────────────────────────
         // El fichero se busca relativo al directorio de trabajo del proyecto.
         //Se ha comentado la linea de abajo porque hay que buildear el mapa de la actividad cargada
         //borrar o ver que hacer
         //buildMap(new File("src/resources/upv.jpg"));
+        // Create map pane ONLY ONCE
+        mapPane = new Pane();
 
-        try {
-            // ── Carga del mapa inicial ─────────────────────────────────────
-            // El fichero se busca relativo al directorio de trabajo del proyecto.
-            buildMap(new File("src/resources/upv.jpg"));
-            if(currentActivity != null){
-                drawRoute(currentActivity);
-                drawAnnotations(currentActivity);
-                cargarDatosGrafico(currentActivity);
-            }
-        } catch (Exception ex) {
-            System.getLogger(MainSceneController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+    zoomGroup = new Group();
+    zoomGroup.getChildren().add(mapPane);
+
+    contentGroup = new Group();
+    contentGroup.getChildren().add(zoomGroup);
+
+    map_scrollpane.setContent(contentGroup);
+
+    try {
+
+        List<Activity> activities = app.getAllActivities();
+
+        if (!activities.isEmpty()) {
+
+            currentActivity = activities.get(0);
+
+            currentRegion = currentActivity.getSuggestedMap();
+
+            buildMap(new File(currentRegion.getImagePath()));
+
+            drawRoute(currentActivity);
+            drawAnnotations(currentActivity);
+
+            cargarDatosGrafico(currentActivity);
         }
         
         if(currentActivity == null) activityName.textProperty().set("Activity: None");
         else activityName.textProperty().set(currentActivity.getName());
+
+    } catch (Exception ex) {
+        ex.printStackTrace();
+    }
     }
 
     public void cargarDatosGrafico(Activity actividad) {
@@ -830,17 +877,44 @@ public class MainSceneController implements Initializable {
         stage.show();
     }
 
+    private MapRegion currentRegion;
+
     @FXML
     private void openActivities(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NewActivity.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ListActivities.fxml"));
         Parent root = loader.load();
+
+        ListActivitiesController controller = loader.getController();
+
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(this.getClass().getResource("/css/newActivityStyles.css").toExternalForm());
+        scene.getStylesheets().add(this.getClass().getResource("/css/listActivitiesStyles.css").toExternalForm());
 
         Stage stage = new Stage();
         stage.setTitle("Activities");
         stage.setScene(scene);
         stage.showAndWait();
+
+        Activity selected = controller.getSelectedActivity();
+//        if(selected != null){
+//            currentActivity = selected;
+//            drawRoute(currentActivity);
+//            drawAnnotations(currentActivity);
+//            cargarDatosGrafico(currentActivity);
+//        }
+
+        if (selected != null) {
+            currentActivity = selected;
+            try {
+                currentRegion = currentActivity.getSuggestedMap();
+                buildMap(new File(currentRegion.getImagePath()));
+                drawRoute(currentActivity);
+                drawAnnotations(currentActivity);
+//                centerMapOnActivity(currentActivity);
+                cargarDatosGrafico(currentActivity);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     @FXML
@@ -851,7 +925,7 @@ public class MainSceneController implements Initializable {
         Stage stage = new Stage();
         stage.setTitle("Add map");
         stage.setScene(new Scene(root));
-        
+
         stage.showAndWait();
     }
 
@@ -867,7 +941,7 @@ public class MainSceneController implements Initializable {
             drawRoute(currentActivity);
         }
     }
-    
+
     @FXML
     private void sessionHistory(ActionEvent event) throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Session.fxml"));
@@ -879,7 +953,7 @@ public class MainSceneController implements Initializable {
         Scene scene = stage.getScene();
         scene.getStylesheets().add(getClass().getResource("/css/sessionStyles.css").toExternalForm());
 
-        
+
         stage.showAndWait();
     }
 
@@ -891,7 +965,7 @@ public class MainSceneController implements Initializable {
         return Color.RED;
     }
 
-    public void dibujarHeatmapVelocidad(Activity actividad) {   
+    public void dibujarHeatmapVelocidad(Activity actividad) {
         mapPane.getChildren().removeIf(node -> node instanceof Line);
 
 //        MapProjection proj = new MapProjection(app.findMapForActivity(actividad), mapPane.getWidth(), mapPane.getHeight());
@@ -930,11 +1004,11 @@ public class MainSceneController implements Initializable {
         Stage stage = new Stage();
         stage.setTitle("Welcome");
         stage.setScene(new Scene(root));
-        stage.show();   
+        stage.show();
         Stage stag = (Stage) zoomGroup.getScene().getWindow();
         stag.close();
     }
-    
+
     private void drawAnnotations(Activity activity) {
 
         mapPane.getChildren().removeIf(node ->
@@ -945,11 +1019,13 @@ public class MainSceneController implements Initializable {
         map_listview.getItems().clear();
 
         MapProjection proj = new MapProjection(
-            app.findMapForActivity(activity),
+            currentRegion,
             mapWidth,
             mapHeight
         );
-        
+
+//        List<Annotation> anns = activity.getAnnotations();
+
 
         for (Annotation ann : activity.getAnnotations()) {
             
@@ -1036,7 +1112,7 @@ public class MainSceneController implements Initializable {
             }
         }
     }
-    
+
     private void drawRoute(Activity activity) {
 
         // Remove previous route drawings
@@ -1046,7 +1122,7 @@ public class MainSceneController implements Initializable {
         );
 
         MapProjection proj = new MapProjection(
-            app.findMapForActivity(activity),
+            currentRegion,
             mapWidth,
             mapHeight
         );
@@ -1099,7 +1175,7 @@ public class MainSceneController implements Initializable {
         endCircle.setFill(Color.RED);
         endCircle.setStroke(Color.BLACK);
         endCircle.setUserData("route");
-        
+
         mapPane.getChildren().add(endCircle);
         activityName.textProperty().set(currentActivity.getName());
         setStatistics();

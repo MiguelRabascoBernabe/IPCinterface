@@ -20,6 +20,7 @@ public class EstrabaApp extends Application {
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/logo.png")));
         Scene scene = new Scene(root);
         stage.setTitle("Welcome");
+        
         stage.setScene(scene);
         stage.show();
     }
