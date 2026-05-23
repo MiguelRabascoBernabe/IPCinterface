@@ -55,7 +55,7 @@ public class NewActivityController implements Initializable {
         
         context.importActivity(fileToUpload);
         System.out.println("File uploaded!");
-        System.exit(0);
+        handleCancel(event);
     }
     
     private void handleCancel(MouseEvent e){
