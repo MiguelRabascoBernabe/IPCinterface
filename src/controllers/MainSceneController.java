@@ -712,32 +712,35 @@ public class MainSceneController implements Initializable {
         // Create map pane ONLY ONCE
         mapPane = new Pane();
 
-        zoomGroup = new Group();
-        zoomGroup.getChildren().add(mapPane);
+    zoomGroup = new Group();
+    zoomGroup.getChildren().add(mapPane);
 
-        contentGroup = new Group();
-        contentGroup.getChildren().add(zoomGroup);
+    contentGroup = new Group();
+    contentGroup.getChildren().add(zoomGroup);
 
-        map_scrollpane.setContent(contentGroup);
+    map_scrollpane.setContent(contentGroup);
 
-        try {
+    try {
 
+        List<Activity> activities = app.getAllActivities();
 
-            if (!activities.isEmpty()) {
+        if (!activities.isEmpty()) {
 
-                currentActivity = activities.get(0);
+            currentActivity = activities.get(0);
 
-                currentRegion = currentActivity.getSuggestedMap();
+            currentRegion = currentActivity.getSuggestedMap();
 
-                buildMap(new File(currentRegion.getImagePath()));
+            buildMap(new File(currentRegion.getImagePath()));
 
-                drawRoute(currentActivity);
-                cargarDatosGrafico(currentActivity);
-            }
+            drawRoute(currentActivity);
+            drawAnnotations(currentActivity);
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            cargarDatosGrafico(currentActivity);
         }
+
+    } catch (Exception ex) {
+        ex.printStackTrace();
+    }
     }
 
     public void cargarDatosGrafico(Activity actividad) {

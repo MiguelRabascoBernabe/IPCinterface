@@ -30,8 +30,8 @@ public class SignInFormController implements Initializable {
 
     @FXML
     private TextField username;
-    @FXML
-    private Text usernameError;
+//    @FXML
+//    private Text usernameError;
     @FXML
     private PasswordField password;
     @FXML
