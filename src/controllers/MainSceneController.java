@@ -73,6 +73,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Polyline;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -665,9 +666,15 @@ public class MainSceneController implements Initializable {
         List<Activity> activities = app.getAllActivities();
 
         if (!activities.isEmpty()) {
-            currentActivity = activities.get(0);
-            cargarDatosGrafico(currentActivity);
-//            drawAnnotations(currentActivity);
+            try{
+                currentActivity = activities.get(0);
+                buildMap(new File(currentActivity.getSuggestedMap().getImagePath()));
+                cargarDatosGrafico(currentActivity);   
+                drawAnnotations(currentActivity);
+            }catch(Exception e){
+                System.out.println("Error on loading activity on initialization");
+            }
+            
         }
         
         // ── Carga del mapa inicial ─────────────────────────────────────
@@ -675,14 +682,16 @@ public class MainSceneController implements Initializable {
         //Se ha comentado la linea de abajo porque hay que buildear el mapa de la actividad cargada
         //borrar o ver que hacer
         //buildMap(new File("src/resources/upv.jpg"));
+
         try {
             // ── Carga del mapa inicial ─────────────────────────────────────
             // El fichero se busca relativo al directorio de trabajo del proyecto.
             buildMap(new File("src/resources/upv.jpg"));
             if(currentActivity != null){
-            drawAnnotations(currentActivity);
-            cargarDatosGrafico(currentActivity);
-        }
+                drawRoute(currentActivity);
+                drawAnnotations(currentActivity);
+                cargarDatosGrafico(currentActivity);
+            }
         } catch (Exception ex) {
             System.getLogger(MainSceneController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
@@ -722,7 +731,6 @@ public class MainSceneController implements Initializable {
      *
      * @param event evento de acción del menú
      */
-    @FXML
     private void about(ActionEvent event) {
         Alert mensaje = new Alert(Alert.AlertType.INFORMATION);
 
@@ -824,12 +832,19 @@ public class MainSceneController implements Initializable {
         
         stage.showAndWait();
     }
-    
-    @FXML
-    private void speedBtnAction(ActionEvent event)throws IOException{
-        
-    }
 
+    @FXML
+
+    private void speedBtnAction(ActionEvent event) {
+        speedMode = !speedMode;
+        if(speedMode){
+            dibujarHeatmapVelocidad(app.getAllActivities().get(0));
+        }else{
+            //Aqui va el codigo de volver a mostrar la trace normal
+            //Completar
+        }
+    }
+    
     @FXML
     private void sessionHistory(ActionEvent event) throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Session.fxml"));
@@ -843,8 +858,6 @@ public class MainSceneController implements Initializable {
 
         
         stage.showAndWait();
-        
-        
     }
 
     private Color getColorSpeed(double velocidadKmh) {
@@ -855,7 +868,7 @@ public class MainSceneController implements Initializable {
         return Color.RED;
     }
 
-    public void dibujarHeatmapVelocidad(Activity actividad) {
+    public void dibujarHeatmapVelocidad(Activity actividad) {   
         mapPane.getChildren().removeIf(node -> node instanceof Line);
 
 //        MapProjection proj = new MapProjection(app.findMapForActivity(actividad), mapPane.getWidth(), mapPane.getHeight());
@@ -996,5 +1009,72 @@ public class MainSceneController implements Initializable {
                 }
             }
         }
+    }
+    
+    // Code co-written by AI
+    private void drawRoute(Activity activity) {
+
+        // Remove previous route drawings
+        mapPane.getChildren().removeIf(node ->
+            node.getUserData() != null &&
+            node.getUserData().equals("route")
+        );
+
+        MapProjection proj = new MapProjection(
+            app.findMapForActivity(activity),
+            mapWidth,
+            mapHeight
+        );
+
+        // Route line
+        Polyline route = new Polyline();
+
+        for (TrackPoint tp : activity.getTrackPoints()) {
+            Point2D p = proj.project(tp);
+
+            route.getPoints().addAll(
+                p.getX(),
+                p.getY()
+            );
+        }
+
+        route.setStroke(Color.DODGERBLUE);
+        route.setStrokeWidth(3);
+
+        route.setUserData("route");
+
+        mapPane.getChildren().add(route);
+
+        // START POINT (green)
+        TrackPoint start = activity.getStartPoint();
+        Point2D startP = proj.project(start);
+
+        Circle startCircle = new Circle(
+            startP.getX(),
+            startP.getY(),
+            8
+        );
+
+        startCircle.setFill(Color.LIMEGREEN);
+        startCircle.setStroke(Color.BLACK);
+        startCircle.setUserData("route");
+
+        mapPane.getChildren().add(startCircle);
+
+        // END POINT (red)
+        TrackPoint end = activity.getEndPoint();
+        Point2D endP = proj.project(end);
+
+        Circle endCircle = new Circle(
+            endP.getX(),
+            endP.getY(),
+            8
+        );
+
+        endCircle.setFill(Color.RED);
+        endCircle.setStroke(Color.BLACK);
+        endCircle.setUserData("route");
+        
+        mapPane.getChildren().add(endCircle);
     }
 }

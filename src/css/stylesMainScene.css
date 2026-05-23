@@ -93,3 +93,7 @@
 .botonesZoom {
     -fx-background-color: #B3F4F5;
 }
+
+.botonActivities{
+    -fx-font-size: 16px;
+}
