@@ -13,6 +13,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -25,15 +26,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainSceneController">
+<BorderPane prefHeight="594.0" prefWidth="899.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainSceneController">
    <center>
       <VBox prefHeight="556.0" prefWidth="853.0">
          <children>
             <SplitPane fx:id="splitPane" dividerPositions="0.7784037558685446" VBox.vgrow="ALWAYS">
                <items>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox prefHeight="554.0" prefWidth="610.0">
                      <children>
-                        <LineChart fx:id="graficaAlturas" prefHeight="198.0" prefWidth="659.0" styleClass="azul">
+                        <LineChart fx:id="graficaAlturas" prefHeight="198.0" prefWidth="633.0" styleClass="azul">
                           <xAxis>
                             <NumberAxis label="Distance" prefHeight="43.0" prefWidth="574.0" side="BOTTOM" />
                           </xAxis>
@@ -44,9 +45,9 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
                         </LineChart>
-                        <AnchorPane prefHeight="183.0" prefWidth="652.0" VBox.vgrow="ALWAYS">
+                        <AnchorPane prefHeight="330.0" prefWidth="669.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <ScrollPane fx:id="map_scrollpane" fitToHeight="true" hbarPolicy="ALWAYS" pannable="true" prefHeight="358.0" prefWidth="659.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <ScrollPane fx:id="map_scrollpane" fitToHeight="true" hbarPolicy="ALWAYS" pannable="true" prefHeight="358.0" prefWidth="648.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <content>
                                     <Group fx:id="contentGroup">
                                        <children>
@@ -85,7 +86,7 @@
                         </AnchorPane>
                      </children>
                   </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox prefHeight="554.0" prefWidth="222.0">
                      <children>
                         <Button fx:id="activitiesBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openActivities" prefHeight="66.0" prefWidth="186.0" styleClass="botonActivities" text="Activities">
                            <VBox.margin>
@@ -94,7 +95,7 @@
                            <font>
                               <Font size="16.0" />
                            </font></Button>
-                        <Label alignment="TOP_CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="189.0" text="Activity X" textAlignment="CENTER" textFill="#25468c">
+                        <Label fx:id="activityName" alignment="TOP_CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="189.0" text="Activity: X" textAlignment="CENTER" textFill="#25468c">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
@@ -102,10 +103,125 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <ListView fx:id="map_listview" onMouseClicked="#listClicked" prefHeight="488.0" prefWidth="185.0" styleClass="azul" VBox.vgrow="ALWAYS">
-                           <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </VBox.margin></ListView>
+                        <VBox prefHeight="496.0" prefWidth="186.0">
+                           <children>
+                              <ScrollPane hbarPolicy="NEVER" prefHeight="402.0" prefWidth="187.0">
+                                 <content>
+                                    <VBox prefHeight="200.0" prefWidth="167.0">
+                                       <children>
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <Label prefHeight="18.0" prefWidth="80.0" text="Distance: " />
+                                                <TextField fx:id="distanceF" prefHeight="26.0" prefWidth="102.0" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <Label prefWidth="80.0" text="Duration: ">
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
+                                                </Label>
+                                                <TextField fx:id="durationF" prefHeight="26.0" prefWidth="102.0" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <Label prefWidth="80.0" text="Avg. speed: ">
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
+                                                </Label>
+                                                <TextField fx:id="avgSpeedF" prefHeight="26.0" prefWidth="102.0" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <Label prefWidth="80.0" text="Avg. pace: ">
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
+                                                </Label>
+                                                <TextField fx:id="avgPaceF" prefHeight="26.0" prefWidth="102.0" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <Label prefWidth="80.0" text="Elev. gain: ">
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
+                                                </Label>
+                                                <TextField fx:id="elevGainF" prefHeight="26.0" prefWidth="102.0" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <Label prefWidth="80.0" text="Elev. loss: ">
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
+                                                </Label>
+                                                <TextField fx:id="elevLossF" prefHeight="26.0" prefWidth="102.0" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <Label prefHeight="18.0" prefWidth="80.0" text="Min. altitude: " />
+                                                <TextField fx:id="minAltitudeF" prefHeight="26.0" prefWidth="102.0" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <Label prefHeight="18.0" prefWidth="80.0" text="Max. altitude: " />
+                                                <TextField fx:id="maxAltitudeF" prefHeight="26.0" prefWidth="102.0" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </content>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </VBox.margin>
+                              </ScrollPane>
+                              <ScrollPane hbarPolicy="NEVER" prefHeight="504.0" prefWidth="197.0" styleClass="azul">
+                                 <content>
+                                    <VBox prefHeight="500.0" prefWidth="190.0">
+                                       <children>
+                                          <ListView fx:id="map_listview" onMouseClicked="#listClicked" prefHeight="500.0" prefWidth="183.0" />
+                                       </children>
+                                    </VBox>
+                                 </content>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </VBox.margin>
+                              </ScrollPane>
+                           </children>
+                        </VBox>
                      </children>
                   </VBox>
                </items>

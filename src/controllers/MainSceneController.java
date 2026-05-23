@@ -65,6 +65,7 @@ import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import app.Poi;
 import java.util.List;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -190,7 +191,25 @@ public class MainSceneController implements Initializable {
 
     private double mapWidth;
     private double mapHeight;
-
+    @FXML
+    private TextField distanceF;
+    @FXML
+    private TextField durationF;
+    @FXML
+    private TextField avgSpeedF;
+    @FXML
+    private TextField avgPaceF;
+    @FXML
+    private TextField elevGainF;
+    @FXML
+    private TextField elevLossF;
+    @FXML
+    private TextField minAltitudeF;
+    @FXML
+    private TextField maxAltitudeF;
+    @FXML
+    private Label activityName;
+    
     // =========================================================
     //  MANEJADORES DE ZOOM
     // =========================================================
@@ -676,7 +695,7 @@ public class MainSceneController implements Initializable {
             }
             
         }
-        
+                
         // ── Carga del mapa inicial ─────────────────────────────────────
         // El fichero se busca relativo al directorio de trabajo del proyecto.
         //Se ha comentado la linea de abajo porque hay que buildear el mapa de la actividad cargada
@@ -695,6 +714,9 @@ public class MainSceneController implements Initializable {
         } catch (Exception ex) {
             System.getLogger(MainSceneController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
+        
+        if(currentActivity == null) activityName.textProperty().set("Activity: None");
+        else activityName.textProperty().set(currentActivity.getName());
     }
 
     public void cargarDatosGrafico(Activity actividad) {
@@ -842,6 +864,7 @@ public class MainSceneController implements Initializable {
         }else{
             //Aqui va el codigo de volver a mostrar la trace normal
             //Completar
+            drawRoute(currentActivity);
         }
     }
     
@@ -912,14 +935,14 @@ public class MainSceneController implements Initializable {
         stag.close();
     }
     
-    // Method created with the help of AI
     private void drawAnnotations(Activity activity) {
 
-        // remove old annotation drawings
         mapPane.getChildren().removeIf(node ->
             node.getUserData() != null &&
             node.getUserData().equals("annotation")
         );
+        
+        map_listview.getItems().clear();
 
         MapProjection proj = new MapProjection(
             app.findMapForActivity(activity),
@@ -927,9 +950,12 @@ public class MainSceneController implements Initializable {
             mapHeight
         );
         
-//        List<Annotation> anns = activity.getAnnotations();
 
         for (Annotation ann : activity.getAnnotations()) {
+            
+            Poi poiFromAnn = new Poi(ann.getText() != null && !ann.getText().isEmpty() ? ann.getText() : ann.getType().toString(), ann.getGeoPoints().get(0).getLatitude(), ann.getGeoPoints().get(0).getLongitude());
+            map_listview.getItems().add(poiFromAnn);
+            
             System.out.println("tipo anotacion: " + ann.getType());
             switch (ann.getType()) {
                 case POINT -> {
@@ -991,7 +1017,7 @@ public class MainSceneController implements Initializable {
                     Point2D e = proj.project(edge);
 
                     double radius = c.distance(e);
-//
+
                     Circle circle = new Circle(
                         c.getX(),
                         c.getY(),
@@ -1011,7 +1037,6 @@ public class MainSceneController implements Initializable {
         }
     }
     
-    // Code co-written by AI
     private void drawRoute(Activity activity) {
 
         // Remove previous route drawings
@@ -1076,5 +1101,53 @@ public class MainSceneController implements Initializable {
         endCircle.setUserData("route");
         
         mapPane.getChildren().add(endCircle);
+        activityName.textProperty().set(currentActivity.getName());
+        setStatistics();
+    }
+    
+    private void setStatistics(){
+        if (currentActivity == null) {
+            distanceF.setText("none");
+            durationF.setText("none");
+            avgSpeedF.setText("none");
+            avgPaceF.setText("none");
+            elevGainF.setText("none");
+            elevLossF.setText("none");
+            minAltitudeF.setText("none");
+            maxAltitudeF.setText("none");
+        }else{
+            double distance = 0;
+            double maxAl = Double.MIN_VALUE;
+            double minAl = Double.MAX_VALUE;
+
+            List<TrackPoint> puntos = currentActivity.getTrackPoints();
+
+            for (int i = 1; i < puntos.size(); i++) {
+                TrackPoint p1 = puntos.get(i - 1);
+                TrackPoint p2 = puntos.get(i);
+
+                distance = p1.distanceTo(p2);
+                maxAl = Double.max(maxAl,p1.getElevation());
+                minAl = Double.min(minAl,p1.getElevation());
+            }
+            distanceF.setText(String.format("%.2f", distance).replace(',', '.'));
+            durationF.setText(formatearDuration());
+            avgSpeedF.setText(String.format("%.2f", currentActivity.getAverageSpeed()).replace(',', '.'));
+            avgPaceF.setText(String.format("%.2f", currentActivity.getAveragePace()).replace(',', '.'));
+            elevGainF.setText(String.format("%.2f", currentActivity.getElevationGain()).replace(',', '.'));
+            elevLossF.setText(String.format("%.2f", currentActivity.getElevationLoss()).replace(',', '.'));
+            minAltitudeF.setText(String.format("%.2f", minAl).replace(',', '.'));
+            maxAltitudeF.setText(String.format("%.2f", maxAl).replace(',', '.'));
+        }
+        
+        
+    }
+    
+    private String formatearDuration(){
+        long seconds = currentActivity.getDuration().getSeconds();
+        long hours = seconds/3600;
+        long minutes = (seconds%3600)/60;
+
+        return String.format("%dh %02dmin", hours, minutes);
     }
 }
