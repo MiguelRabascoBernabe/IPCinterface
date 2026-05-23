@@ -463,7 +463,7 @@ public class MainSceneController implements Initializable {
         // background image ALWAYS at bottom layer
         mapPane.getChildren().add(0, iv);
     }
-    
+
     private void saveAnnotation(boolean useTwoPoints){
         System.out.println(
             "Saving annotation type = " +
@@ -474,36 +474,36 @@ public class MainSceneController implements Initializable {
             mapWidth,
             mapHeight
         );
-        
+
         Annotation ann;
         GeoPoint firstGeo = proj.unproject(annotationState.getFirstX(), annotationState.getFirstY());
-        
+
         if(useTwoPoints){
             GeoPoint secondGeo = proj.unproject(annotationState.getSecondX(), annotationState.getSecondY());
 
-            ann = new Annotation(annotationState.getType(), 
-                annotationState.getText(), 
-                annotationState.getColor(), 
+            ann = new Annotation(annotationState.getType(),
+                annotationState.getText(),
+                annotationState.getColor(),
                 2.0, List.of(firstGeo, secondGeo));
         } else {
             ann = new Annotation(
-                annotationState.getType(), 
-                annotationState.getText(), 
-                annotationState.getColor(), 
+                annotationState.getType(),
+                annotationState.getText(),
+                annotationState.getColor(),
                 2.0, List.of(firstGeo)
             );
         }
-        
+
         System.out.println("ann:" + ann.getType());
         Annotation saved = app.addAnnotation(currentActivity, ann);
-        
+
         if(saved != null) {
             System.out.println("saved: " + saved.getType());
             drawAnnotations(currentActivity);
         }
         System.out.println("Annotation saved correctly");
     }
-    
+
      private void addPoi(double x, double y) {
 
         // ── Construcción del diálogo personalizado ────────────────────
@@ -703,7 +703,7 @@ public class MainSceneController implements Initializable {
 //            cargarDatosGrafico(currentActivity);
 ////            drawAnnotations(currentActivity);
 //        }
-        
+
         // ── Carga del mapa inicial ─────────────────────────────────────
         // El fichero se busca relativo al directorio de trabajo del proyecto.
         //Se ha comentado la linea de abajo porque hay que buildear el mapa de la actividad cargada
@@ -722,7 +722,6 @@ public class MainSceneController implements Initializable {
 
         try {
 
-            List<Activity> activities = app.getAllActivities();
 
             if (!activities.isEmpty()) {
 
@@ -733,8 +732,6 @@ public class MainSceneController implements Initializable {
                 buildMap(new File(currentRegion.getImagePath()));
 
                 drawRoute(currentActivity);
-                drawAnnotations(currentActivity);
-
                 cargarDatosGrafico(currentActivity);
             }
 
@@ -777,7 +774,6 @@ public class MainSceneController implements Initializable {
      *
      * @param event evento de acción del menú
      */
-    @FXML
     private void about(ActionEvent event) {
         Alert mensaje = new Alert(Alert.AlertType.INFORMATION);
 
@@ -854,16 +850,16 @@ public class MainSceneController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    
+
     private MapRegion currentRegion;
 
     @FXML
     private void openActivities(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ListActivities.fxml"));
         Parent root = loader.load();
-        
+
         ListActivitiesController controller = loader.getController();
-        
+
         Scene scene = new Scene(root);
         scene.getStylesheets().add(this.getClass().getResource("/css/listActivitiesStyles.css").toExternalForm());
 
@@ -871,7 +867,7 @@ public class MainSceneController implements Initializable {
         stage.setTitle("Activities");
         stage.setScene(scene);
         stage.showAndWait();
-        
+
         Activity selected = controller.getSelectedActivity();
 //        if(selected != null){
 //            currentActivity = selected;
@@ -903,13 +899,20 @@ public class MainSceneController implements Initializable {
         Stage stage = new Stage();
         stage.setTitle("Add map");
         stage.setScene(new Scene(root));
-        
+
         stage.showAndWait();
     }
-    
+
     @FXML
-    private void speedBtnAction(ActionEvent event)throws IOException{
-        
+
+    private void speedBtnAction(ActionEvent event) {
+        speedMode = !speedMode;
+        if(speedMode){
+            dibujarHeatmapVelocidad(app.getAllActivities().get(0));
+        }else{
+            //Aqui va el codigo de volver a mostrar la trace normal
+            //Completar
+        }
     }
 
     @FXML
@@ -923,10 +926,8 @@ public class MainSceneController implements Initializable {
         Scene scene = stage.getScene();
         scene.getStylesheets().add(getClass().getResource("/css/sessionStyles.css").toExternalForm());
 
-        
+
         stage.showAndWait();
-        
-        
     }
 
     private Color getColorSpeed(double velocidadKmh) {
@@ -937,7 +938,7 @@ public class MainSceneController implements Initializable {
         return Color.RED;
     }
 
-    public void dibujarHeatmapVelocidad(Activity actividad) {   
+    public void dibujarHeatmapVelocidad(Activity actividad) {
         mapPane.getChildren().removeIf(node -> node instanceof Line);
 
 //        MapProjection proj = new MapProjection(app.findMapForActivity(actividad), mapPane.getWidth(), mapPane.getHeight());
@@ -976,11 +977,11 @@ public class MainSceneController implements Initializable {
         Stage stage = new Stage();
         stage.setTitle("Welcome");
         stage.setScene(new Scene(root));
-        stage.show();   
+        stage.show();
         Stage stag = (Stage) zoomGroup.getScene().getWindow();
         stag.close();
     }
-    
+
     // Method created with the help of AI
     private void drawAnnotations(Activity activity) {
 
@@ -995,7 +996,7 @@ public class MainSceneController implements Initializable {
             mapWidth,
             mapHeight
         );
-        
+
 //        List<Annotation> anns = activity.getAnnotations();
 
         for (Annotation ann : activity.getAnnotations()) {
@@ -1079,7 +1080,7 @@ public class MainSceneController implements Initializable {
             }
         }
     }
-    
+
     // Code co-written by AI
     private void drawRoute(Activity activity) {
 
@@ -1143,7 +1144,7 @@ public class MainSceneController implements Initializable {
         endCircle.setFill(Color.RED);
         endCircle.setStroke(Color.BLACK);
         endCircle.setUserData("route");
-        
+
         mapPane.getChildren().add(endCircle);
     }
 }
