@@ -25,6 +25,7 @@ import java.time.Duration;
 import upv.ipc.sportlib.Activity;
 import upv.ipc.sportlib.SportActivityApp;
 import upv.ipc.sportlib.User;
+import upv.ipc.sportlib.Session;
 
 /**
  * FXML Controller class
@@ -34,7 +35,7 @@ import upv.ipc.sportlib.User;
 public class SessionController implements Initializable {
 
     @FXML
-    private TableView<Activity> sessionTable;
+    private TableView<Session> sessionTable;
     @FXML
     private Text totalSessions;
     @FXML
@@ -47,17 +48,21 @@ public class SessionController implements Initializable {
     private Text annotations;
     
     @FXML
-    private TableColumn<Activity, String> startColumn;
+    private TableColumn<Session, String> startColumn;
 
     @FXML
-    private TableColumn<Activity, String> endColumn;
+    private TableColumn<Session, String> endColumn;
 
     @FXML
-    private TableColumn<Activity, String> durationColumn;
+    private TableColumn<Session, String> durationColumn;
 
     
     private final SportActivityApp app = SportActivityApp.getInstance();
     public User user = app.getCurrentUser();
+    private final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM HH:mm");
+    @FXML
+    private Text totalActivities;
+
     /**
      * Initializes the controller class.
      */
@@ -73,57 +78,49 @@ public class SessionController implements Initializable {
         
        
         startColumn.setCellValueFactory(data ->
-            new SimpleStringProperty(
-                data.getValue().getStartTime().format(
-                                DateTimeFormatter.ofPattern("dd/MM HH:mm")
-                )
-            )
+            new SimpleStringProperty(data.getValue().getStartTime().format(fmt))
         );
-        
         endColumn.setCellValueFactory(data ->
-            new SimpleStringProperty(
-                data.getValue().getEndTime().format(
-                                DateTimeFormatter.ofPattern("dd/MM HH:mm")
-                )
-            )
+            new SimpleStringProperty(data.getValue().getEndTime().format(fmt))
         );
-        
         durationColumn.setCellValueFactory(data -> {
-
             Duration d = data.getValue().getDuration();
-
-            String texto =
-                    d.toHours() + "h "
-                    + (d.toMinutes() % 60) + "m";
-
-            return new SimpleStringProperty(texto);
+            return new SimpleStringProperty(d.toHours() + "h " + (d.toMinutes() % 60) + "m");
         });
-        startNumbers();
-        
-        sessionTable.getItems().addAll(app.getUserActivities());
 
+        sessionTable.getItems().addAll(user.getSessions());
+        loadStats();
 
         
     }    
-    private void startNumbers(){
-        Duration total = Duration.ZERO;
-        if(user.getActivities().size()>0){
-            totalSessions.setText("Total Sessions: "+ user.getActivities().size());
-            //get total time
-            for(Activity a: user.getActivities()){
-                total = total.plus(a.getDuration());}
-            totalTime.setText("Total Time: " + total.toHours() + "h " + (total.toMinutes() % 60) + "m");
+    private void loadStats() {
+        var sessions = user.getSessions();
 
-            imported.setText("Imported: 0");
-            viewed.setText("Viewed: 0");
-            annotations.setText("Annotations: 0");
+        Duration total = Duration.ZERO;
+        int totalImported = 0;
+        int totalViewed = 0;
+        int totalAnnotations = 0;
+
+        for (Session s : sessions) {
+            total = total.plus(s.getDuration());
+            totalImported += s.getImportedActivities();
+            totalViewed += s.getViewedActivities();
+            totalAnnotations += s.getAnnotationsCreated();
         }
+
+        totalSessions.setText("Total Sessions: " + sessions.size());
+        totalTime.setText("Total Time: " + total.toHours() + "h " + (total.toMinutes() % 60) + "m");
+        imported.setText("Imported: " + totalImported);
+        viewed.setText("Viewed: " + totalViewed);
+        annotations.setText("Annotations: " + totalAnnotations);
+        totalActivities.setText("Total Activities: " + user.getActivities().size());
+        
+        
     }
 
     @FXML
     private void closeSession(ActionEvent event) {
-            sessionTable.getScene().getWindow().hide();
-
+        sessionTable.getScene().getWindow().hide();
     }
     
 
