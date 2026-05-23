@@ -103,11 +103,11 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <VBox prefHeight="496.0" prefWidth="186.0">
+                        <VBox maxWidth="1.7976931348623157E308" prefHeight="496.0" prefWidth="186.0">
                            <children>
                               <ScrollPane hbarPolicy="NEVER" prefHeight="402.0" prefWidth="187.0">
                                  <content>
-                                    <VBox prefHeight="200.0" prefWidth="167.0">
+                                    <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="167.0">
                                        <children>
                                           <HBox prefHeight="100.0" prefWidth="200.0">
                                              <children>
@@ -208,18 +208,15 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </VBox.margin>
                               </ScrollPane>
-                              <ScrollPane hbarPolicy="NEVER" prefHeight="504.0" prefWidth="197.0" styleClass="azul">
-                                 <content>
-                                    <VBox prefHeight="500.0" prefWidth="190.0">
-                                       <children>
-                                          <ListView fx:id="map_listview" onMouseClicked="#listClicked" prefHeight="500.0" prefWidth="183.0" />
-                                       </children>
-                                    </VBox>
-                                 </content>
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </VBox.margin>
-                              </ScrollPane>
+                              <VBox maxWidth="1.7976931348623157E308" prefHeight="500.0" prefWidth="190.0">
+                                 <children>
+                                    <ListView fx:id="map_listview" maxWidth="1.7976931348623157E308" onMouseClicked="#listClicked" prefHeight="500.0" prefWidth="183.0">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </ListView>
+                                 </children>
+                              </VBox>
                            </children>
                         </VBox>
                      </children>
