@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package controllers;
 
 import java.net.URL;
@@ -15,16 +11,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;import javafx.scene.shape.Circle;
 import java.io.File;
 import java.util.Locale;
-import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import javafx.scene.image.Image;
 import javafx.scene.effect.GaussianBlur;
 import upv.ipc.sportlib.*;
-import app.Poi;
-import javafx.scene.Scene;
 import javafx.scene.text.Text;
-
-
 
 /**
  * FXML Controller class
@@ -122,10 +113,8 @@ public class UserController implements Initializable {
         
     }
     public void configParameter(SportActivityApp App){
-        System.out.println("Usuario: " + user); // añade esto
         if (user == null) return;
 
-        System.out.println("Nick: " + user.getNickName()); // y esto
         usernameInput.setText(user.getNickName());
         emailInput.setText(user.getEmail());
         passInput.setText(user.getPassword());
@@ -147,7 +136,6 @@ public class UserController implements Initializable {
         });
         passInput.textProperty().addListener((obs, old, val) -> {
             if (passError == null) return;
-            //System.out.println("password changed: " + val);
 
             if (!User.validatePassword(val)) {
                 //passError.setText("Contraseña no válida");
@@ -186,24 +174,25 @@ public class UserController implements Initializable {
         
         if(passValid && emailValid){
             disableInputs();
-            System.out.println("Email and pass valid");
             updateEntry();
-        }else{
-            System.out.println("passValid:" + passValid);
-            System.out.println("emailValid: "+ emailValid);
         }
-        //DATABASE UPKEEP
-   
     }
     
-    private void updateEntry(){
-        
-        user.setEmail(emailInput.getText());
-        user.setPassword(passInput.getText());
-        user.setBirthDate(birthdateInput.getValue());
-        user.setAvatarPath(profileImage.getImage().getUrl());
-    
+    private void updateEntry() {
+        String password = passInput.getText();
+
+        if (password == null || password.isBlank()) {
+            password = user.getPassword();
+        }
+
+        app.updateCurrentUser(
+            emailInput.getText(),
+            password,
+            birthdateInput.getValue(),
+            profileImage.getImage().getUrl()
+        );
     }
+    
 
     @FXML
     private void editClick(ActionEvent event) {
@@ -224,7 +213,6 @@ public class UserController implements Initializable {
 
     @FXML
     private void avatarSelect(ActionEvent event) throws Exception {
-        //System.out.println("[DEBUG]: Avatar path" + user.getAvatarPath());
         //paths seem to be local, so you cannot upload an image to the DB
         //avat images can NOT persistent
         avatarChanged = true;
