@@ -463,7 +463,7 @@ public class MainSceneController implements Initializable {
 
     @FXML
     private void zoomInBtnFunction(ActionEvent event){
-        if(zoomV <= 1.5){
+        if(zoomV <= 2){
             zoomIn(event);
             zoom(zoomV);
         }
@@ -548,6 +548,7 @@ public class MainSceneController implements Initializable {
         if(speedMode.get()){
             if(currentActivity != null){
                 dibujarHeatmapVelocidad();
+                drawAnnotations(currentActivity);
             }
         }else{
             if(currentActivity != null){
