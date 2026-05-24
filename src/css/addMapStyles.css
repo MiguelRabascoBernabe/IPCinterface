@@ -1,0 +1,90 @@
+.root {
+    -fx-background-color: #FDFDFD;
+    -fx-padding: 0;
+}
+
+.header-bar {
+    -fx-background-color: #84b8ec;
+    -fx-border-color: #A9D8D9;
+    -fx-border-width: 0 0 1 0;
+}
+
+.header-title {
+    -fx-fill: #25468C;
+}
+
+.label {
+    -fx-text-fill: #222222;
+    -fx-font-family: "System";
+}
+
+.text-field {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #D1D1D1;
+    -fx-border-width: 1;
+    -fx-padding: 6 10;
+    -fx-text-fill: #444444;
+}
+
+.text-field:focused {
+    -fx-border-color: #A9D8D9;
+    -fx-background-color: #FAFAFA;
+}
+
+#uploadBtn {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: #A9D8D9;
+    -fx-border-width: 2;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 8, 0, 0, 2);
+}
+
+#uploadBtn:hover {
+    -fx-background-color: #F1F7F0;
+    -fx-border-color: #89C4C5;
+}
+
+#uploadBtn .text {
+    -fx-fill: #25468C;
+    -fx-font-weight: bold;
+}
+
+.button {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: #D1D1D1;
+    -fx-border-width: 1;
+    -fx-text-fill: #666666;
+    -fx-cursor: hand;
+    -fx-padding: 6 20;
+}
+
+.button:hover {
+    -fx-background-color: #F5F5F5;
+    -fx-border-color: #BDBDBD;
+}
+
+#addBtn {
+    -fx-background-color: #EAEAEA;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-width: 0;
+    -fx-text-fill: #999999;
+}
+
+#addBtn:hover:not(:disabled) {
+    -fx-background-color: #25468C;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+#mapViewer {
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 4);
+}

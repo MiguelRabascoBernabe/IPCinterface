@@ -10,20 +10,24 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="TOP_CENTER" prefHeight="412.0" prefWidth="554.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddMapController">
+<VBox alignment="TOP_CENTER" prefHeight="479.0" prefWidth="635.0" stylesheets="@../css/addMapStyles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddMapController">
    <children>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Add map">
-         <font>
-            <Font name="System Bold" size="44.0" />
-         </font>
-      </Text>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="header-bar">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Add map">
+               <font>
+                  <Font name="System Bold" size="44.0" />
+               </font>
+            </Text>
+         </children>
+      </HBox>
       <VBox prefHeight="293.0" prefWidth="438.0">
          <children>
             <HBox prefHeight="242.0" prefWidth="438.0">
                <children>
-                  <VBox prefHeight="353.0" prefWidth="403.0">
+                  <VBox prefHeight="370.0" prefWidth="391.0">
                      <children>
-                        <Button fx:id="uploadBtn" mnemonicParsing="false" onAction="#uploadFunction" prefHeight="39.0" prefWidth="117.0" text="Button">
+                        <Button fx:id="uploadBtn" mnemonicParsing="false" onAction="#uploadFunction" prefHeight="39.0" prefWidth="117.0">
                            <graphic>
                               <HBox prefHeight="31.0" prefWidth="162.0">
                                  <children>
@@ -34,7 +38,7 @@
                                     </ImageView>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Upload" wrappingWidth="78.13671875">
                                        <font>
-                                          <Font size="23.0" />
+                                          <Font name="System Bold" size="23.0" />
                                        </font>
                                     </Text>
                                  </children>
@@ -44,37 +48,37 @@
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </VBox.margin>
                         </Button>
-                        <ImageView fx:id="mapViewer" fitHeight="272.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="mapViewer" fitHeight="272.0" fitWidth="357.0" pickOnBounds="true" preserveRatio="true">
                            <VBox.margin>
                               <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                            </VBox.margin>
                         </ImageView>
                      </children>
                   </VBox>
-                  <VBox maxHeight="-Infinity" prefHeight="306.0" prefWidth="146.0">
+                  <VBox maxHeight="-Infinity" prefHeight="306.0" prefWidth="202.0">
                      <children>
                         <VBox prefHeight="54.0" prefWidth="130.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Minimum latitude" />
-                              <TextField fx:id="minLatF" onKeyTyped="#validarNumero" prefHeight="26.0" prefWidth="116.0" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Minimum latitude" />
+                              <TextField fx:id="minLatF" onKeyTyped="#validarNumero" prefHeight="26.0" prefWidth="116.0" styleClass="text-field" />
                            </children>
                         </VBox>
                         <VBox prefHeight="54.0" prefWidth="107.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Minimum longitude" />
-                              <TextField fx:id="minLongF" onKeyTyped="#validarNumero" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Minimum longitude" />
+                              <TextField fx:id="minLongF" onKeyTyped="#validarNumero" styleClass="text-field" />
                            </children>
                         </VBox>
                         <VBox prefHeight="56.0" prefWidth="107.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Maximum latitude" />
-                              <TextField fx:id="maxLatF" onKeyTyped="#validarNumero" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Maximum latitude" />
+                              <TextField fx:id="maxLatF" onKeyTyped="#validarNumero" styleClass="text-field" />
                            </children>
                         </VBox>
                         <VBox prefHeight="56.0" prefWidth="107.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Maximum longitude" />
-                              <TextField fx:id="maxLongF" onKeyTyped="#validarNumero" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Maximum longitude" />
+                              <TextField fx:id="maxLongF" onKeyTyped="#validarNumero" styleClass="text-field" />
                            </children>
                         </VBox>
                         <HBox prefHeight="50.0" prefWidth="137.0">
