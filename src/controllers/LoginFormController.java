@@ -109,7 +109,7 @@ public class LoginFormController implements Initializable {
                         Stage newStage = new Stage();
 
                         newStage.setScene(new Scene(root));
-                        newStage.setTitle("Estraba");
+                        newStage.setTitle("Running La Safor");
                         newStage.show();
                         Stage stage = (Stage) signInGo.getScene().getWindow();
                         stage.close();

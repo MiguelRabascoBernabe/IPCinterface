@@ -178,7 +178,7 @@
    <top>
       <HBox alignment="CENTER_RIGHT" fillHeight="false" prefHeight="43.0" prefWidth="841.0" spacing="5.0" styleClass="top-bar" BorderPane.alignment="CENTER">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Estraba" wrappingWidth="85.13671875">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Running La Safor" wrappingWidth="133.13671875">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin></Text>
