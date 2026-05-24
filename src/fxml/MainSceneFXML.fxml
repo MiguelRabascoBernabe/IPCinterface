@@ -68,15 +68,62 @@
                                     </Group>
                                  </content>
                               </ScrollPane>
-                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                              <VBox prefHeight="200.0" prefWidth="100.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#zoomInBtnFunction" prefHeight="26.0" prefWidth="27.0" styleClass="button-zoom" text="+" />
-                                    <Button mnemonicParsing="false" onAction="#zoomOutBtnFunction" prefHeight="26.0" prefWidth="25.0" text="-" />
-                                 </children>
-                                 <padding>
-                                    <Insets left="10.0" top="10.0" />
-                                 </padding>
-                              </HBox>
+                                    <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" onAction="#zoomInBtnFunction" prefHeight="26.0" prefWidth="27.0" styleClass="button-zoom" text="+" />
+                                          <Button mnemonicParsing="false" onAction="#zoomOutBtnFunction" prefHeight="26.0" prefWidth="25.0" text="-" />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" top="10.0" />
+                                       </padding>
+                                    </HBox>
+                                    <VBox fx:id="speedLeyenda" spacing="8.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-radius: 12; -fx-border-color: #E0E0E0; -fx-border-width: 1; -fx-padding: 12;">
+                                        <children>
+                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold; -fx-fill: #25468C;" text="Speed (km/h)" />
+
+                                           <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                              <children>
+                                                 <Pane prefHeight="12.0" prefWidth="12.0" style="-fx-background-color: #0000FF; -fx-background-radius: 4;" />
+                                                 <Label prefWidth="56.0" style="-fx-text-fill: #666666;" text="&lt; 5" />
+                                              </children>
+                                           </HBox>
+
+                                           <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                              <children>
+                                                 <Pane prefHeight="12.0" prefWidth="12.0" style="-fx-background-color: #008000; -fx-background-radius: 4;" />
+                                                 <Label prefWidth="56.0" style="-fx-text-fill: #666666;" text="5 - 15" />
+                                              </children>
+                                           </HBox>
+
+                                           <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                              <children>
+                                                 <Pane prefHeight="12.0" prefWidth="12.0" style="-fx-background-color: #FFFF00; -fx-background-radius: 4;" />
+                                                 <Label prefWidth="56.0" style="-fx-text-fill: #666666;" text="15 - 25" />
+                                              </children>
+                                           </HBox>
+
+                                           <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                              <children>
+                                                 <Pane prefHeight="12.0" prefWidth="12.0" style="-fx-background-color: #FFA500; -fx-background-radius: 4;" />
+                                                 <Label prefWidth="56.0" style="-fx-text-fill: #666666;" text="25 - 40" />
+                                              </children>
+                                           </HBox>
+
+                                           <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                              <children>
+                                                 <Pane prefHeight="12.0" prefWidth="12.0" style="-fx-background-color: #FF0000; -fx-background-radius: 4;" />
+                                                 <Label prefWidth="56.0" style="-fx-text-fill: #666666;" text="&gt; 40" />
+                                              </children>
+                                           </HBox>
+                                        </children>
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                     </VBox>
+                                  </children>
+                              </VBox>
                               <Button mnemonicParsing="false" onAction="#openAddMap" text="Add map" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0" />
                               <ToggleButton fx:id="speedBtn" mnemonicParsing="false" onAction="#speedBtnAction" text="Speed" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="45.0" />
                            </children>
@@ -105,7 +152,7 @@
                         </Label>
                         <VBox maxWidth="1.7976931348623157E308" prefHeight="496.0" prefWidth="186.0">
                            <children>
-                              <ScrollPane hbarPolicy="NEVER" prefHeight="402.0" prefWidth="187.0">
+                              <ScrollPane hbarPolicy="NEVER" maxWidth="1.7976931348623157E308" prefHeight="402.0" prefWidth="187.0">
                                  <content>
                                     <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="167.0">
                                        <children>

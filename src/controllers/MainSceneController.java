@@ -121,6 +121,8 @@ public class MainSceneController implements Initializable {
     private Label activityName;
     @FXML
     private ToggleButton speedBtn;
+    @FXML
+    private VBox speedLeyenda;
     
     void zoomIn(ActionEvent event) {
         double sliderVal = zoomV; //zoom_slider.getValue();
@@ -363,11 +365,11 @@ public class MainSceneController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-               //  setCellFactory() define cómo se renderiza cada celda
-        //  de forma independiente al modelo Poi.
-        //  Aquí mostramos "CÓDIGO – Nombre" en cada fila.
+               
         zoomV = 1.0;
         speedBtn.selectedProperty().bindBidirectional(speedMode);
+        speedLeyenda.visibleProperty().bind(speedMode);
+        speedLeyenda.managedProperty().bind(speedLeyenda.visibleProperty());
         
         map_listview.setCellFactory(listView -> new ListCell<Poi>() {
             @Override
