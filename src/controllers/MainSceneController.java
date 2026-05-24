@@ -38,12 +38,15 @@ import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import app.Poi;
 import java.util.List;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polyline;
@@ -90,7 +93,7 @@ public class MainSceneController implements Initializable {
     private Button activitiesBtn;
     @FXML
     private LineChart<Number, Number> graficaAlturas;
-    private boolean speedMode = false;
+    private BooleanProperty speedMode = new SimpleBooleanProperty(false);
 
     private AnnotationCreationState annotationState;
     private boolean waitingForSecondPoint = false;
@@ -116,6 +119,8 @@ public class MainSceneController implements Initializable {
     private TextField maxAltitudeF;
     @FXML
     private Label activityName;
+    @FXML
+    private ToggleButton speedBtn;
     
     void zoomIn(ActionEvent event) {
         double sliderVal = zoomV; //zoom_slider.getValue();
@@ -362,6 +367,7 @@ public class MainSceneController implements Initializable {
         //  de forma independiente al modelo Poi.
         //  Aquí mostramos "CÓDIGO – Nombre" en cada fila.
         zoomV = 1.0;
+        speedBtn.selectedProperty().bindBidirectional(speedMode);
         
         map_listview.setCellFactory(listView -> new ListCell<Poi>() {
             @Override
@@ -517,6 +523,7 @@ public class MainSceneController implements Initializable {
                 drawAnnotations(currentActivity);
                 centerMapOnActivity(currentActivity);
                 cargarDatosGrafico(currentActivity);
+                speedMode.setValue(false);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -538,13 +545,15 @@ public class MainSceneController implements Initializable {
     @FXML
 
     private void speedBtnAction(ActionEvent event) {
-        speedMode = !speedMode;
-        if(speedMode){
-            dibujarHeatmapVelocidad(app.getAllActivities().get(0));
+        if(speedMode.get()){
+            if(currentActivity != null){
+                dibujarHeatmapVelocidad();
+            }
         }else{
-            //Aqui va el codigo de volver a mostrar la trace normal
-            //Completar
-            drawRoute(currentActivity);
+            if(currentActivity != null){
+                drawRoute(currentActivity);
+                drawAnnotations(currentActivity);
+            }
         }
     }
 
@@ -571,31 +580,34 @@ public class MainSceneController implements Initializable {
         return Color.RED;
     }
 
-    public void dibujarHeatmapVelocidad(Activity actividad) {
-        mapPane.getChildren().removeIf(node -> node instanceof Line);
+    public void dibujarHeatmapVelocidad() {
+        mapPane.getChildren().removeIf(node -> 
+            node.getUserData() != null && node.getUserData().equals("speed_segment")
+        );
 
-//        MapProjection proj = new MapProjection(app.findMapForActivity(actividad), mapPane.getWidth(), mapPane.getHeight());
         MapProjection proj = new MapProjection(
-            app.findMapForActivity(actividad),
+            currentRegion,
             mapWidth,
             mapHeight
         );
-        List<TrackPoint> puntos = actividad.getTrackPoints();
+
+        List<TrackPoint> puntos = currentActivity.getTrackPoints();
 
         for (int i = 1; i < puntos.size(); i++) {
             TrackPoint p1 = puntos.get(i - 1);
             TrackPoint p2 = puntos.get(i);
 
-            double velocidad = p1.speedTo(p2);
-
             Point2D pix1 = proj.project(p1);
             Point2D pix2 = proj.project(p2);
 
+            double velocidad = p1.speedTo(p2);
+
             Line segmento = new Line(pix1.getX(), pix1.getY(), pix2.getX(), pix2.getY());
-//            System.out.println(pix1.getX()+", "+ pix1.getY());
+            //System.out.println("Heat: "+pix1.getX()+", " +pix1.getY()+", " +pix2.getX()+", "+ pix2.getY());
             segmento.setStroke(getColorSpeed(velocidad));
-            segmento.setStrokeWidth(3.5);
+            segmento.setStrokeWidth(3); 
             segmento.setStrokeLineCap(StrokeLineCap.ROUND);
+            segmento.setUserData("speed_segment");
 
             mapPane.getChildren().add(segmento);
         }
@@ -734,7 +746,7 @@ public class MainSceneController implements Initializable {
 
         for (TrackPoint tp : activity.getTrackPoints()) {
             Point2D p = proj.project(tp);
-
+            //System.out.println(p.getX()+", " +p.getY());
             route.getPoints().addAll(
                 p.getX(),
                 p.getY()

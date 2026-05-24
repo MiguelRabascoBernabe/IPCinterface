@@ -78,7 +78,7 @@
                                  </padding>
                               </HBox>
                               <Button mnemonicParsing="false" onAction="#openAddMap" text="Add map" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0" />
-                              <ToggleButton mnemonicParsing="false" onAction="#speedBtnAction" text="Speed" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="45.0" />
+                              <ToggleButton fx:id="speedBtn" mnemonicParsing="false" onAction="#speedBtnAction" text="Speed" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="45.0" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />

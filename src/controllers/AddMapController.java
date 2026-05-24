@@ -92,6 +92,7 @@ public class AddMapController implements Initializable {
     @FXML
     private void confirmFunction(ActionEvent event) {
         app.addMapRegion(fileName, selectedFile, Double.parseDouble(minLatF.getText()), Double.parseDouble(maxLatF.getText()), Double.parseDouble(minLongF.getText()), Double.parseDouble(maxLatF.getText()));
+        ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
     }
 
     @FXML
