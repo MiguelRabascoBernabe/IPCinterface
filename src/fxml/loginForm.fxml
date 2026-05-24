@@ -48,28 +48,28 @@
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Username" />
-                  <TextField fx:id="username" maxWidth="152.0" prefHeight="41.0" prefWidth="152.0" promptText="ExampleUsername" styleClass="input" />
+                  <TextField fx:id="username" maxWidth="152.0" onKeyPressed="#enterPressed" prefHeight="41.0" prefWidth="152.0" promptText="ExampleUsername" styleClass="input" />
                   <Text fx:id="usernameError" fill="#d71515" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="error-text" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="E-mail address" />
-                  <TextField fx:id="email" maxWidth="225.0" prefHeight="41.0" prefWidth="225.0" promptText="yourtag@yourdomain.com" styleClass="input" />
+                  <TextField fx:id="email" maxWidth="225.0" onKeyPressed="#enterPressed" prefHeight="41.0" prefWidth="225.0" promptText="yourtag@yourdomain.com" styleClass="input" />
                   <Text fx:id="emailError" fill="#d71515" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="error-text" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Password" />
-                  <PasswordField fx:id="password" maxWidth="215.0" prefHeight="25.0" prefWidth="215.0" promptText="SuperSecretP@ssw0rd" styleClass="input" />
+                  <PasswordField fx:id="password" maxWidth="215.0" onKeyPressed="#enterPressed" prefHeight="25.0" prefWidth="215.0" promptText="SuperSecretP@ssw0rd" styleClass="input" />
                   <Text fx:id="passwordError" fill="#d71515" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="error-text" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Date of Birth" />
-                  <DatePicker fx:id="birthdate" prefHeight="50.0" prefWidth="165.0" promptText="DD/MM/YYYY" styleClass="input" />
+                  <DatePicker fx:id="birthdate" onKeyPressed="#enterPressed" prefHeight="50.0" prefWidth="165.0" promptText="DD/MM/YYYY" styleClass="input" />
                   <Text fx:id="birthdateError" fill="#d71515" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="error-text" />
                </children>
             </VBox>

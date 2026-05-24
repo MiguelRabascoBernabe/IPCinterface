@@ -37,12 +37,12 @@
             <VBox prefHeight="0.0" prefWidth="300.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Username" />
-                  <TextField fx:id="username" promptText="SuperCoolUser" styleClass="input" />
+                  <TextField fx:id="username" onKeyPressed="#enterPressed" promptText="SuperCoolUser" styleClass="input" />
                </children></VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Password" />
-                  <PasswordField fx:id="password" promptText="SuperSecretP@ssW0rd" styleClass="input" />
+                  <PasswordField fx:id="password" onKeyPressed="#enterPressed" promptText="SuperSecretP@ssW0rd" styleClass="input" />
                   <Text fx:id="passwordError" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="error-text" />
                </children>
             </VBox>

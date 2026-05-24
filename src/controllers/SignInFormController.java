@@ -18,6 +18,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -109,6 +111,11 @@ public class SignInFormController implements Initializable {
             }
         }
         else{passwordError.setText("Username and password do not match");}
+    }
+
+    @FXML
+    private void enterPressed(KeyEvent event) {
+        if(event.getCode()==KeyCode.ENTER){signInGo(new ActionEvent());}
     }
     
 }

@@ -18,6 +18,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import upv.ipc.sportlib.User;
 import app.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 /**
  * FXML Controller class
@@ -158,7 +160,13 @@ public class LoginFormController implements Initializable {
             ex.printStackTrace();
         }
     }
+    
     private boolean checkLetter(char c){
         return userChar.contains(""+c);
+    }
+
+    @FXML
+    private void enterPressed(KeyEvent event) {
+        if(event.getCode()==KeyCode.ENTER){createAccount(new ActionEvent());}
     }
 }
