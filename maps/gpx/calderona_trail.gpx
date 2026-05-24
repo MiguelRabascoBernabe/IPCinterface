@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gpx version="1.1" creator="ExampleGenerator">
-<trk><name>Example Activity</name><trkseg>
+<trk><name>Calderona Trail</name><trkseg>
 <trkpt lat="39.69" lon="-0.42"><ele>50.0</ele><time>2026-03-09T10:39:29.925058+00:00</time></trkpt>
 <trkpt lat="39.689986295347545" lon="-0.41947664043757055"><ele>53.128689300804616</ele><time>2026-03-09T10:39:34.925058+00:00</time></trkpt>
 <trkpt lat="39.68994521895368" lon="-0.4189547153673234"><ele>56.180339887498945</ele><time>2026-03-09T10:39:39.925058+00:00</time></trkpt>

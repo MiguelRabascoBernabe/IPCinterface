@@ -112,7 +112,7 @@
                                           <HBox prefHeight="100.0" prefWidth="200.0">
                                              <children>
                                                 <Label prefHeight="18.0" prefWidth="80.0" text="Distance: " />
-                                                <TextField fx:id="distanceF" prefHeight="26.0" prefWidth="102.0" />
+                                                <TextField fx:id="distanceF" editable="false" prefHeight="26.0" prefWidth="102.0" />
                                              </children>
                                              <VBox.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -125,7 +125,7 @@
                                                       <Insets />
                                                    </HBox.margin>
                                                 </Label>
-                                                <TextField fx:id="durationF" prefHeight="26.0" prefWidth="102.0" />
+                                                <TextField fx:id="durationF" editable="false" prefHeight="26.0" prefWidth="102.0" />
                                              </children>
                                              <VBox.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -138,7 +138,7 @@
                                                       <Insets />
                                                    </HBox.margin>
                                                 </Label>
-                                                <TextField fx:id="avgSpeedF" prefHeight="26.0" prefWidth="102.0" />
+                                                <TextField fx:id="avgSpeedF" editable="false" prefHeight="26.0" prefWidth="102.0" />
                                              </children>
                                              <VBox.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -151,7 +151,7 @@
                                                       <Insets />
                                                    </HBox.margin>
                                                 </Label>
-                                                <TextField fx:id="avgPaceF" prefHeight="26.0" prefWidth="102.0" />
+                                                <TextField fx:id="avgPaceF" editable="false" prefHeight="26.0" prefWidth="102.0" />
                                              </children>
                                              <VBox.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -164,7 +164,7 @@
                                                       <Insets />
                                                    </HBox.margin>
                                                 </Label>
-                                                <TextField fx:id="elevGainF" prefHeight="26.0" prefWidth="102.0" />
+                                                <TextField fx:id="elevGainF" editable="false" prefHeight="26.0" prefWidth="102.0" />
                                              </children>
                                              <VBox.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -177,7 +177,7 @@
                                                       <Insets />
                                                    </HBox.margin>
                                                 </Label>
-                                                <TextField fx:id="elevLossF" prefHeight="26.0" prefWidth="102.0" />
+                                                <TextField fx:id="elevLossF" editable="false" prefHeight="26.0" prefWidth="102.0" />
                                              </children>
                                              <VBox.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -186,7 +186,7 @@
                                           <HBox prefHeight="100.0" prefWidth="200.0">
                                              <children>
                                                 <Label prefHeight="18.0" prefWidth="80.0" text="Min. altitude: " />
-                                                <TextField fx:id="minAltitudeF" prefHeight="26.0" prefWidth="102.0" />
+                                                <TextField fx:id="minAltitudeF" editable="false" prefHeight="26.0" prefWidth="102.0" />
                                              </children>
                                              <VBox.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -195,7 +195,7 @@
                                           <HBox prefHeight="100.0" prefWidth="200.0">
                                              <children>
                                                 <Label prefHeight="18.0" prefWidth="80.0" text="Max. altitude: " />
-                                                <TextField fx:id="maxAltitudeF" prefHeight="26.0" prefWidth="102.0" />
+                                                <TextField fx:id="maxAltitudeF" editable="false" prefHeight="26.0" prefWidth="102.0" />
                                              </children>
                                              <VBox.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -244,6 +244,7 @@
                <items>
                   <MenuItem fx:id="viewEditBtn" mnemonicParsing="false" onAction="#openViewEdit" text="View/edit" />
                   <MenuItem mnemonicParsing="false" onAction="#sessionHistory" text="Session history" />
+                        <MenuItem mnemonicParsing="false" onAction="#statistics" text="Cumulative statistics" />
                   <MenuItem mnemonicParsing="false" onAction="#signOut" text="Sign Out" />
                </items>
             </Menu>

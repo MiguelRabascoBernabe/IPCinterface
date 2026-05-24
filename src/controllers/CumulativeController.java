@@ -7,23 +7,29 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.text.Text;
 import java.time.Duration;
-import javafx.scene.control.ListView;
+import javafx.fxml.FXML;
 import upv.ipc.sportlib.Activity;
 import upv.ipc.sportlib.SportActivityApp;
 
 public class CumulativeController implements Initializable {
+    @FXML
     private Text totalTime;
+    @FXML
     private Text accumulatedDistance;
+    @FXML
     private Text ascendedMetres;
+    @FXML
     private Text descendedMetres;
+    @FXML
     private Button calculateButton;
+    @FXML
     private ComboBox<String> monthCombobox;
+    @FXML
     private ComboBox<String> yearCombobox;
     
     private void initializeCombobox(ComboBox<String> cb, String[] options){
@@ -46,7 +52,6 @@ public class CumulativeController implements Initializable {
         if(monthCombobox.getSelectionModel().getSelectedItem() == null || yearCombobox.getSelectionModel().getSelectedItem() == null) return;
         
         SportActivityApp app = SportActivityApp.getInstance();
-        app.login("testing", "Ul12345$");
         List<Activity> activities = app.getUserActivities();
         
         Month month = Month.valueOf(monthCombobox.getSelectionModel().getSelectedItem().toUpperCase());

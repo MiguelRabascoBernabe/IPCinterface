@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package app;
 
 import javafx.application.Application;
@@ -19,7 +14,7 @@ public class EstrabaApp extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/InitialScene.fxml"));
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/resources/logo.png")));
         Scene scene = new Scene(root);
-        stage.setTitle("Welcome");
+        stage.setTitle("Runnning La Safor");
         
         stage.setScene(scene);
         stage.show();

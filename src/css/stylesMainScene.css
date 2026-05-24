@@ -97,3 +97,12 @@
 .botonActivities{
     -fx-font-size: 16px;
 }
+
+.no-map-label {
+    -fx-font-size: 22px;
+    -fx-text-fill: #666666;
+    -fx-font-weight: bold;
+    -fx-background-color: rgba(255,255,255,0.85);
+    -fx-padding: 20px;
+    -fx-background-radius: 10px;
+}

@@ -39,7 +39,6 @@ public class ListActivitiesController implements Initializable{
     
     @FXML
     private void loadNewActivity(ActionEvent e) throws IOException {
-
         FXMLLoader loader =
             new FXMLLoader(getClass().getResource("/fxml/NewActivity.fxml"));
 
@@ -68,13 +67,12 @@ public class ListActivitiesController implements Initializable{
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         listview.setPlaceholder(
             new Label("No activities imported yet")
         );
-System.out.println(
-    app.getUserActivities().size()
-);
+//        System.out.println(
+//            app.getUserActivities().size()
+//        );
         listview.getItems().setAll(
             app.getUserActivities()
         );

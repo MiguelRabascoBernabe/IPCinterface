@@ -38,7 +38,6 @@ import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import app.Poi;
 import java.util.List;
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -128,8 +127,7 @@ public class MainSceneController implements Initializable {
         double sliderVal = zoomV; //zoom_slider.getValue();
         //zoom_slider.setValue(sliderVal - 0.1);
         zoomV = zoomV -0.1;
-        //System.out.println(app.registerUser("testing","test@tung.sahur", "Ul12345$", LocalDate.MIN, "/src/resources/logo.png"));
-        System.out.println(app.login("testing", "Ul12345$"));
+//        System.out.println(app.login("testing", "Ul12345$"));
     }
 
     private void zoom(double scaleValue) {
@@ -199,16 +197,46 @@ public class MainSceneController implements Initializable {
 
         iv.setFitWidth(mapWidth);
         iv.setFitHeight(mapHeight);
+        
+        mapPane.setOnMouseClicked(e -> {
+            if(waitingForSecondPoint && e.getButton() == MouseButton.PRIMARY){
+                annotationState.setSecondX(e.getX());
+                annotationState.setSecondY(e.getY());
+
+                // CREATE ANNOTATION
+                saveAnnotation(true);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText(null);
+                alert.setContentText("Annotation saved correctly");
+                alert.show();
+
+                waitingForSecondPoint = false;
+                annotationState = null;
+
+                return;
+            }
+
+            if (e.getButton() == MouseButton.SECONDARY) {
+                try {
+                    // Clic derecho → mostrar menú contextual
+                    onMapRightClick(e.getX(), e.getY());
+                } catch (Exception ex) {
+                    System.getLogger(MainSceneController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                }
+
+            } else if (e.getButton() == MouseButton.PRIMARY && insertionMode) {
+                // FIX 2: clic izquierdo en modo inserción → añadir POI y desactivar modo
+                insertionMode = false;
+                mapPane.setStyle(""); // Restauramos el cursor normal
+                addPoi(e.getX(), e.getY());
+            }
+        });
 
         // background image ALWAYS at bottom layer
         mapPane.getChildren().add(0, iv);
     }
 
     private void saveAnnotation(boolean useTwoPoints){
-        System.out.println(
-            "Saving annotation type = " +
-            annotationState.getType()
-        );
         MapProjection proj = new MapProjection(
             currentRegion,
             mapWidth,
@@ -234,14 +262,9 @@ public class MainSceneController implements Initializable {
             );
         }
 
-        System.out.println("ann:" + ann.getType());
         Annotation saved = app.addAnnotation(currentActivity, ann);
 
-        if(saved != null) {
-            System.out.println("saved: " + saved.getType());
-            drawAnnotations(currentActivity);
-        }
-        System.out.println("Annotation saved correctly");
+        if(saved != null) drawAnnotations(currentActivity);
     }
 
      private void addPoi(double x, double y) {
@@ -308,7 +331,6 @@ public class MainSceneController implements Initializable {
         if(!controller.isAccepted()) return;
 
         annotationState.setType(controller.getAnnotationType());
-        System.out.println("Selected type = " + controller.getAnnotationType());
         annotationState.setText(controller.getAnnotationText());
         annotationState.setColor(controller.getSelectedColor().toString());
 
@@ -324,8 +346,6 @@ public class MainSceneController implements Initializable {
 
             return;
         } else {
-            // CREATE THE ANNOTATION FOR TEXT OR POINT
-//            System.out.println(annotationState.getType());
             saveAnnotation(false);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
@@ -333,69 +353,56 @@ public class MainSceneController implements Initializable {
             alert.show();
         }
     }
+    
+    private Label emptyMapLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        MenuItem miText   = new MenuItem("📝 Añadir texto");
-        MenuItem miCircle = new MenuItem("⭕ Añadir círculo");
-        mapContextMenu = new ContextMenu(miText, miCircle);
-
                //  setCellFactory() define cómo se renderiza cada celda
         //  de forma independiente al modelo Poi.
         //  Aquí mostramos "CÓDIGO – Nombre" en cada fila.
+        zoomV = 1.0;
+        
         map_listview.setCellFactory(listView -> new ListCell<Poi>() {
             @Override
             protected void updateItem(Poi poi, boolean empty) {
-                // Siempre llamar a super primero (requerido por JavaFX)
                 super.updateItem(poi, empty);
 
                 if (empty || poi == null) {
-                    // Celda vacía: limpiamos texto y gráfico
                     setText(null);
                     setGraphic(null);
                 } else {
-                    // Mostramos código y nombre separados por un guión largo
-                    setText(poi.getCode() + " – " + poi.getPosition());
+
+                    String coords = String.format(
+                        "(X, Y) = (%.0f, %.0f)",
+                        poi.getPosition().getX(),
+                        poi.getPosition().getY()
+                    );
+
+                    setText(poi.getCode() + " - " + coords);
                 }
             }
         });
 
         mapPane = new Pane();
 
-    zoomGroup = new Group();
-    zoomGroup.getChildren().add(mapPane);
+        zoomGroup = new Group();
+        zoomGroup.getChildren().add(mapPane);
 
-    contentGroup = new Group();
-    contentGroup.getChildren().add(zoomGroup);
+        contentGroup = new Group();
+        contentGroup.getChildren().add(zoomGroup);
 
-    map_scrollpane.setContent(contentGroup);
+        map_scrollpane.setContent(contentGroup);
 
-    try {
-
-        List<Activity> activities = app.getAllActivities();
-
-        if (!activities.isEmpty()) {
-
-            currentActivity = activities.get(0);
-
-            currentRegion = currentActivity.getSuggestedMap();
-
-            buildMap(new File(currentRegion.getImagePath()));
-
-            drawRoute(currentActivity);
-            drawAnnotations(currentActivity);
-
-            cargarDatosGrafico(currentActivity);
+        try {
+            activityName.setText("Activity: None");
+            mapPane.setPrefSize(650, 300);
+            showNoActivityMessage();
+        } catch(Exception e){
+            e.printStackTrace();
         }
-        
-        if(currentActivity == null) activityName.textProperty().set("Activity: None");
-        else activityName.textProperty().set(currentActivity.getName());
+    }
 
-    } catch (Exception ex) {
-        ex.printStackTrace();
-    }
-    }
 
     public void cargarDatosGrafico(Activity actividad) {
         graficaAlturas.getData().clear();
@@ -441,7 +448,7 @@ public class MainSceneController implements Initializable {
 
         // FIX 3: showOpenDialog() devuelve null si el usuario cancela la selección
         if (imgFile != null) {
-            System.out.println("Mapa seleccionado: " + imgFile.getCanonicalPath());
+//            System.out.println("Mapa seleccionado: " + imgFile.getCanonicalPath());
             buildMap(imgFile); // Reconstruimos la vista con la nueva imagen
             map_listview.getItems().clear(); // Borramos los datos del mapa anterior
         }
@@ -501,13 +508,14 @@ public class MainSceneController implements Initializable {
         Activity selected = controller.getSelectedActivity();
 
         if (selected != null) {
+            mapPane.getChildren().clear();
             currentActivity = selected;
             try {
                 currentRegion = currentActivity.getSuggestedMap();
                 buildMap(new File(currentRegion.getImagePath()));
                 drawRoute(currentActivity);
                 drawAnnotations(currentActivity);
-//                centerMapOnActivity(currentActivity);
+                centerMapOnActivity(currentActivity);
                 cargarDatosGrafico(currentActivity);
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -584,7 +592,7 @@ public class MainSceneController implements Initializable {
             Point2D pix2 = proj.project(p2);
 
             Line segmento = new Line(pix1.getX(), pix1.getY(), pix2.getX(), pix2.getY());
-            System.out.println(pix1.getX()+", "+ pix1.getY());
+//            System.out.println(pix1.getX()+", "+ pix1.getY());
             segmento.setStroke(getColorSpeed(velocidad));
             segmento.setStrokeWidth(3.5);
             segmento.setStrokeLineCap(StrokeLineCap.ROUND);
@@ -622,19 +630,18 @@ public class MainSceneController implements Initializable {
             mapHeight
         );
 
-//        List<Annotation> anns = activity.getAnnotations();
-
-
         for (Annotation ann : activity.getAnnotations()) {
+            GeoPoint gp = ann.getGeoPoints().get(0);
+            Point2D projectedPoint = proj.project(gp);
             
-            Poi poiFromAnn = new Poi(ann.getText() != null && !ann.getText().isEmpty() ? ann.getText() : ann.getType().toString(), ann.getGeoPoints().get(0).getLatitude(), ann.getGeoPoints().get(0).getLongitude());
+            Poi poiFromAnn = new Poi(ann.getText() != null && !ann.getText().isEmpty() ? ann.getText() : ann.getType().toString(), projectedPoint.getX(), projectedPoint.getY());
+            
+            poiFromAnn.setPosition(projectedPoint);
             map_listview.getItems().add(poiFromAnn);
             
-            System.out.println("tipo anotacion: " + ann.getType());
             switch (ann.getType()) {
                 case POINT -> {
 
-                    GeoPoint gp = ann.getGeoPoints().get(0);
                     Point2D p = proj.project(gp);
 
                     Circle c = new Circle(p.getX(), p.getY(), 6);
@@ -646,7 +653,6 @@ public class MainSceneController implements Initializable {
                 }
                 case TEXT -> {
 
-                    GeoPoint gp = ann.getGeoPoints().get(0);
                     Point2D p = proj.project(gp);
 
                     Text text = new Text(ann.getText());
@@ -660,7 +666,6 @@ public class MainSceneController implements Initializable {
 
                     mapPane.getChildren().add(text);
                 }
-
                 case LINE -> {
 
                     GeoPoint gp1 = ann.getGeoPoints().get(0);
@@ -681,7 +686,6 @@ public class MainSceneController implements Initializable {
 
                     mapPane.getChildren().add(line);
                 }
-
                 case CIRCLE -> {
 
                     GeoPoint center = ann.getGeoPoints().get(0);
@@ -823,5 +827,91 @@ public class MainSceneController implements Initializable {
         long minutes = (seconds%3600)/60;
 
         return String.format("%dh %02dmin", hours, minutes);
+    }
+
+    @FXML
+    private void statistics(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CumulativeStatistics.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        stage.setTitle("Cumulative statistics");
+        stage.setScene(new Scene(root));
+        Scene scene = stage.getScene();
+        scene.getStylesheets().add(getClass().getResource("/css/statisticsStyles.css").toExternalForm());
+
+
+        stage.showAndWait();
+    }
+    
+    private void showNoActivityMessage() {
+        mapPane.getChildren().clear();
+        emptyMapLabel = new Label(
+            "Welcome!\n\nLoad an activity from the \"Activities\" menu."
+        );
+        emptyMapLabel.getStyleClass().add("no-map-label");
+
+        emptyMapLabel.layoutXProperty().bind(
+            mapPane.widthProperty()
+                .subtract(emptyMapLabel.widthProperty())
+                .divide(2)
+        );
+
+        emptyMapLabel.layoutYProperty().bind(
+            mapPane.heightProperty()
+                .subtract(emptyMapLabel.heightProperty())
+                .divide(2)
+        );
+
+        mapPane.getChildren().add(emptyMapLabel);
+    }
+    
+    private void centerMapOnActivity(Activity activity) {
+        if (activity == null || activity.getTrackPoints().isEmpty()) {
+            return;
+        }
+
+        MapProjection proj = new MapProjection(
+            currentRegion,
+            mapWidth,
+            mapHeight
+        );
+
+        double minX = Double.MAX_VALUE;
+        double minY = Double.MAX_VALUE;
+        double maxX = Double.MIN_VALUE;
+        double maxY = Double.MIN_VALUE;
+
+        for (TrackPoint tp : activity.getTrackPoints()) {
+
+            Point2D p = proj.project(tp);
+
+            minX = Math.min(minX, p.getX());
+            minY = Math.min(minY, p.getY());
+
+            maxX = Math.max(maxX, p.getX());
+            maxY = Math.max(maxY, p.getY());
+        }
+
+        double centerX = (minX + maxX) / 2.0;
+        double centerY = (minY + maxY) / 2.0;
+
+        double scaledMapWidth = mapPane.getWidth() * zoomGroup.getScaleX();
+        double scaledMapHeight = mapPane.getHeight() * zoomGroup.getScaleY();
+
+        double viewW = map_scrollpane.getViewportBounds().getWidth();
+        double viewH = map_scrollpane.getViewportBounds().getHeight();
+
+        double scrollH = (centerX * zoomGroup.getScaleX() - viewW / 2)
+                / (scaledMapWidth - viewW);
+
+        double scrollV = (centerY * zoomGroup.getScaleY() - viewH / 2)
+                / (scaledMapHeight - viewH);
+
+        scrollH = Math.max(0, Math.min(1, scrollH));
+        scrollV = Math.max(0, Math.min(1, scrollV));
+
+        map_scrollpane.setHvalue(scrollH);
+        map_scrollpane.setVvalue(scrollV);
     }
 }

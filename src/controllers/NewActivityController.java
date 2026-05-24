@@ -3,22 +3,16 @@ package controllers;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-import upv.ipc.sportlib.Activity;
 import upv.ipc.sportlib.SportActivityApp;
 
 public class NewActivityController implements Initializable {
@@ -71,13 +65,11 @@ public class NewActivityController implements Initializable {
         
         if(fileToUpload != null){
             context = SportActivityApp.getInstance();
-            // placeholder login in order to test the functionalities
-            context.login("testing", "Ul12345$");
             
             createButton.setDisable(false);
             createButton.setCursor(Cursor.HAND);
             
-            System.out.println(context.getUserActivities());
+//            System.out.println(context.getUserActivities());
             filenameLabel.setText(fileToUpload.getName());
             toggleVisibility(true);
         }
