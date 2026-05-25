@@ -112,6 +112,9 @@ public class NewAnnotation implements Initializable {
                 visibleSelectedOption.setText(lol2.name);
             });
         }
+        
+        visibleSelectedOption.setText("CIRCLE");
+        
         ///////////// VALIDATION FOR TEXT IN SOME CASES ///////////// 
         
         validAnnotation = new SimpleBooleanProperty();
