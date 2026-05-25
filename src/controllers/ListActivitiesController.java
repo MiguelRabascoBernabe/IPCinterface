@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -64,15 +65,11 @@ public class ListActivitiesController implements Initializable{
         );
     }
     
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         listview.setPlaceholder(
             new Label("No activities imported yet")
         );
-//        System.out.println(
-//            app.getUserActivities().size()
-//        );
         listview.getItems().setAll(
             app.getUserActivities()
         );
@@ -86,11 +83,15 @@ public class ListActivitiesController implements Initializable{
                 if (empty || activity == null) {
                     setText(null);
                 } else {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                     setText(
                         activity.getName()
                         + " | "
                         + String.format("%.2f km",
                             activity.getTotalDistance() / 1000.0)
+                        + " | "
+                        + activity.getStartTime().format(formatter)
+                            
                     );
                 }
             }

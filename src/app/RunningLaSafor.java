@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-public class EstrabaApp extends Application {
+public class RunningLaSafor extends Application {
     public static Context c=new Context();
     @Override
     public void start(Stage stage) throws Exception {

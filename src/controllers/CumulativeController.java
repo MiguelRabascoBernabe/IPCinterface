@@ -74,7 +74,8 @@ public class CumulativeController implements Initializable {
         
         
         totalTime.setText(String.format("%dh %02dmin", hours, minutes));
-        accumulatedDistance.setText(round(totalDistance, 2) + "m");
+        accumulatedDistance.setText(round((double)totalDistance / 1000, 2) + "km");        
+
         ascendedMetres.setText(round(totalGain, 2) + "m");
         descendedMetres.setText(round(totalLoss, 2) + "m");
     }
