@@ -124,6 +124,8 @@ public class MainSceneController implements Initializable {
     @FXML
     private VBox speedLeyenda;
     
+    private Circle highlightMarker;
+    
     void zoomIn(ActionEvent event) {
         double sliderVal = zoomV; //zoom_slider.getValue();
         //zoom_slider.setValue(sliderVal + 0.1);
@@ -432,6 +434,7 @@ public class MainSceneController implements Initializable {
         }
 
         graficaAlturas.getData().add(series);
+        javafx.application.Platform.runLater(() -> setupChartHighlight());
     }
 
     private void about(ActionEvent event) {
@@ -809,28 +812,14 @@ public class MainSceneController implements Initializable {
             minAltitudeF.setText("none");
             maxAltitudeF.setText("none");
         }else{
-            double distance = 0;
-            double maxAl = Double.MIN_VALUE;
-            double minAl = Double.MAX_VALUE;
-
-            List<TrackPoint> puntos = currentActivity.getTrackPoints();
-
-            for (int i = 1; i < puntos.size(); i++) {
-                TrackPoint p1 = puntos.get(i - 1);
-                TrackPoint p2 = puntos.get(i);
-
-                distance = p1.distanceTo(p2);
-                maxAl = Double.max(maxAl,p1.getElevation());
-                minAl = Double.min(minAl,p1.getElevation());
-            }
-            distanceF.setText(String.format("%.2f", distance).replace(',', '.'));
+            distanceF.setText(String.format("%.2f km", currentActivity.getTotalDistance() / 1000.0).replace(',', '.'));
             durationF.setText(formatearDuration());
-            avgSpeedF.setText(String.format("%.2f", currentActivity.getAverageSpeed()).replace(',', '.'));
-            avgPaceF.setText(String.format("%.2f", currentActivity.getAveragePace()).replace(',', '.'));
-            elevGainF.setText(String.format("%.2f", currentActivity.getElevationGain()).replace(',', '.'));
-            elevLossF.setText(String.format("%.2f", currentActivity.getElevationLoss()).replace(',', '.'));
-            minAltitudeF.setText(String.format("%.2f", minAl).replace(',', '.'));
-            maxAltitudeF.setText(String.format("%.2f", maxAl).replace(',', '.'));
+            avgSpeedF.setText(String.format("%.2f km/h", currentActivity.getAverageSpeed()).replace(',', '.'));
+            avgPaceF.setText(String.format("%.2f min/km", currentActivity.getAveragePace()).replace(',', '.'));
+            elevGainF.setText(String.format("%.2f m", currentActivity.getElevationGain()).replace(',', '.'));
+            elevLossF.setText(String.format("%.2f m", currentActivity.getElevationLoss()).replace(',', '.'));
+            minAltitudeF.setText(String.format("%.2f m", currentActivity.getMinElevation()).replace(',', '.'));
+            maxAltitudeF.setText(String.format("%.2f m", currentActivity.getMaxElevation()).replace(',', '.'));
         }
         
         
@@ -928,5 +917,66 @@ public class MainSceneController implements Initializable {
 
         map_scrollpane.setHvalue(scrollH);
         map_scrollpane.setVvalue(scrollV);
+    }
+    
+    private void setupChartHighlight() {
+        if (highlightMarker == null) {
+            highlightMarker = new Circle(8);
+            highlightMarker.setFill(Color.ORANGE);
+            highlightMarker.setStroke(Color.WHITE);
+            highlightMarker.setStrokeWidth(2);
+            highlightMarker.setVisible(false);
+        }
+
+        javafx.scene.Node plotBackground = graficaAlturas.lookup(".chart-plot-background");
+        if (plotBackground == null) return;
+
+        plotBackground.setOnMouseMoved(e -> {
+            if (currentActivity == null || currentActivity.getTrackPoints().isEmpty()) return;
+
+            if (!mapPane.getChildren().contains(highlightMarker)) {
+                mapPane.getChildren().add(highlightMarker);
+            }
+            highlightMarker.setVisible(true);
+
+            double mouseX = e.getX();
+            double distanciaKmTarget = graficaAlturas.getXAxis().getValueForDisplay(mouseX).doubleValue();
+
+            List<TrackPoint> puntos = currentActivity.getTrackPoints();
+            TrackPoint puntoMasCercano = puntos.get(0);
+            double minimaDiferencia = Double.MAX_VALUE;
+            double distanciaAcumuladaMetros = 0.0;
+
+            for (int i = 0; i < puntos.size(); i++) {
+                TrackPoint tp = puntos.get(i);
+                if (i > 0) {
+                    distanciaAcumuladaMetros += tp.distanceTo(puntos.get(i - 1));
+                }
+
+                double distanciaKmActual = distanciaAcumuladaMetros / 1000.0;
+                double diferencia = Math.abs(distanciaKmActual - distanciaKmTarget);
+
+                if (diferencia < minimaDiferencia) {
+                    minimaDiferencia = diferencia;
+                    puntoMasCercano = tp;
+                }
+            }
+
+            MapProjection proj = new MapProjection(currentRegion, mapWidth, mapHeight);
+            Point2D mapaPixels = proj.project(puntoMasCercano);
+
+            highlightMarker.setCenterX(mapValue(mapaPixels.getX()));
+            highlightMarker.setCenterY(mapValue(mapaPixels.getY()));
+        });
+
+        plotBackground.setOnMouseExited(e -> {
+            if (highlightMarker != null) {
+                highlightMarker.setVisible(false);
+            }
+        });
+    }
+
+    private double mapValue(double val) {
+        return Double.isNaN(val) || Double.isInfinite(val) ? 0.0 : val;
     }
 }
